@@ -1,0 +1,18 @@
+export default {
+  background: '#1a1f2e',
+  surface: '#242b3d',
+  surfaceLight: '#2d3548',
+  primary: '#0ea5e9',
+  primaryDark: '#0284c7',
+  secondary: '#f97316',
+  secondaryDark: '#ea580c',
+  text: '#f8fafc',
+  textSecondary: '#94a3b8',
+  textMuted: '#64748b',
+  border: '#334155',
+  success: '#10b981',
+  error: '#ef4444',
+  warning: '#f59e0b',
+  white: '#ffffff',
+  black: '#000000',
+};
