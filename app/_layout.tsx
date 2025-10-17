@@ -43,7 +43,6 @@ export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts({
     "Lexend-Regular": require("../assets/fonts/Lexend-Regular.ttf"),
     // "Lexend-Thin": require("../assets/fonts/Lexend-Thin.ttf"),
-    // "Lexend-": require("../../client/assets/fonts/Lexend-ExtraLight.ttf"),
     // "Lexend-ExtraLight": require("../assets/fonts/Lexend-ExtraLight.ttf"),
     // "Lexend-Light": require("../assets/fonts/Lexend-Light.ttf"),
     "Lexend-Medium": require("../assets/fonts/Lexend-Medium.ttf"),
