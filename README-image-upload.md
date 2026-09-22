@@ -1,5 +1,7 @@
 # Team Logo Upload Flow - Supabase Storage Integration
 
+> Documento histórico. Las afirmaciones de estar listo para producción y las garantías de limpieza, permisos y compatibilidad requieren verificación. Ver [estado](docs/status.md) y [datos](docs/db-context.md) antes de usar los scripts SQL mencionados.
+
 Este documento describe la implementación completa del flujo de subida de logos de equipos usando Supabase Storage.
 
 ## 🎯 Funcionalidades Implementadas

@@ -1,146 +1,182 @@
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import { Stack, useRouter } from 'expo-router';
-import { Settings, Trophy, TrendingUp, Users as UsersIcon, LogOut } from 'lucide-react-native';
-import { useAuth } from '@/contexts/AuthContext';
-import Colors from '@/constants/colors';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
+import { Stack, useRouter } from "expo-router";
+import {
+  Settings,
+  TrendingUp,
+  Users as UsersIcon,
+  LogOut,
+  Clock,
+  Edit,
+} from "lucide-react-native";
+import Colors from "@/constants/colors";
+import { useAuth } from "@/contexts/AuthContext";
+import { useMe, useMyTeams, useUpdateMe } from "@/hooks/profile";
+import AvatarUploader from "@/components/AvatarUploader";
+import TeamListItem from "@/components/TeamListItem";
 
 export default function ProfileScreen() {
-  const { user, signOut } = useAuth();
   const router = useRouter();
+  const { signOut } = useAuth();
+  const { data: me } = useMe();
+  const { data: teams } = useMyTeams();
+  const updateMe = useUpdateMe();
 
   const handleSignOut = async () => {
     await signOut();
-    router.replace('/');
+    router.replace("/signin"); // va a splash -> routing tuyo
   };
+
+  console.log("MY TEAMS: ", teams)
 
   return (
     <>
-      <Stack.Screen options={{ headerShown: true, title: 'Profile', headerStyle: { backgroundColor: Colors.surface }, headerTintColor: Colors.text }} />
-      <ScrollView style={styles.container}>
+      <Stack.Screen
+        options={{
+          headerShown: true,
+          title: "Profile",
+          headerStyle: { backgroundColor: Colors.surface },
+          headerTintColor: Colors.text,
+        }}
+      />
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={{ paddingBottom: 32 }}
+      >
         <View style={styles.header}>
-          <View style={styles.avatar}>
-            <Text style={styles.avatarText}>{user?.display_name?.charAt(0) || 'U'}</Text>
-          </View>
-          <Text style={styles.name}>{user?.display_name || 'User'}</Text>
-          <Text style={styles.bio}>{user?.bio || 'Basketball enthusiast'}</Text>
+          {me && (
+            <AvatarUploader
+              userId={me.id}
+              avatarPath={me.avatar_url}
+              onUploaded={(path) => updateMe.mutate({ avatar_url: path })}
+              size={112}
+            />
+          )}
+          <Text style={styles.name}>{me?.display_name || "User"}</Text>
           <View style={styles.levelBadge}>
-            <Text style={styles.levelText}>Level {user?.level || 1}</Text>
+            <Text style={styles.levelText}>Level {me?.level ?? 1}</Text>
           </View>
         </View>
 
         <View style={styles.statsGrid}>
-          <View style={styles.statCard}>
-            <Text style={styles.statValue}>{user?.games_played || 0}</Text>
-            <Text style={styles.statLabel}>Games</Text>
-          </View>
-          <View style={styles.statCard}>
-            <Text style={styles.statValue}>{user?.games_won || 0}</Text>
-            <Text style={styles.statLabel}>Wins</Text>
-          </View>
-          <View style={styles.statCard}>
-            <Text style={styles.statValue}>
-              {user?.games_played ? Math.round(((user?.games_won || 0) / user.games_played) * 100) : 0}%
-            </Text>
-            <Text style={styles.statLabel}>Win Rate</Text>
-          </View>
+          <Stat value={me?.games_played ?? 0} label="Games" />
+          <Stat value={me?.points_total ?? 0} label="Points" />
+          <Stat value={me?.assists_total ?? 0} label="Assists" />
         </View>
 
+        {/* My Teams */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Stats</Text>
-          <View style={styles.statRow}>
-            <Text style={styles.statRowLabel}>Points Per Game</Text>
-            <Text style={styles.statRowValue}>
-              {user?.games_played ? ((user?.points_total || 0) / user.games_played).toFixed(1) : '0.0'}
+          <Text style={styles.sectionTitle}>My Teams</Text>
+
+          {teams && teams.length > 0 ? (
+            teams.map((t: any) => <TeamListItem key={t.id} team={t} />)
+          ) : (
+            <Text style={{ color: Colors.textSecondary }}>
+              You are not in any team yet.
             </Text>
-          </View>
-          <View style={styles.statRow}>
-            <Text style={styles.statRowLabel}>Assists</Text>
-            <Text style={styles.statRowValue}>
-              {user?.games_played ? ((user?.assists_total || 0) / user.games_played).toFixed(1) : '0.0'}
-            </Text>
-          </View>
-          <View style={styles.statRow}>
-            <Text style={styles.statRowLabel}>Rebounds</Text>
-            <Text style={styles.statRowValue}>
-              {user?.games_played ? ((user?.rebounds_total || 0) / user.games_played).toFixed(1) : '0.0'}
-            </Text>
-          </View>
+          )}
+
+          <MenuItem
+            icon={<UsersIcon color={Colors.primary} size={20} />}
+            text="Manage Teams"
+            onPress={() => router.push('/teams')}
+          />
         </View>
 
+        {/* Mis estadisticas */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Achievements</Text>
-          <View style={styles.achievementsGrid}>
-            {[1, 2, 3, 4].map((i) => (
-              <View key={i} style={styles.achievementCard}>
-                <Trophy color={Colors.secondary} size={32} />
-              </View>
-            ))}
-          </View>
+          <Text style={styles.sectionTitle}>My statistics</Text>
+          <MenuItem
+            icon={<TrendingUp color={Colors.primary} size={20} />}
+            text="View Detailed Statistics"
+            onPress={() => Alert.alert("Coming soon")}
+          />
         </View>
 
+        {/* Historial de juegos */}
         <View style={styles.section}>
-          <TouchableOpacity style={styles.menuItem}>
-            <View style={styles.menuItemLeft}>
-              <TrendingUp color={Colors.primary} size={20} />
-              <Text style={styles.menuItemText}>View Detailed Statistics</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem}>
-            <View style={styles.menuItemLeft}>
-              <UsersIcon color={Colors.primary} size={20} />
-              <Text style={styles.menuItemText}>My Teams</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem}>
-            <View style={styles.menuItemLeft}>
-              <Settings color={Colors.primary} size={20} />
-              <Text style={styles.menuItemText}>App Settings</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} onPress={handleSignOut}>
-            <View style={styles.menuItemLeft}>
-              <LogOut color={Colors.error} size={20} />
-              <Text style={[styles.menuItemText, { color: Colors.error }]}>Logout</Text>
-            </View>
-          </TouchableOpacity>
+          <Text style={styles.sectionTitle}>Game History</Text>
+          <MenuItem
+            icon={<Clock color={Colors.primary} size={20} />}
+            text="View Game History"
+            onPress={() => Alert.alert("Coming soon")}
+          />
+        </View>
+
+        {/* Configuraciones y logout */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Account</Text>
+          <MenuItem
+            icon={<Edit color={Colors.primary} size={20} />}
+            text="Edit profile"
+            onPress={() => Alert.alert("Coming soon")}
+          />
+          <MenuItem
+            icon={<Settings color={Colors.primary} size={20} />}
+            text="App Settings"
+            onPress={() => Alert.alert("Coming soon")}
+          />
+          <MenuItem
+            icon={<LogOut color={Colors.error} size={20} />}
+            text="Logout"
+            destructive
+            onPress={handleSignOut}
+          />
         </View>
       </ScrollView>
     </>
   );
 }
 
+function Stat({
+  value,
+  label,
+  suffix = "",
+}: {
+  value: number | string;
+  label: string;
+  suffix?: string;
+}) {
+  return (
+    <View style={styles.statCard}>
+      <Text style={styles.statValue}>
+        {value}
+        {suffix}
+      </Text>
+      <Text style={styles.statLabel}>{label}</Text>
+    </View>
+  );
+}
+
+function MenuItem({ icon, text, onPress, destructive }: any) {
+  return (
+    <TouchableOpacity style={styles.menuItem} onPress={onPress}>
+      <View style={styles.menuItemLeft}>
+        {icon}
+        <Text
+          style={[styles.menuItemText, destructive && { color: Colors.error }]}
+        >
+          {text}
+        </Text>
+      </View>
+    </TouchableOpacity>
+  );
+}
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.background,
-  },
-  header: {
-    alignItems: 'center' as const,
-    padding: 24,
-    gap: 12,
-  },
-  avatar: {
-    width: 96,
-    height: 96,
-    borderRadius: 48,
-    backgroundColor: Colors.primary,
-    justifyContent: 'center' as const,
-    alignItems: 'center' as const,
-  },
-  avatarText: {
-    fontSize: 40,
-    fontWeight: '700' as const,
-    color: Colors.white,
-  },
-  name: {
-    fontSize: 24,
-    fontWeight: '700' as const,
-    color: Colors.text,
-  },
+  container: { flex: 1, backgroundColor: Colors.background },
+  header: { alignItems: "center", padding: 24, gap: 12 },
+  name: { fontSize: 24, fontWeight: "700" as const, color: Colors.text },
   bio: {
     fontSize: 16,
     color: Colors.textSecondary,
-    textAlign: 'center' as const,
+    textAlign: "center" as const,
   },
   levelBadge: {
     backgroundColor: Colors.secondary,
@@ -148,13 +184,9 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 20,
   },
-  levelText: {
-    fontSize: 14,
-    fontWeight: '600' as const,
-    color: Colors.white,
-  },
+  levelText: { fontSize: 14, fontWeight: "600" as const, color: Colors.white },
   statsGrid: {
-    flexDirection: 'row' as const,
+    flexDirection: "row" as const,
     paddingHorizontal: 16,
     gap: 12,
     marginBottom: 24,
@@ -164,74 +196,58 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.surface,
     borderRadius: 16,
     padding: 20,
-    alignItems: 'center' as const,
+    alignItems: "center" as const,
     gap: 8,
   },
-  statValue: {
-    fontSize: 28,
-    fontWeight: '700' as const,
-    color: Colors.text,
-  },
-  statLabel: {
-    fontSize: 14,
-    color: Colors.textSecondary,
-  },
-  section: {
-    paddingHorizontal: 16,
-    marginBottom: 24,
-  },
+  statValue: { fontSize: 28, fontWeight: "700" as const, color: Colors.text },
+  statLabel: { fontSize: 14, color: Colors.textSecondary },
+  section: { paddingHorizontal: 16, marginBottom: 24 },
   sectionTitle: {
     fontSize: 20,
-    fontWeight: '700' as const,
+    fontWeight: "700" as const,
     color: Colors.text,
     marginBottom: 16,
   },
-  statRow: {
-    flexDirection: 'row' as const,
-    justifyContent: 'space-between' as const,
+  card: {
     backgroundColor: Colors.surface,
     padding: 16,
     borderRadius: 12,
     marginBottom: 8,
   },
-  statRowLabel: {
-    fontSize: 16,
-    color: Colors.text,
-  },
-  statRowValue: {
-    fontSize: 16,
-    fontWeight: '600' as const,
-    color: Colors.primary,
-  },
-  achievementsGrid: {
-    flexDirection: 'row' as const,
-    flexWrap: 'wrap' as const,
-    gap: 12,
-  },
-  achievementCard: {
-    width: 80,
-    height: 80,
-    backgroundColor: Colors.surface,
-    borderRadius: 12,
-    justifyContent: 'center' as const,
-    alignItems: 'center' as const,
-  },
+  cardText: { color: Colors.text, fontSize: 16 },
   menuItem: {
-    flexDirection: 'row' as const,
-    justifyContent: 'space-between' as const,
-    alignItems: 'center' as const,
+    flexDirection: "row" as const,
+    alignItems: "center" as const,
     backgroundColor: Colors.surface,
     padding: 16,
     borderRadius: 12,
     marginBottom: 8,
   },
   menuItemLeft: {
-    flexDirection: 'row' as const,
-    alignItems: 'center' as const,
+    flexDirection: "row" as const,
+    alignItems: "center" as const,
     gap: 12,
   },
-  menuItemText: {
-    fontSize: 16,
-    color: Colors.text,
+  menuItemText: { fontSize: 16, color: Colors.text },
+  teamRow: { flexDirection: "row", alignItems: "center", gap: 12 },
+  teamLogoWrapper: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    overflow: "hidden",
+    backgroundColor: Colors.surfaceLight,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  teamLogo: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
+  },
+  teamLogoPlaceholder: {
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

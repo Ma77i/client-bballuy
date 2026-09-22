@@ -1,4 +1,6 @@
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
+//lib/backend/supabase.ts
+import { createClient } from '@supabase/supabase-js';
+import type { Database } from './database.types';
 import Constants from 'expo-constants';
 import { BackendProvider, Session, AuthUser } from './types';
 
@@ -9,7 +11,7 @@ if (!supabaseUrl || !supabaseAnonKey) {
   console.error('Missing Supabase credentials. Please set EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_ANON_KEY');
 }
 
-export const supabase: SupabaseClient = createClient(supabaseUrl, supabaseAnonKey, {
+export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
   auth: {
     autoRefreshToken: true,
     persistSession: true,
@@ -108,7 +110,7 @@ export const supabaseProvider: BackendProvider = {
   },
 
   db: {
-    from<T = unknown>(table: string) {
+    from<T = unknown>(table: keyof Database['public']['Tables']) {
       const query = supabase.from(table);
       
       return {

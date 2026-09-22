@@ -1,4 +1,6 @@
-export type AppRole = 'player' | 'team_captain' | 'moderator' | 'admin';
+import type { Database, Tables } from './database.types';
+
+export type AppRole = Database['public']['Enums']['app_role'];
 export type ProfileVisibility = 'public' | 'friends' | 'private';
 export type LocationMode = 'precise' | 'approx';
 export type MatchStatus = 'scheduled' | 'in_progress' | 'completed' | 'cancelled';
@@ -7,26 +9,7 @@ export type ReportStatus = 'pending' | 'reviewing' | 'resolved' | 'dismissed';
 export type ThreadType = 'team' | 'direct' | 'match';
 export type ConsentType = 'tos' | 'privacy_policy' | 'age_verification';
 
-export interface UserPublic {
-  id: string;
-  display_name: string;
-  avatar_url: string | null;
-  app_role: AppRole;
-  discoverable: boolean;
-  profile_visibility: ProfileVisibility;
-  location_mode: LocationMode;
-  bio: string | null;
-  city: string | null;
-  level: number;
-  xp: number;
-  games_played: number;
-  games_won: number;
-  points_total: number;
-  assists_total: number;
-  rebounds_total: number;
-  created_at: string;
-  updated_at: string;
-}
+export type UserPublic = Tables<'users_public'>;
 
 export interface Team {
   id: string;
@@ -45,28 +28,15 @@ export interface Team {
 export interface TeamMember {
   team_id: string;
   user_id: string;
-  role: 'captain' | 'member';
+  role: 'captain' | 'player';
   position: string | null;
   jersey_number: number | null;
   joined_at: string;
 }
 
-export interface Court {
-  id: string;
-  name: string;
-  coords: { lat: number; lng: number };
-  address: string | null;
-  surface: 'concrete' | 'asphalt' | 'wood' | 'rubber' | 'other' | null;
-  lighting: boolean;
-  indoor: boolean;
-  hoops_count: number;
-  notes: string | null;
-  rating_avg: number;
-  rating_count: number;
-  created_by: string;
-  created_at: string;
-  updated_at: string;
-}
+export type Court = Tables<'courts'>;
+export type CourtCatalog = Tables<'court_catalog'>;
+export type CourtMembership = Tables<'court_memberships'>;
 
 export interface Match {
   id: string;
@@ -148,7 +118,7 @@ export interface BackendProvider {
     onAuthStateChange: (callback: (session: Session | null) => void) => { unsubscribe: () => void };
   };
   db: {
-    from: <T = unknown>(table: string) => QueryBuilder<T>;
+    from: <T = unknown>(table: keyof Database['public']['Tables']) => QueryBuilder<T>;
   };
   storage: {
     upload: (bucket: string, path: string, file: File | Blob) => Promise<{ data: { path: string } | null; error: Error | null }>;

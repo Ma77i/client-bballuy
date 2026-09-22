@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { View, TextInput, StyleSheet, ScrollView, TouchableOpacity, Text } from 'react-native';
 import { Search, X } from 'lucide-react-native';
 import Colors from '@/constants/colors';
@@ -16,6 +16,10 @@ interface SearchInputProps {
   onSelectResult: (result: SearchResult) => void;
   isLoading?: boolean;
   showResults?: boolean;
+  /** caracteres mínimos para disparar búsqueda (default 2) */
+  minChars?: number;
+  /** debounce en ms (default 300) */
+  debounceMs?: number;
 }
 
 export default function SearchInput({
@@ -25,32 +29,59 @@ export default function SearchInput({
   onSelectResult,
   isLoading = false,
   showResults = true,
+  minChars = 2,
+  debounceMs = 300,
 }: SearchInputProps) {
   const [query, setQuery] = useState('');
-  const [showDropdown, setShowDropdown] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
+  // Evita re-disparar onSearch con el mismo texto
+  const lastSearchedRef = useRef<string>('');
+
+  // Mantiene el dropdown mientras hay carga o resultados
+  const stickyLoadingRef = useRef(false);
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      if (query.trim()) {
-        onSearch(query);
-        setShowDropdown(true);
-      } else {
-        setShowDropdown(false);
-      }
-    }, 300); // Debounce search
+    // si empezó a cargar, pegamos el estado "sticky"
+    if (isLoading) stickyLoadingRef.current = true;
+    // cuando deja de cargar, soltamos el "sticky"
+    if (!isLoading) stickyLoadingRef.current = false;
+  }, [isLoading]);
 
-    return () => clearTimeout(timeoutId);
-  }, [query, onSearch]);
+  // Debounce de la búsqueda + guardas contra repeticiones
+  useEffect(() => {
+    const q = query.trim();
+    const handle = setTimeout(() => {
+      if (q.length >= minChars && q !== lastSearchedRef.current) {
+        lastSearchedRef.current = q;
+        onSearch(q);
+        setDropdownOpen(true);
+      } else if (q.length < minChars) {
+        setDropdownOpen(false);
+      }
+    }, debounceMs);
+
+    return () => clearTimeout(handle);
+  }, [query, minChars, debounceMs, onSearch]);
+
+  // Lógica única para visibilidad del dropdown (evita flicker)
+  const shouldShowDropdown = useMemo(() => {
+    if (!showResults) return false;
+    const q = query.trim();
+    if (q.length < minChars) return false;
+    // Mostrar si: está abierto y (hay carga sticky o hay resultados)
+    return dropdownOpen && (stickyLoadingRef.current || searchResults.length >= 0);
+  }, [showResults, query, minChars, dropdownOpen, searchResults.length]);
 
   const handleSelectResult = (result: SearchResult) => {
     onSelectResult(result);
     setQuery(result.name);
-    setShowDropdown(false);
+    setDropdownOpen(false);
   };
 
   const handleClear = () => {
     setQuery('');
-    setShowDropdown(false);
+    setDropdownOpen(false);
+    lastSearchedRef.current = '';
   };
 
   return (
@@ -63,7 +94,15 @@ export default function SearchInput({
           placeholderTextColor={Colors.textMuted}
           value={query}
           onChangeText={setQuery}
-          onFocus={() => query.trim() && setShowDropdown(true)}
+          onFocus={() => {
+            if (query.trim().length >= minChars) setDropdownOpen(true);
+          }}
+          // En web, onBlur puede cerrar el dropdown; lo demoramos un frame si hace click en un ítem
+          onBlur={() => {
+            setTimeout(() => setDropdownOpen(false), 120);
+          }}
+          autoCorrect={false}
+          autoCapitalize="none"
         />
         {query.length > 0 && (
           <TouchableOpacity onPress={handleClear}>
@@ -72,30 +111,36 @@ export default function SearchInput({
         )}
       </View>
 
-      {showResults && showDropdown && searchResults.length > 0 && (
+      {shouldShowDropdown && (
         <View style={styles.resultsContainer}>
-          <ScrollView style={styles.results} showsVerticalScrollIndicator={false}>
-            {searchResults.map((result) => (
-              <TouchableOpacity
-                key={result.id}
-                style={styles.resultItem}
-                onPress={() => handleSelectResult(result)}
-              >
-                <View style={styles.resultContent}>
-                  <Text style={styles.resultName}>{result.name}</Text>
-                  {result.subtitle && (
-                    <Text style={styles.resultSubtitle}>{result.subtitle}</Text>
-                  )}
-                </View>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
-        </View>
-      )}
-
-      {isLoading && (
-        <View style={styles.loadingContainer}>
-          <Text style={styles.loadingText}>Searching...</Text>
+          {/* Estado de carga "sticky": solo si no hay resultados aún */}
+          {isLoading && searchResults.length === 0 ? (
+            <View style={styles.stateContainer}>
+              <Text style={styles.stateText}>Searching…</Text>
+            </View>
+          ) : searchResults.length === 0 ? (
+            <View style={styles.stateContainer}>
+              <Text style={styles.stateText}>No results</Text>
+            </View>
+          ) : (
+            <ScrollView style={styles.results} showsVerticalScrollIndicator={false}>
+              {searchResults.map((result) => (
+                <TouchableOpacity
+                  key={result.id}
+                  style={styles.resultItem}
+                  activeOpacity={0.85}
+                  onPress={() => handleSelectResult(result)}
+                >
+                  <View style={styles.resultContent}>
+                    <Text style={styles.resultName}>{result.name}</Text>
+                    {result.subtitle && (
+                      <Text style={styles.resultSubtitle}>{result.subtitle}</Text>
+                    )}
+                  </View>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          )}
         </View>
       )}
     </View>
@@ -103,10 +148,7 @@ export default function SearchInput({
 }
 
 const styles = StyleSheet.create({
-  container: {
-    position: 'relative',
-    zIndex: 1,
-  },
+  container: { position: 'relative', zIndex: 1 },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -118,11 +160,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.border,
   },
-  input: {
-    flex: 1,
-    fontSize: 16,
-    color: Colors.text,
-  },
+  input: { flex: 1, fontSize: 16, color: Colors.text },
   resultsContainer: {
     position: 'absolute',
     top: '100%',
@@ -133,40 +171,23 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.border,
     marginTop: 4,
-    maxHeight: 200,
+    maxHeight: 240,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 8,
   },
-  results: {
-    maxHeight: 200,
-  },
+  results: { maxHeight: 240 },
   resultItem: {
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderBottomWidth: 1,
     borderBottomColor: Colors.border,
   },
-  resultContent: {
-    gap: 4,
-  },
-  resultName: {
-    fontSize: 16,
-    color: Colors.text,
-    fontWeight: '500',
-  },
-  resultSubtitle: {
-    fontSize: 14,
-    color: Colors.textSecondary,
-  },
-  loadingContainer: {
-    padding: 16,
-    alignItems: 'center',
-  },
-  loadingText: {
-    fontSize: 14,
-    color: Colors.textMuted,
-  },
+  resultContent: { gap: 4 },
+  resultName: { fontSize: 16, color: Colors.text, fontWeight: '500' },
+  resultSubtitle: { fontSize: 14, color: Colors.textSecondary },
+  stateContainer: { padding: 16, alignItems: 'center' },
+  stateText: { fontSize: 14, color: Colors.textMuted },
 });

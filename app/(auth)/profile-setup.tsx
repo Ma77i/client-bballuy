@@ -23,7 +23,7 @@ export default function ProfileSetupScreen() {
       }
       setUserId(user.id);
     })();
-  }, []);
+  }, [router]);
 
   const pickFromGallery = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();

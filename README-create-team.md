@@ -1,5 +1,7 @@
 # Create Team Flow - Basketball Mobile App
 
+> Documento histórico, no validado como estado actual. El enlace de invitación es fijo y hay discrepancias de esquema/roles. Ver [estado](docs/status.md) y [SPEC-001](specs/001-core-journey/spec.md). Las afirmaciones de completitud no representan aceptación comprobada.
+
 Este documento describe el flujo completo de creación de equipos implementado en la aplicación de baloncesto.
 
 ## 📱 Flujo de 3 Pasos

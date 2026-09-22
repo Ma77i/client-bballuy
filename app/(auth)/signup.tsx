@@ -60,7 +60,7 @@ export default function SignUpScreen() {
     }
 
     setIsLoading(true);
-    const { data, error } = await signUp(email, password, displayName);
+    const { error } = await signUp(email, password, displayName);
     setIsLoading(false);
 
     if (error) {
@@ -68,7 +68,9 @@ export default function SignUpScreen() {
       return;
     }
 
-    const userId = data?.user?.id;
+    const { data: userRes } = await supabase.auth.getUser();
+    const userId = userRes?.user?.id;
+
     if (userId) {
       await syncPendingConsent(userId);
     }

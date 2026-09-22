@@ -59,7 +59,7 @@ export default function ImagePicker({
     <View style={styles.container}>
       <Text style={styles.label}>Team Logo</Text>
       
-      {imageUri ? (
+      {imageUri && (
         <View style={styles.imagePreview}>
           <Image source={{ uri: imageUri }} style={styles.image} />
           {onRemove && (
@@ -73,10 +73,6 @@ export default function ImagePicker({
               <Text style={styles.uploadingText}>Uploading...</Text>
             </View>
           )}
-        </View>
-      ) : (
-        <View style={styles.placeholder}>
-          <Text style={styles.placeholderText}>{placeholder}</Text>
         </View>
       )}
       

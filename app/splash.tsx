@@ -25,7 +25,7 @@ export default function SplashScreen() {
     if (!hasSeen) {
       router.replace('/onboarding');
     } else {
-      router.replace(isAuthenticated ? '/(tabs)/map' : '/(auth)/age-gate');
+      router.replace(isAuthenticated ? '/(tabs)/map' : '/(auth)/signin');
     }
   }, [rootState?.key, isLoading, checked, hasSeen, isAuthenticated, router]);
 

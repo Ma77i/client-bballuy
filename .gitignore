@@ -42,3 +42,9 @@ app-example
 # generated native folders
 /ios
 /android
+
+# Local verification results (summaries are recorded in specs/*/verification.md)
+.harness/
+
+# Supabase CLI cache (the local workspace has its own ignore file).
+/supabase/.temp/

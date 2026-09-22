@@ -34,6 +34,14 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
 
   // Save notifications to storage whenever notifications change
   useEffect(() => {
+    const saveNotifications = async () => {
+      try {
+        await AsyncStorage.setItem('notifications', JSON.stringify(notifications));
+      } catch (error) {
+        console.error('Error saving notifications:', error);
+      }
+    };
+
     saveNotifications();
   }, [notifications]);
 
@@ -49,14 +57,6 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
       }
     } catch (error) {
       console.error('Error loading notifications:', error);
-    }
-  };
-
-  const saveNotifications = async () => {
-    try {
-      await AsyncStorage.setItem('notifications', JSON.stringify(notifications));
-    } catch (error) {
-      console.error('Error saving notifications:', error);
     }
   };
 

@@ -34,7 +34,7 @@ export default function ReviewCreateStep() {
               text: 'OK',
               onPress: () => {
                 resetForm();
-                router.push(`/team/${result.teamId}` as any);
+                router.replace(`/team/${result.teamId}`);
               },
             },
           ]
@@ -198,6 +198,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
+    marginTop: 16,
   },
   backButton: {
     padding: 8,
