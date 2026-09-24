@@ -1,5 +1,6 @@
+import Text from '@/components/AppText';
 // components/TeamListItem.tsx
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { Users as UsersIcon } from 'lucide-react-native';
 import Colors from '@/constants/colors';
 import { useRouter } from 'expo-router';

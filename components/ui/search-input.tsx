@@ -1,5 +1,6 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { View, TextInput, StyleSheet, ScrollView, TouchableOpacity, Text } from 'react-native';
+import Text from '@/components/AppText';
+import React, { useEffect, useRef, useState } from 'react';
+import { View, TextInput, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
 import { Search, X } from 'lucide-react-native';
 import Colors from '@/constants/colors';
 
@@ -38,15 +39,6 @@ export default function SearchInput({
   // Evita re-disparar onSearch con el mismo texto
   const lastSearchedRef = useRef<string>('');
 
-  // Mantiene el dropdown mientras hay carga o resultados
-  const stickyLoadingRef = useRef(false);
-  useEffect(() => {
-    // si empezó a cargar, pegamos el estado "sticky"
-    if (isLoading) stickyLoadingRef.current = true;
-    // cuando deja de cargar, soltamos el "sticky"
-    if (!isLoading) stickyLoadingRef.current = false;
-  }, [isLoading]);
-
   // Debounce de la búsqueda + guardas contra repeticiones
   useEffect(() => {
     const q = query.trim();
@@ -63,14 +55,8 @@ export default function SearchInput({
     return () => clearTimeout(handle);
   }, [query, minChars, debounceMs, onSearch]);
 
-  // Lógica única para visibilidad del dropdown (evita flicker)
-  const shouldShowDropdown = useMemo(() => {
-    if (!showResults) return false;
-    const q = query.trim();
-    if (q.length < minChars) return false;
-    // Mostrar si: está abierto y (hay carga sticky o hay resultados)
-    return dropdownOpen && (stickyLoadingRef.current || searchResults.length >= 0);
-  }, [showResults, query, minChars, dropdownOpen, searchResults.length]);
+  // Keep the dropdown open for loading, results and an explicit empty state.
+  const shouldShowDropdown = showResults && query.trim().length >= minChars && dropdownOpen;
 
   const handleSelectResult = (result: SearchResult) => {
     onSelectResult(result);

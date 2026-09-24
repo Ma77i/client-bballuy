@@ -1,5 +1,15 @@
 # Contexto de base de datos
 
+## Local permission boundary — 2026-09-21
+
+T03 adds local migration 20260921000100_core_permissions.sql after the inspected
+baseline and membership contract. Core profile/court/membership table and column
+grants are reconciled with owner RLS; two real local sessions and anonymous API
+calls verify the boundary. See [ADR 0004](decisions/0004-core-permission-boundary.md)
+and [evidence](../specs/001-core-journey/verification.md). This change has not been
+applied to hosted Supabase; earlier source findings still describe that inspected
+remote state until a fresh inventory and separately reviewed upgrade.
+
 ## Local data contract implemented — 2026-09-20
 
 The second export supplied the missing enums, 12 application routines and the

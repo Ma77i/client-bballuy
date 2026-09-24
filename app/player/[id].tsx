@@ -1,5 +1,6 @@
+import Text from '@/components/AppText';
 import { useLocalSearchParams, Stack } from 'expo-router';
-import { View, Text, StyleSheet, ScrollView, Image, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, ScrollView, Image, ActivityIndicator } from 'react-native';
 import Colors from '@/constants/colors';
 import { useUserById } from '@/hooks/profile';
 import { getSignedAvatarUrl } from '@/lib/backend/storage';

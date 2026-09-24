@@ -1,7 +1,15 @@
 # SPEC-001 implementation plan
 
 Revised 2026-09-19: court communities replace the proposed team-first journey.
-Reading update 2026-09-21: T00–T02 now have local evidence; T03 is next. Execution
+Reading update 2026-09-23: T04 has local acceptance, including owner iPhone tests.
+T05 has local account-isolation evidence. T06 integrates the SDK 57 native map
+and the three-court catalog; local iPhone acceptance is complete. T07 join/leave/My Courts
+has local acceptance, including the owner's iPhone report on 2026-09-24.
+Formal audit on 2026-09-24 reopens T08: public onboarding/consent still overstates
+the MVP and location-accuracy evidence needs explicit confirmation. The implemented
+local journey retains its passing evidence. See [closure review](closure-review.md).
+Do not begin another specification until these closure findings are resolved.
+Execution
 states live in [tasks.json](tasks.json), and dated results in [verification.md](verification.md).
 
 ## Strategy
@@ -14,19 +22,20 @@ Keep Expo, React Native and Supabase. Deliver authentication, real court discove
 2. T01: finish client checks and establish proportionate behavior tests.
 3. T02: inspect/reconcile profiles and courts, design membership storage and prepare a disposable backend.
 4. T03: enforce profile privileges, curated-catalog permissions and ownership of memberships.
-5. T04: complete registration, minimal profile and persistent session.
-6. T05: isolate personal data and My Courts between accounts.
-7. T06: validate native map integration, then connect the real catalog, list and details.
-8. T07: complete persistent join/leave/My Courts with uniqueness and retries.
-9. T08: remove simulated MVP data and verify the two-account device journey.
+5. T09: upgrade to SDK 57 and prepare LAN-only iPhone testing (owner-approved prerequisite).
+6. T04: complete registration, minimal profile and persistent session.
+7. T05: isolate personal data and My Courts between accounts.
+8. T06: validate native map integration, then connect the real catalog, list and details.
+9. T07: complete persistent join/leave/My Courts with uniqueness and retries.
+10. T08: remove simulated MVP data and verify the two-account device journey.
 
 ## Proposed implementation
 
 - Start with react-native-maps: Google Maps on Android and Apple Maps on iOS. Validate an SDK-compatible version and native rebuild before adopting. See [ADR 0002](../../docs/decisions/0002-court-first-mvp.md).
 - Keep the court catalog and memberships in Supabase. The map provider draws the basemap; it does not define membership or supply the MVP catalog.
 - T02 implements local court_memberships with court_id, user_id and joined_at,
-  a unique user/court pair and foreign keys. T03 must add and verify owner-scoped
-  insert/delete policies before opening API writes. Leaving removes the active
+  a unique user/court pair and foreign keys. T03 adds verified owner-scoped
+  read/insert/delete policies and server-managed timestamps. Leaving removes the active
   relationship; do not introduce attendance status or expiration.
 - Treat join and leave as idempotent desired-state operations. Derive/check identity from authentication, enforce uniqueness in the database and reconcile UI/cache after failures.
 - Support a proposed many-to-many relationship: several courts per user and several users per court. Do not require a team or connect this relationship to future team eligibility.

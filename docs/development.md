@@ -1,7 +1,18 @@
 # Desarrollo local
 
-## Entorno observado
-Windows/PowerShell, Node.js 24.16.0 y npm 11.13.0 durante la organización. Son versiones observadas, no una matriz de compatibilidad. El repositorio declara Expo 54, React Native 0.81.4, React 19.1 y TypeScript 5.9; lockfile npm versión 3.
+## SDK 57 preparation - 2026-09-22
+
+The owner approved SDK 57 to match Expo Go 57.0.9 on an iPhone. Current versions:
+Expo 57.0.24, React Native 0.86.3, React 19.2.3 and TypeScript 6.0.3.
+Use `npm ci` for the app and `npm ci --prefix local-backend/tools` for Supabase CLI.
+See the [local iPhone procedure](../local-backend/README.md) and
+[upgrade evidence](../specs/001-core-journey/verification.md). Older observations
+below describe the SDK 54 baseline. A successful bundle is not device acceptance.
+
+## Historical starting environment (superseded by SDK 57 above)
+Windows/PowerShell, Node 24.16.0 and npm 11.13.0 were observed during organization.
+The initial checkout declared Expo 54, React Native 0.81.4, React 19.1 and
+TypeScript 5.9; these are historical versions, not the current package manifest.
 
 La revisión inicial no actualizó dependencias ni certificó compilación móvil. La corrección posterior del arranque alinea dependencias dentro de SDK 54; los resultados están en [la evidencia](../specs/001-core-journey/verification.md). Deno y Supabase CLI no estaban en PATH. Registrar el entorno de cada prueba antes de atribuir fallos al código.
 
@@ -43,9 +54,21 @@ Para una comprobación sin red, usar `npm.cmd start -- --offline`. No combinar `
 ## Datos y cierre
 ### Client regression tests
 
+Current suite: 46 tests covering auth/session/consent recovery, account isolation,
+catalog/location, membership retries, local-device address selection and utilities.
+Run db:local:sessions and db:local:permissions for actual backend contracts; the
+latest recorded runs passed 42 and 111 assertions. Browser fault injection and
+owner iPhone acceptance are recorded separately in the specification.
+verify:edge currently fails because Deno is unavailable. This does not get hidden
+by the passing client checks; no legacy Edge service is certified for activation.
+
 Run `npm run test:client` alongside `npm run verify`. The tests use Node's built-in test runner and native TypeScript loading, verified with Node 24.16.0. No test framework or extra dependency is installed. The suite imports the real profanity utility and exercises accepted text, case-insensitive detection, word boundaries, masking and rejected validation results.
 
-Keep pure-logic regression tests focused on changed behavior. TypeScript and lint cover the court result contract and module resolution; they do not prove rendered UI interactions. Add native component/device tests when the affected MVP screens are connected. Backend authorization and integrity need direct allow/deny tests against a disposable database in T02/T03; session restart and account switching need the T04/T05 device scenarios. The four utility tests do not cover these boundaries or establish language-wide moderation accuracy. `verify` remains the documentation/type/lint command; run `test:client` separately.
+Keep regression tests focused on behavior. TypeScript and lint do not prove
+rendered UI interactions. The profanity tests alone do not establish language-wide
+moderation accuracy. Use the existing API suites and documented browser/device
+scenarios when changing those boundaries. verify remains documentation/type/lint;
+it does not automatically run test:client or local database suites.
 
 Los controles locales de documentación/tipos/lint no leen `.env` ni consultan Supabase. Las pruebas funcionales requieren entorno de desarrollo y cuentas de prueba identificados, sin guardar contraseñas, JWT ni datos personales como evidencia.
 

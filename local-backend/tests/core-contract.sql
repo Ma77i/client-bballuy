@@ -44,8 +44,10 @@ BEGIN
   IF EXISTS (SELECT 1 FROM public.team_members WHERE user_id=fixture_user) THEN
     RAISE EXCEPTION 'Fixture unexpectedly requires a team';
   END IF;
-  IF has_table_privilege('anon', 'public.court_memberships', 'INSERT') OR has_table_privilege('authenticated', 'public.court_memberships', 'INSERT') THEN
-    RAISE EXCEPTION 'Membership API writes must stay gated until T03';
+  IF has_any_column_privilege('anon', 'public.court_memberships', 'INSERT')
+    OR has_column_privilege('authenticated', 'public.court_memberships', 'joined_at', 'INSERT')
+    OR NOT has_column_privilege('authenticated', 'public.court_memberships', 'user_id', 'INSERT') THEN
+    RAISE EXCEPTION 'Membership grants must preserve caller ownership and server timestamps';
   END IF;
 END;
 $$;

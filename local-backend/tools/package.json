@@ -1,0 +1,9 @@
+{
+  "name": "bballuy-local-tools",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Isolated Supabase CLI runtime; not bundled with the Expo application.",
+  "dependencies": {
+    "supabase": "2.99.0"
+  }
+}

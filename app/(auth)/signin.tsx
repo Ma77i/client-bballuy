@@ -1,6 +1,7 @@
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, Alert, ActivityIndicator } from 'react-native';
+import Text from '@/components/AppText';
+import { View, StyleSheet, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react-native';
 import { useAuth } from '@/contexts/AuthContext';
 import { validateEmail } from '@/lib/utils/validation';
@@ -9,42 +10,43 @@ import LoadingOverlay from '@/components/LoadingOverlay';
 
 export default function SignInScreen() {
   const router = useRouter();
-  const { signIn, signInWithOAuth } = useAuth();
+  const { signIn } = useAuth();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  
+
+
+  const submitting = useRef(false);
+  const [formError, setFormError] = useState<string | null>(null);
 
   const handleSignIn = async () => {
-    const emailValidation = validateEmail(email);
+    if (submitting.current) return;
+    setFormError(null);
+    const emailValidation = validateEmail(email.trim());
     if (!emailValidation.valid) {
-      Alert.alert('Invalid Email', emailValidation.error);
+      setFormError(emailValidation.error ?? 'Enter a valid email address');
       return;
     }
 
     if (!password) {
-      Alert.alert('Error', 'Please enter your password');
+      setFormError('Please enter your password');
       return;
     }
 
+    submitting.current = true;
     setIsLoading(true);
-    const { error } = await signIn(email, password);
-    setIsLoading(false);
-
-    if (error) {
-      Alert.alert('Sign In Failed', error.message);
-    } else {
-      router.replace('/map');
+    try {
+      const { error } = await signIn(email, password);
+      if (error) setFormError(error.message);
+      else router.replace('/splash');
+    } finally {
+      submitting.current = false;
+      setIsLoading(false);
     }
   };
 
-  const handleOAuth = async (provider: 'google' | 'apple' | 'facebook') => {
-    const { error } = await signInWithOAuth(provider);
-    if (error) {
-      Alert.alert('OAuth Failed', error.message);
-    }
-  };
+
 
   return (
     <>
@@ -58,6 +60,7 @@ export default function SignInScreen() {
         </View>
 
         <View style={styles.form}>
+          {formError && <Text accessibilityRole="alert" style={{ color: Colors.error }}>{formError}</Text>}
           <View style={styles.inputGroup}>
             <Text style={styles.label}>Email</Text>
             <TextInput
@@ -97,11 +100,7 @@ export default function SignInScreen() {
             </View>
           </View>
 
-          <TouchableOpacity style={styles.forgotPassword}>
-            <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
+<TouchableOpacity
             style={styles.primaryButton}
             onPress={handleSignIn}
             disabled={isLoading}
@@ -111,33 +110,6 @@ export default function SignInScreen() {
             ) : (
               <Text style={styles.primaryButtonText}>Sign In</Text>
             )}
-          </TouchableOpacity>
-
-          <View style={styles.divider}>
-            <View style={styles.dividerLine} />
-            <Text style={styles.dividerText}>OR</Text>
-            <View style={styles.dividerLine} />
-          </View>
-
-          <TouchableOpacity
-            style={styles.oauthButton}
-            onPress={() => handleOAuth('google')}
-          >
-            <Text style={styles.oauthButtonText}>Continue with Google</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.oauthButton}
-            onPress={() => handleOAuth('apple')}
-          >
-            <Text style={styles.oauthButtonText}>Continue with Apple</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.oauthButton}
-            onPress={() => handleOAuth('facebook')}
-          >
-            <Text style={styles.oauthButtonText}>Continue with Facebook</Text>
           </TouchableOpacity>
 
           <View style={styles.footer}>

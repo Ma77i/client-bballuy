@@ -1,5 +1,6 @@
+import Text from '@/components/AppText';
 import React from 'react';
-import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, View, StyleSheet } from 'react-native';
 import Colors from '@/constants/colors';
 
 interface RadioOption {

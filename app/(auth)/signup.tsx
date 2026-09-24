@@ -1,15 +1,14 @@
+import Text from '@/components/AppText';
 import {
   View,
-  Text,
   StyleSheet,
   TouchableOpacity,
   TextInput,
-  Alert,
   ActivityIndicator,
   ScrollView,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Eye, EyeOff } from "lucide-react-native";
 import { useAuth } from "@/contexts/AuthContext";
 import {
@@ -20,12 +19,10 @@ import {
 } from "@/lib/utils/validation";
 import Colors from "@/constants/colors";
 import LoadingOverlay from "@/components/LoadingOverlay";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { supabase } from "@/lib/backend/supabase";
 
 export default function SignUpScreen() {
   const router = useRouter();
-  const { signUp, signInWithOAuth } = useAuth();
+  const { signUp } = useAuth();
   const [displayName, setDisplayName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -33,97 +30,65 @@ export default function SignUpScreen() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const submitting = useRef(false);
+  const [formError, setFormError] = useState<string | null>(null);
+
+  const [confirmationPending, setConfirmationPending] = useState(false);
+
   const passwordStrength = calculatePasswordStrength(password);
 
   const handleSignUp = async () => {
-    const nameValidation = validateDisplayName(displayName);
+    if (submitting.current) return;
+    setFormError(null);
+    const nameValidation = validateDisplayName(displayName.trim());
     if (!nameValidation.valid) {
-      Alert.alert("Invalid Name", nameValidation.error);
+      setFormError(nameValidation.error ?? "Enter a valid name");
       return;
     }
 
-    const emailValidation = validateEmail(email);
+    const emailValidation = validateEmail(email.trim());
     if (!emailValidation.valid) {
-      Alert.alert("Invalid Email", emailValidation.error);
+      setFormError(emailValidation.error ?? "Enter a valid email address");
       return;
     }
 
     const passwordValidation = validatePassword(password);
     if (!passwordValidation.valid) {
-      Alert.alert("Invalid Password", passwordValidation.errors.join("\n"));
+      setFormError(passwordValidation.errors.join("\n"));
       return;
     }
 
     if (password !== confirmPassword) {
-      Alert.alert("Error", "Passwords do not match");
+      setFormError("Passwords do not match");
       return;
     }
 
+    submitting.current = true;
     setIsLoading(true);
-    const { error } = await signUp(email, password, displayName);
-    setIsLoading(false);
-
-    if (error) {
-      Alert.alert("Sign Up Failed", error.message);
-      return;
-    }
-
-    const { data: userRes } = await supabase.auth.getUser();
-    const userId = userRes?.user?.id;
-
-    if (userId) {
-      await syncPendingConsent(userId);
-    }
-
-    Alert.alert(
-      "Success",
-      "Account created successfully! Let’s finish setting up your profile.",
-      [
-        {
-          text: "Continue",
-          onPress: () => router.replace("/profile-setup"),
-        },
-      ]
-    );
-    // else {
-    //       Alert.alert('Success', 'Account created! Please check your email to verify your account.', [
-    //         { text: 'OK', onPress: () => router.replace('/(auth)/signin') },
-    //       ]);
-    //     }
-  };
-
-  const handleOAuth = async (provider: "google" | "apple" | "facebook") => {
-    const { error } = await signInWithOAuth(provider);
-    if (error) {
-      Alert.alert("OAuth Failed", error.message);
-    }
-  };
-
-  async function syncPendingConsent(userId: string) {
     try {
-      const pending = await AsyncStorage.getItem("pendingConsent");
-      if (!pending) return;
-
-      const parsed = JSON.parse(pending);
-      const { version, acceptedAt } = parsed;
-
-      const { error } = await supabase.from("user_consents").upsert({
-        user_id: userId,
-        tos_version: version,
-        privacy_version: version,
-        accepted_at: acceptedAt,
-        source: "app",
-      });
-
-      if (error) {
-        console.error("Error syncing consent:", error);
-      } else {
-        await AsyncStorage.removeItem("pendingConsent");
-      }
-    } catch (err) {
-      console.error("Unexpected error syncing consent:", err);
+      const { error, requiresConfirmation } = await signUp(email, password, displayName);
+      if (error) { setFormError(error.message); return; }
+      if (requiresConfirmation) { setConfirmationPending(true); return; }
+      router.replace('/splash');
+    } catch {
+      setFormError('Unable to finish setup. Try signing in to continue your account.');
+    } finally {
+      submitting.current = false;
+      setIsLoading(false);
     }
-  }
+  };
+
+
+
+  if (confirmationPending) return (
+    <View style={[styles.container, { padding: 24, justifyContent: 'center', gap: 24 }]}>
+      <Text style={styles.title}>Check your email</Text>
+      <Text style={styles.subtitle}>Follow the confirmation link, then return here and sign in. You do not need to register again.</Text>
+      <TouchableOpacity style={styles.primaryButton} onPress={() => router.replace('/(auth)/signin')}>
+        <Text style={styles.primaryButtonText}>Go to sign in</Text>
+      </TouchableOpacity>
+    </View>
+  );
 
   return (
     <>
@@ -137,6 +102,7 @@ export default function SignUpScreen() {
           </View>
 
           <View style={styles.form}>
+            {formError && <Text accessibilityRole="alert" style={{ color: Colors.error }}>{formError}</Text>}
             <View style={styles.inputGroup}>
               <Text style={styles.label}>Display Name</Text>
               <TextInput
@@ -234,33 +200,6 @@ export default function SignUpScreen() {
               ) : (
                 <Text style={styles.primaryButtonText}>Create Account</Text>
               )}
-            </TouchableOpacity>
-
-            <View style={styles.divider}>
-              <View style={styles.dividerLine} />
-              <Text style={styles.dividerText}>OR</Text>
-              <View style={styles.dividerLine} />
-            </View>
-
-            <TouchableOpacity
-              style={styles.oauthButton}
-              onPress={() => handleOAuth("google")}
-            >
-              <Text style={styles.oauthButtonText}>Continue with Google</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.oauthButton}
-              onPress={() => handleOAuth("apple")}
-            >
-              <Text style={styles.oauthButtonText}>Continue with Apple</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.oauthButton}
-              onPress={() => handleOAuth("facebook")}
-            >
-              <Text style={styles.oauthButtonText}>Continue with Facebook</Text>
             </TouchableOpacity>
 
             <View style={styles.footer}>

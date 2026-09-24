@@ -1,3 +1,5 @@
+import { useAuth } from '@/contexts/AuthContext';
+import { accountQueryKey } from '@/lib/auth/account-cache';
 // hooks/profile.ts
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/lib/backend/supabase';
@@ -39,18 +41,16 @@ export function useUserById(id?: string) {
   });
 }
 
-async function getUserId(): Promise<string> {
-  const { data, error } = await supabase.auth.getUser();
-  if (error || !data?.user) throw new Error('Not authenticated');
-  return data.user.id;
-}
-
 /** ME */
 export function useMe() {
+  const { session } = useAuth();
+  const owner = session?.user.id ?? null;
   return useQuery<Me | null>({
-    queryKey: ['me'],
+    queryKey: accountQueryKey(owner, 'me'),
+    enabled: Boolean(owner),
     queryFn: async () => {
-      const uid = await getUserId();
+      if (!owner) throw new Error('Not authenticated');
+      const uid = owner;
       const { data, error } = await supabase
         .from('users_public')
         .select('*')
@@ -69,10 +69,13 @@ export function useMe() {
 
 /** UPDATE ME */
 export function useUpdateMe() {
+  const { session } = useAuth();
+  const owner = session?.user.id ?? null;
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async (patch: Partial<ProfilePatch>) => {
-      const uid = await getUserId();
+      if (!owner) throw new Error('Not authenticated');
+      const uid = owner;
       const { data, error } = await supabase
         .from('users_public')
         .update(patch)
@@ -83,17 +86,21 @@ export function useUpdateMe() {
       return data;
     },
     onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ['me'] });
+      qc.invalidateQueries({ queryKey: accountQueryKey(owner, 'me') });
     },
   });
 }
 
 /** MY TEAMS (merge capitán + miembro activo) */
 export function useMyTeams() {
+  const { session } = useAuth();
+  const owner = session?.user.id ?? null;
   return useQuery<TeamLite[]>({
-    queryKey: ['my-teams'],
+    queryKey: accountQueryKey(owner, 'my-teams'),
+    enabled: Boolean(owner),
     queryFn: async () => {
-      const uid = await getUserId();
+      if (!owner) throw new Error('Not authenticated');
+      const uid = owner;
 
       // 1) Equipos donde soy capitán
       const { data: captainTeams, error: e1 } = await supabase

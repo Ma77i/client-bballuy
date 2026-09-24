@@ -4,30 +4,36 @@ import { useRootNavigationState, useRouter } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Colors from "@/constants/colors";
 import { useAuth } from "@/contexts/AuthContext";
+import { authDestination } from '@/lib/auth/controller';
 
 export default function SplashScreen() {
   const router = useRouter();
   const rootState = useRootNavigationState();
-  const { isAuthenticated, isLoading } = useAuth();
+  const auth = useAuth();
+  const destination = authDestination(auth);
   const [checked, setChecked] = useState(false);
   const [hasSeen, setHasSeen] = useState<boolean | null>(null);
 
   useEffect(() => {
     (async () => {
-      const v = await AsyncStorage.getItem('hasSeenOnboarding');
-      setHasSeen(v === 'true');
-      setChecked(true);
+      try {
+        const v = await AsyncStorage.getItem('hasSeenOnboarding');
+        setHasSeen(v === 'true');
+      } catch { setHasSeen(true); }
+      finally { setChecked(true); }
     })();
   }, []);
 
   useEffect(() => {
-    if (!rootState?.key || isLoading || !checked) return;
-    if (!hasSeen) {
+    if (!rootState?.key || !destination || !checked) return;
+    if (auth.session) {
+      router.replace(destination);
+    } else if (!hasSeen) {
       router.replace('/onboarding');
     } else {
-      router.replace(isAuthenticated ? '/(tabs)/map' : '/(auth)/signin');
+      router.replace('/(auth)/signin');
     }
-  }, [rootState?.key, isLoading, checked, hasSeen, isAuthenticated, router]);
+  }, [rootState?.key, destination, checked, hasSeen, auth.session, router]);
 
 
   return (

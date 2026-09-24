@@ -45,6 +45,7 @@ app-example
 
 # Local verification results (summaries are recorded in specs/*/verification.md)
 .harness/
+.playwright-mcp/
 
 # Supabase CLI cache (the local workspace has its own ignore file).
 /supabase/.temp/

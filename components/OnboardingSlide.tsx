@@ -1,6 +1,6 @@
+import Text from '@/components/AppText';
 import {
   View,
-  Text,
   ImageBackground,
   TouchableOpacity,
   StyleSheet,
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: Colors.background, padding: 24 },
   image: { height: 300, justifyContent: "center" },
   overlay: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     backgroundColor: "rgba(0,0,0,0.1)",
     borderRadius: 20,
   },

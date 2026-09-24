@@ -1,6 +1,7 @@
+import Text from '@/components/AppText';
 // components/ui/avatar-group.tsx
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import Colors from '@/constants/colors';
 import AvatarBubble from '@/components/ui/avatar-bubble';
 

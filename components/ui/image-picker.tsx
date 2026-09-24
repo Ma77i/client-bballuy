@@ -1,5 +1,6 @@
+import Text from '@/components/AppText';
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, Alert, ActivityIndicator } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Image, Alert, ActivityIndicator } from 'react-native';
 import { Upload, Camera, X } from 'lucide-react-native';
 import Colors from '@/constants/colors';
 

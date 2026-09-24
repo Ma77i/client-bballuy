@@ -1,5 +1,6 @@
+import Text from '@/components/AppText';
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Modal, Pressable } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Modal, Pressable } from 'react-native';
 import { Clock } from 'lucide-react-native';
 import Colors from '@/constants/colors';
 

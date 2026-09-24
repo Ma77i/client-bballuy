@@ -1,7 +1,7 @@
+import Text from '@/components/AppText';
 import React, { useEffect, useMemo, useState, useCallback } from "react";
 import {
   View,
-  Text,
   StyleSheet,
   Image,
   TouchableOpacity,
@@ -108,7 +108,7 @@ export default function TeamProfile() {
     })();
   }, [id]);
 
-  const fetchTeamData = async (teamId: string) => {
+  async function fetchTeamData(teamId: string) {
     try {
       setLoading(true);
 
@@ -271,7 +271,7 @@ export default function TeamProfile() {
     }
   };
 
-  const fetchMyMembership = async (teamId: string, uid: string) => {
+  async function fetchMyMembership(teamId: string, uid: string) {
     const { data, error } = await supabase
       .from("team_members")
       .select("team_id,user_id,role,status")

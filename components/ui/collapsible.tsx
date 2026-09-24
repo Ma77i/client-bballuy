@@ -1,5 +1,6 @@
+import Text from '@/components/AppText';
 import { PropsWithChildren, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import Colors from '@/constants/colors';

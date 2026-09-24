@@ -5,7 +5,7 @@
       "id": "SPEC-001",
       "title": "Account, courts and community membership",
       "path": "specs/001-core-journey",
-      "status": "draft",
+      "status": "in_progress",
       "requirements": ["R01", "R02", "R03", "R04", "R05", "R06", "R07", "R08", "R09", "R10"]
     }
   ]

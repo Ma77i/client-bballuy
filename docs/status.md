@@ -1,5 +1,273 @@
 # Estado del proyecto
 
+## Formal closure audit supersedes the previous closure - 2026-09-24
+
+The main local journey works, but SPEC-001 is not formally closed. T08 and the
+registry return to in_progress following the [closure review](../specs/001-core-journey/closure-review.md).
+Public onboarding advertises real-time activity, teams, statistics and games that
+the MVP does not provide. Consent still opens placeholder URLs and promises
+unavailable privacy operations. These are R10/A10 findings inside SPEC-001, not
+features to defer silently. Explicit physical-location confirmation for the three
+courts is also missing; source-coordinate equality is not a field accuracy check.
+
+Fresh checks: verify passes, 46 client tests and 11 harness tests pass; verify:edge
+fails because Deno is missing. Existing local API/browser/iPhone results remain
+valid within their recorded limits. Only documentation/task states changed in
+this audit. No commits, staging, resets, remote changes or SPEC-002 work occurred.
+The review contains the acceptance-by-criterion assessment, debt register and
+proposed commit groups. Next: close its C01-C03 findings within SPEC-001.
+
+Entries below are chronological history; their closure statements are superseded.
+
+## SPEC-001 local MVP accepted - 2026-09-24
+
+T08 is done and SPEC-001 is verified for the local Supabase/browser/iPhone Expo Go
+scope. The owner explicitly confirms independent A/B membership (B leaving does
+not affect A) and connection-failure recovery after reconnecting and retrying.
+Browser checks now also pass catalog/My Courts read-error recovery, A -> B -> A,
+profile/menu logout failure and retry, no-match search and direct legacy-route
+exclusion. See the [dated evidence](../specs/001-core-journey/verification.md).
+
+No app code changed in this closure. Disposable browser accounts were removed,
+the temporary preview stopped and remote data left untouched. Existing static,
+unit and local permission results remain recorded with their execution dates.
+
+Proposed next phase: prepare a reproducible beta release. First review and commit
+the accumulated working changes, document remaining dependency/legacy-service
+risks, and define a separate release specification. Plan a backed-up incremental
+hosted schema upgrade preserving the three courts and user data; validate a
+standalone iOS build and hosted email configuration before distribution. These
+are proposals, not deployment authorization or claims of production readiness.
+Android, a full web map, catalog expansion and team features remain outside this MVP.
+
+## T08 implementation and partial acceptance - 2026-09-24
+
+T08 is in progress. Active tabs are Courts, My Courts and Profile. Legacy team,
+player, notification-settings and creation routes are excluded through navigator
+guards; their source and stored data remain. Removed unfinished menu actions,
+avatar upload from onboarding/profile and the nonexistent match route declaration.
+Profile shows the authenticated display name. Shared logout now keeps failures
+visible with Retry logout; successful logout navigates to signin.
+
+Passed this run: verify, 46 client tests, 42 local session assertions, 111 local
+permission assertions and preservation of all three courts. Browser checks passed
+invalid-password recovery, incomplete-profile validation, blocked profile-save
+retry with retained input, blocked join retry, lost successful join/leave response
+recovery, one My Courts card and reload persistence. Local fixtures were removed
+and the temporary 8092 preview stopped; no remote data or deployment changed.
+
+Not complete: the next browser action (My Courts read failure and logout failure)
+was not executed because automatic approval review hit a usage limit, not because
+it found the action unsafe. Remaining browser cases include catalog/list retries,
+logout/menu behavior, direct legacy-link exclusion and the new two-account flow.
+The final iPhone two-account/error journey also remains pending. Previous T05/T07
+account-isolation evidence still applies but does not replace this final pass.
+See the dated [evidence and remaining steps](../specs/001-core-journey/verification.md).
+
+## T07 local iPhone acceptance complete - 2026-09-24
+
+The owner reports successful court search, joining, fully closing/reopening the
+app with membership retained, and leaving the court on iPhone. Together with the
+preceding browser, retry, integrity and permission evidence, this completes T07
+for the local scope. This is owner-reported evidence, not agent-observed device
+interaction. Native account switching and rejoining were not separately reported.
+
+Next: T08, verify the complete MVP with two accounts, recoverable errors and no
+simulated events or misleading unfinished controls. Hosted behavior and standalone
+builds remain unverified. This closure changes documentation/task state only;
+no application, database, account or deployment changes were performed.
+
+## T07 membership implementation - 2026-09-24
+
+Join court, Leave court and My Courts are implemented against local Supabase.
+Changes are confirmed by the server before showing success; repeat joins preserve
+the original timestamp and uncertain requests can retry the same intended action.
+The owner-scoped list supports loading, empty, refresh and error/retry states.
+No team, attendance, public roster or expiry is implied.
+
+Passed: verify, 46 client tests, 42 local Auth/membership assertions, 111 permission
+assertions, three-court preservation and iOS bundle export. Browser checks covered
+join/list/reload, A -> B -> A isolation, leave/empty/rejoin and refresh. Synthetic
+browser accounts were removed; existing user accounts and remote data are intact.
+T07 stays in progress pending the same membership journey on the owner's iPhone.
+Then T08 verifies the complete MVP. See
+[evidence](../specs/001-core-journey/verification.md) and
+[decision](decisions/0009-confirmed-court-membership.md).
+
+## T06 local iPhone acceptance complete - 2026-09-23
+
+The owner confirms the permission-denied message and continued manual map browsing
+on iPhone. Combined with the earlier three-court rendering, correct marker details,
+search and granted-location results, T06 is now done for the local iPhone scope.
+Automated and browser evidence remain linked in the specification. Android builds,
+hosted behavior and a full web map are not certified by this acceptance.
+
+Next task: T07, join/leave/rejoin court communities and the My Courts screen, with
+persistent owner-scoped membership. No application, remote database or permission
+settings were changed by the agent in this documentation-only update.
+
+## T06 owner iPhone results - 2026-09-23
+
+The owner confirms all three courts appear, marker taps open the correct court,
+searching rodo returns two results, and Use my location centers on their position.
+No permission prompt appeared. Prior permission is a possible explanation, not
+an inspected fact. Native permission-denied/manual-browsing acceptance remains
+pending; T06 stays in progress. No application or remote changes in this update.
+
+## T06 catalog and map implementation - 2026-09-23
+
+T06 is implemented locally and remains in progress pending iPhone map acceptance.
+The SDK-compatible react-native-maps 1.27.2 uses the default Apple provider on iOS.
+Catalog search, list and detail screens now read the existing three courts; sample
+ratings, distances and player counts were removed. The native map receives the
+same filtered rows. Foreground location is opt-in and denial preserves browsing.
+Web offers the catalog/list/details without importing a native map.
+
+Passed: verify, 40 client tests, 35 local Auth/catalog assertions, court-preservation
+check, Expo Doctor 21/21 and iOS/Android/web export. Browser checks covered the
+three real names, accent-insensitive search, no matches, Palermo details and an
+unknown court. Native rendering/taps/location permission behavior require the
+owner's iPhone test. No remote changes or deployment. Next: validate T06 on iPhone,
+then T07 membership actions and My Courts UI. See
+[evidence](../specs/001-core-journey/verification.md) and
+[map decision](decisions/0008-sdk57-court-map.md).
+
+## T05 local account isolation complete - 2026-09-23
+
+T05 is complete with local/browser evidence. Identity changes replace the query
+cache and mounted personal screen state; owner-keyed queries are disabled while
+signed out. Notifications use backend/account storage, wait for hydration and
+serialize writes across instances. Unowned legacy notifications are not imported,
+and automatic sample events have been removed. My Courts has an owner-filtered
+reader/hook; its final screen and join/leave actions remain T07.
+
+Verification: 34 client tests, 34 local Auth/session/isolation assertions, preserved
+three-court check and verify pass. Browser A -> logout -> B -> logout -> A showed
+the correct profiles and no synthetic badge. Two temporary browser accounts were
+removed; user accounts and remote data were untouched. Native account switching
+was not rerun. Next task: T06, validate the native map and connect the real catalog.
+See [evidence](../specs/001-core-journey/verification.md) and
+[decision](decisions/0007-account-scoped-state.md). The MVP is not yet complete.
+
+## T04 local acceptance complete - 2026-09-23
+
+The owner retested the updated flow on iPhone with a new account and signed out.
+Together with the earlier reported web/iPhone session persistence and logout,
+browser onboarding evidence, 29 client tests and 27 local Auth/session assertions,
+this completes T04's local acceptance. The latest report is manual user evidence,
+not an independently observed device recording or database inspection.
+
+Next task: T05, isolate personal query data, My Courts and notifications between
+accounts. T06 map/catalog integration is also available by dependencies. T04
+completion does not certify the full MVP or hosted behavior. The original generic
+consent warning's cause remains unknown; retain its history if it recurs. Exact
+iOS force-quit timing and native fault injection were not independently observed.
+No app code, user accounts, remote data or deployment changed in this update.
+
+## Consent recovery implemented locally - 2026-09-23
+
+The original generic consent warning did not reproduce in a fresh local API or
+browser signup. Its specific cause remains unknown. The confirmed handling defect
+was corrected: failure previously logged a generic console error and continued
+without a retry. Pending consent is now validated, bound to the signup account
+and backend, and synchronized during validated session hydration. Failures retain
+the pending record and expose the existing setup Retry/Sign out controls.
+
+The updated browser flow persisted consent and reached discovery; logout passed.
+29 client tests and 27 local Auth/session assertions pass, including consent
+retry, account/environment separation and cross-account write rejection. The
+three courts remain preserved. T04 stays in progress pending owner validation of
+the updated flow on iPhone and clarification of the original failure if it recurs.
+Unbound legacy pending values are not silently assigned on login. No remote
+changes or database migrations were made. See the dated specification evidence.
+
+## Owner-reported web and iPhone session check - 2026-09-23
+
+The owner reports successful sign-in, retained authentication after closing and
+reopening, and successful logout on both web and iPhone. This adds manual device
+evidence to T04; the exact iOS termination/background sequence was not recorded.
+The supplied screenshot also shows `Unable to sync pending consent.` This is an
+open onboarding defect, not a failed login. T04 remains in progress while that
+failure is diagnosed and verified. Next action: reproduce consent synchronization
+against local Supabase, fix the confirmed cause and rerun the onboarding journey.
+
+The screenshot's court names and map placeholder are static content in
+app/(tabs)/map.tsx, not the preserved three-court catalog; real discovery is T06.
+No application or database behavior was changed for this evidence update.
+
+## SDK 57 ready for iPhone testing — 2026-09-23
+
+T09 is complete: Expo 57.0.24, React Native 0.86.3 and React 19.2.3 are aligned.
+A clean lockfile install, Expo Doctor (21/21), static checks, 23 client tests,
+11 harness tests and 22 local Auth assertions pass. iOS, Android and web bundles
+export successfully. The LAN launcher reaches local Auth and serves an iOS
+manifest with SDK 57.0.0. The three preserved courts pass the local data check.
+
+The owner now has an iPhone with Expo Go 57.0.9. T04 remains **in_progress** until
+its physical-device session lifecycle is observed; SDK readiness is not device
+acceptance. Use the [iPhone guide](../local-backend/README.md) and
+[evidence](../specs/001-core-journey/verification.md). Expo Go and the CLI need the
+same Expo account. The launcher disables .env and targets local Supabase only.
+No hosted data, deployment or firewall rules were changed.
+
+Remaining limitations: npm audit reports 26 findings (2 low, 17 moderate, 7 high;
+no critical). Existing missing court/match route warnings remain. Native rendering,
+AppState, force-close persistence and hosted email delivery are not certified.
+After T04 acceptance, proceed to T05 account isolation. Historical entries below
+retain the environment and availability at the time of each check.
+
+## T04 implementation and browser evidence — 2026-09-22
+
+Registration, minimal profile setup and the session lifecycle are implemented.
+Local browser checks passed for signup, incomplete-profile recovery, name
+validation, save without avatar, reload persistence, logout and invalid-password
+retry, plus email-confirmation instructions and manual login after following
+a real confirmation link in the local mail viewer. Controller tests cover late responses, failed profile loads and expired
+sessions; real local Auth tests cover refresh and revocation.
+
+T04 remains **in_progress**: only a browser is available, so native force-close,
+reopen and AppState behavior are unverified. The local confirmation-email browser
+journey passed; native link handling and hosted email delivery are not certified.
+T05 (account isolation) follows once T04 acceptance is completed.
+
+Use `npm.cmd run db:local:start` and `npm.cmd run db:local:web` for a local preview
+without editing .env. See [reproduction and limits](../specs/001-core-journey/verification.md)
+and [session decision](decisions/0005-auth-session-lifecycle.md). No hosted writes
+or deployment were performed. Test identities were removed, the temporary Auth
+configuration restored and the local backend/preview stopped. The map, sample notifications, team UI and shared
+personal query keys remain pending T05–T08. Existing consent sync and optional
+avatar storage are not certified. Historical entries below retain their dates.
+
+## T03 local permissions complete — 2026-09-21
+
+Owner-confirmed hosted Edge Functions list is empty. No function deployment or
+server secret change was needed to proceed. The new local migration restricts
+profile fields and ownership, makes courts/catalog read-only to API callers and
+opens private owner-only membership operations. Server roles, statistics and
+timestamps cannot be supplied or edited through the mobile caller's privileges.
+
+Local replay and court-preservation checks pass. The permission suite passes
+111 assertions with two real Auth sessions plus anonymous requests, including
+cross-account attacks, forged metadata, duplicate/concurrent joins and cleanup.
+All three courts remain intact. Client/static checks, 11 harness tests and nine
+client tests pass. See [evidence](../specs/001-core-journey/verification.md).
+
+These permissions are implemented locally, not in hosted Supabase. The app's
+existing hosted configuration remains unchanged. Next available task: T04,
+registration, minimal profile and persistent sessions. Historical entries below
+describe earlier observations, not the current local implementation.
+
+## API key migration preflight — 2026-09-21
+
+The owner reports disabling legacy API keys. Read-only checks with the new
+publishable key returned HTTP 200 for Auth settings and all three courts. This
+does not certify signed-in flows or deployed Edge Functions. Four local functions
+read legacy credentials, but no direct callers were found in the inspected app.
+Some also use absent schema objects or incomplete authorization/error handling.
+See the [migration runbook](supabase-key-migration.md). Hosted function names and
+callers still need confirmation; no functions or gateway settings were changed.
+T03 remains the next implementation task. Historical findings follow below.
+
 ## Current issues and next action — 2026-09-21
 
 This is a reading summary of the recorded evidence, not a new runtime or remote

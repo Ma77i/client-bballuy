@@ -1,8 +1,10 @@
+import { useAuth } from '@/contexts/AuthContext';
+import { accountQueryKey } from '@/lib/auth/account-cache';
+import Text from '@/components/AppText';
 import { useCallback, useState } from "react";
 import {
   Alert,
   View,
-  Text,
   StyleSheet,
   TouchableOpacity,
   ScrollView,
@@ -26,14 +28,7 @@ type Team = {
   created_at?: string;
 };
 
-async function getUid() {
-  const { data, error } = await supabase.auth.getUser();
-  if (error || !data?.user) throw new Error("Not authenticated");
-  return data.user.id;
-}
-
-async function fetchTeamsBuckets() {
-  const uid = await getUid();
+async function fetchTeamsBuckets(uid: string) {
 
   const { data: captainTeams, error: e1 } = await supabase
     .from("teams")
@@ -139,6 +134,8 @@ async function leaveTeam(teamId: string, uid: string) {
 export default function TeamsScreen() {
   const router = useRouter();
   const qc = useQueryClient();
+  const { session } = useAuth();
+  const owner = session?.user.id ?? null;
   const [refreshing, setRefreshing] = useState(false);
 
   // loading granulares por teamId
@@ -147,8 +144,9 @@ export default function TeamsScreen() {
   const [leaving, setLeaving] = useState<Record<string, boolean>>({});
 
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["teams-buckets"],
-    queryFn: fetchTeamsBuckets,
+    queryKey: accountQueryKey(owner, "teams-buckets"),
+    enabled: Boolean(owner),
+    queryFn: () => { if (!owner) throw new Error("Not authenticated"); return fetchTeamsBuckets(owner); },
     staleTime: 30_000,
   });
 
@@ -164,18 +162,18 @@ export default function TeamsScreen() {
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
     try {
-      await qc.invalidateQueries({ queryKey: ["teams-buckets"] });
+      await qc.invalidateQueries({ queryKey: accountQueryKey(owner, "teams-buckets") });
     } finally {
       setRefreshing(false);
     }
-  }, [qc]);
+  }, [qc, owner]);
 
   const handleTapJoin = async (t: Team) => {
     if (!uid || joining[t.id]) return;
     setJoining((s) => ({ ...s, [t.id]: true }));
     try {
       await joinOrRequest(t, uid);
-      await qc.invalidateQueries({ queryKey: ["teams-buckets"] });
+      await qc.invalidateQueries({ queryKey: accountQueryKey(owner, "teams-buckets") });
     } catch (e) {
       console.error("join/request error", e);
     } finally {
@@ -188,7 +186,7 @@ export default function TeamsScreen() {
     setCanceling((s) => ({ ...s, [t.id]: true }));
     try {
       await cancelRequest(t.id, uid);
-      await qc.invalidateQueries({ queryKey: ["teams-buckets"] });
+      await qc.invalidateQueries({ queryKey: accountQueryKey(owner, "teams-buckets") });
     } catch (e) {
       console.error("cancel request error", e);
     } finally {
@@ -221,7 +219,7 @@ const handleLeave = async (t: Team) => {
           setLeaving((s) => ({ ...s, [t.id]: true }));
           try {
             await leaveTeam(t.id, uid);
-            await qc.invalidateQueries({ queryKey: ["teams-buckets"] });
+            await qc.invalidateQueries({ queryKey: accountQueryKey(owner, "teams-buckets") });
           } catch (e) {
             console.error("leave team error", e);
             Alert.alert("Error", "No se pudo salir del equipo. Intentalo de nuevo.");

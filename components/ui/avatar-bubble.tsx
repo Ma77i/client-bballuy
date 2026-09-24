@@ -1,6 +1,7 @@
+import Text from '@/components/AppText';
 // components/ui/avatar-bubble.tsx
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Image } from 'react-native';
 import { Users as UsersIcon } from 'lucide-react-native';
 import { supabase } from '@/lib/backend/supabase';
 import Colors from '@/constants/colors';

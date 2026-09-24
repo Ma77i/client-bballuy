@@ -6,6 +6,13 @@ Aplicación móvil para encontrar personas con quienes jugar al básquet y organ
 
 **No listo para producción.** Hay funcionalidades parciales, errores conocidos y diferencias entre código y esquemas SQL. Ver [estado actual](docs/status.md).
 
+The local MVP's sign up/sign in, court discovery and persistent membership journey
+has browser and owner-reported iPhone evidence. The formal 2026-09-24 audit reopens
+SPEC-001 closure: onboarding/consent still overstates available features, and
+physical court-location accuracy needs explicit confirmation. See the
+[closure review and proposed commits](specs/001-core-journey/closure-review.md).
+Hosted migration, release builds and production readiness remain separate work.
+
 ## Retomar el proyecto
 
 1. Leer [producto](docs/product.md) y [arquitectura](docs/architecture.md).
@@ -17,8 +24,9 @@ Current MVP direction (2026-09-19): sign up/sign in, discover real courts and jo
 
 The [local backend workflow](local-backend/README.md) reproduces the inspected
 schema and three existing courts without changing hosted data. It includes
-database contract tests and type generation. The new membership storage is local
-only and stays closed to API writes until the T03 permission checks are complete.
+database contract tests, two-account permission checks and type generation.
+Membership storage and owner-only permissions are implemented locally; no hosted
+schema upgrade has been deployed by these tasks.
 
 ## Inicio local
 

@@ -3,11 +3,16 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Buffer } from 'node:buffer';
+import { networkInterfaces } from 'node:os';
+import { selectLanAddress } from './local-device.mjs';
+import { verifyAuthorization } from '../local-backend/tests/authorization.mjs';
+import { verifySessions } from '../local-backend/tests/sessions.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const workspace = path.join(root, 'local-backend');
 const config = readFileSync(path.join(workspace, 'supabase/config.toml'), 'utf8');
-const cli = path.join(root, 'node_modules/supabase/dist/supabase.js');
+const cli = path.join(workspace, 'tools/node_modules/supabase/dist/supabase.js');
+if (!existsSync(cli)) throw new Error('Install local tooling with npm ci --prefix local-backend/tools.');
 const docker = process.platform === 'win32' ? 'C:/Program Files/Docker/Docker/resources/bin/docker.exe' : 'docker';
 const project = 'bballuy-local';
 const network = 'bballuy-local-network';
@@ -120,6 +125,52 @@ switch (action) {
     console.log(`PASS: three original courts, 21 core columns, public catalog API, signup trigger, coordinates and membership invariants. Runtime: ${versions}`);
     break;
   }
+  case 'permissions': {
+    const status = JSON.parse(supabase(['status', '-o', 'json']));
+    const publicKey = status.PUBLISHABLE_KEY ?? status.ANON_KEY;
+    if (!publicKey) throw new Error('Local public API key unavailable.');
+    await verifyAuthorization({ publicKey, database });
+    break;
+  }
+  case 'sessions': {
+    const status = JSON.parse(supabase(['status', '-o', 'json']));
+    const publicKey = status.PUBLISHABLE_KEY ?? status.ANON_KEY;
+    const adminKey = status.SECRET_KEY ?? status.SERVICE_ROLE_KEY;
+    if (!publicKey || !adminKey) throw new Error('Local test keys unavailable.');
+    await verifySessions({ publicKey, adminKey, database });
+    break;
+  }
+  case 'device':
+  case 'web': {
+    const device = action === 'device';
+    const args = process.argv.slice(3);
+    if (args.some(arg => !device || !arg.startsWith('--address=')) || args.length > 1) {
+      throw new Error('Only device --address=PRIVATE_IP is supported.');
+    }
+    const host = device ? selectLanAddress(networkInterfaces(), args[0]?.slice('--address='.length)) : '127.0.0.1';
+    const status = JSON.parse(supabase(['status', '-o', 'json']));
+    const publicKey = status.PUBLISHABLE_KEY ?? status.ANON_KEY;
+    if (!publicKey) throw new Error('Local public API key unavailable.');
+    const apiUrl = `http://${host}:55431`;
+    const health = await fetch(`${apiUrl}/auth/v1/health`, {
+      headers: { apikey: publicKey }, signal: AbortSignal.timeout(5000), redirect: 'error',
+    });
+    if (!health.ok) throw new Error(`Local Auth is unavailable at ${apiUrl} (HTTP ${health.status}).`);
+    console.log(`Starting ${device ? 'device' : 'web'} preview against bballuy-local only; .env is disabled for this process.`);
+    if (device) console.log(`Local API: ${apiUrl}. On iPhone, sign in to the same Expo account as the CLI, then scan the QR code. Keep both devices on the same trusted Wi-Fi.`);
+    const preview = spawnSync(process.execPath,
+      [path.join(root, 'node_modules/expo/bin/cli'), 'start', ...(device ? ['--go', '--lan', '--clear'] : ['--web', '--localhost']), '--port', '8090'], {
+        cwd: root, stdio: 'inherit', env: {
+          ...process.env, CI: 'false', BROWSER: 'none', EXPO_NO_DOTENV: '1', EXPO_OFFLINE: device ? '0' : '1',
+          REACT_NATIVE_PACKAGER_HOSTNAME: host,
+          EXPO_PUBLIC_SUPABASE_URL: apiUrl,
+          EXPO_PUBLIC_SUPABASE_ANON_KEY: publicKey, EXPO_PUBLIC_PROVIDER: 'supabase',
+        },
+      });
+    if (preview.error) throw preview.error;
+    process.exitCode = preview.status ?? 1;
+    break;
+  }
   default:
-    throw new Error('Use start, stop, reset, types or verify. No remote operations supported.');
+    throw new Error('Use start, stop, reset, types, verify, permissions, sessions, web or device. No remote operations supported.');
 }

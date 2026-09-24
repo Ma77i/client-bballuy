@@ -1,5 +1,6 @@
+import Text from '@/components/AppText';
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 import { ArrowLeft } from 'lucide-react-native';
 import Colors from '@/constants/colors';
@@ -36,6 +37,32 @@ const soundOptions = [
   { label: 'Bell', value: 'bell' },
   { label: 'Basketball', value: 'basketball' },
 ];
+
+  const SettingCard = ({ children }: { children: React.ReactNode }) => (
+    <View style={styles.settingCard}>
+      {children}
+    </View>
+  );
+
+  const SettingRow = ({
+    title,
+    description,
+    children
+  }: {
+    title: string;
+    description: string;
+    children: React.ReactNode;
+  }) => (
+    <View style={styles.settingRow}>
+      <View style={styles.settingInfo}>
+        <Text style={styles.settingTitle}>{title}</Text>
+        <Text style={styles.settingDescription}>{description}</Text>
+      </View>
+      <View style={styles.settingControl}>
+        {children}
+      </View>
+    </View>
+  );
 
 export default function NotificationsScreen() {
   const router = useRouter();
@@ -81,37 +108,12 @@ export default function NotificationsScreen() {
     }));
   };
 
-  const SettingCard = ({ children }: { children: React.ReactNode }) => (
-    <View style={styles.settingCard}>
-      {children}
-    </View>
-  );
-
-  const SettingRow = ({ 
-    title, 
-    description, 
-    children 
-  }: { 
-    title: string; 
-    description: string; 
-    children: React.ReactNode;
-  }) => (
-    <View style={styles.settingRow}>
-      <View style={styles.settingInfo}>
-        <Text style={styles.settingTitle}>{title}</Text>
-        <Text style={styles.settingDescription}>{description}</Text>
-      </View>
-      <View style={styles.settingControl}>
-        {children}
-      </View>
-    </View>
-  );
 
   return (
     <>
-      <Stack.Screen 
-        options={{ 
-          headerShown: true, 
+      <Stack.Screen
+        options={{
+          headerShown: true,
           title: 'Notifications',
           headerStyle: { backgroundColor: Colors.surface },
           headerTintColor: Colors.text,
@@ -120,7 +122,7 @@ export default function NotificationsScreen() {
               <ArrowLeft color={Colors.text} size={24} />
             </TouchableOpacity>
           ),
-        }} 
+        }}
       />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View style={styles.content}>
@@ -137,7 +139,7 @@ export default function NotificationsScreen() {
                   onValueChange={(value) => updateDoNotDisturbSettings('enabled', value)}
                 />
               </SettingRow>
-              
+
               {settings.doNotDisturb.enabled && (
                 <>
                   <View style={styles.timeContainer}>
@@ -157,7 +159,7 @@ export default function NotificationsScreen() {
                     </View>
                   </View>
                   <Text style={styles.infoText}>
-                    You will not receive any notifications during the Do Not Disturb period. 
+                    You will not receive any notifications during the Do Not Disturb period.
                     However, you will still see them in your notification center when the period ends.
                   </Text>
                 </>
@@ -178,7 +180,7 @@ export default function NotificationsScreen() {
                   onValueChange={(value) => updateSettings('events', 'newEventInvitations', value)}
                 />
               </SettingRow>
-              
+
               <SettingRow
                 title="Event Reminders"
                 description="Reminders for your upcoming games."
@@ -220,7 +222,7 @@ export default function NotificationsScreen() {
                   onValueChange={(value) => updateSettings('teamsAndPlayers', 'teamUpdates', value)}
                 />
               </SettingRow>
-              
+
               <SettingRow
                 title="Player Statistics"
                 description="When friends achieve new milestones."

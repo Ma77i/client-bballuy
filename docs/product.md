@@ -1,6 +1,7 @@
 # Product and MVP scope
 
-Updated 2026-09-19.
+Updated 2026-09-24. The main local journey is implemented; formal closure still
+has the [C01-C03 findings](../specs/001-core-journey/closure-review.md).
 
 ## Purpose
 
@@ -22,7 +23,11 @@ The current requirements are in [SPEC-001](../specs/001-core-journey/spec.md). [
 - Join/leave and My Courts.
 - Restored session after reopening, account isolation and clear failures/retries.
 
-Proposed initial scope: Android validation and a curated set of 10–20 real courts in Montevideo. Confirm platform, area and source before preparing the catalog. The map recommendation is react-native-maps with Google Maps on Android and Apple Maps on iOS, subject to an integration check.
+Validated interaction target: the owner's iPhone with Expo Go SDK 57, using Apple
+Maps through react-native-maps 1.27.2. The local catalog preserves the three
+owner-supplied court records. Web supports list/search/details. Android acceptance,
+expansion to 10-20 courts and a full web map are not delivered. Source-coordinate
+preservation is verified; explicit physical accuracy confirmation remains pending.
 
 ## Deferred features
 
@@ -36,4 +41,8 @@ Users manage their own profile and court memberships. Joining grants no administ
 
 ## Open decisions
 
-First platform, geographic area, court-data provenance, visibility of member counts/rosters, email confirmation and development backend. Age policy, consent content and public URLs also remain provisional; existing text is not a legal validation.
+The development backend is unlinked local Supabase and iPhone is the confirmed
+validation platform. Public member counts/rosters, catalog expansion and hosted
+email configuration remain undecided. Age policy, consent content and public
+URLs are provisional; existing text is not legal validation. Misleading onboarding
+and consent claims are acceptance findings to fix now, not deferred feature delivery.

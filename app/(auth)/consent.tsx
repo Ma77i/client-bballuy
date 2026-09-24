@@ -1,6 +1,6 @@
+import Text from '@/components/AppText';
 import {
   View,
-  Text,
   StyleSheet,
   TouchableOpacity,
   ScrollView,

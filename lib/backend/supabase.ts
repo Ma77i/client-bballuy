@@ -2,6 +2,10 @@
 import { createClient } from '@supabase/supabase-js';
 import type { Database } from './database.types';
 import Constants from 'expo-constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Platform } from 'react-native';
+import { sessionOptions } from '../auth/options';
+import { createConsentSync } from '../auth/consent';
 import { BackendProvider, Session, AuthUser } from './types';
 
 const supabaseUrl = Constants.expoConfig?.extra?.supabaseUrl || process.env.EXPO_PUBLIC_SUPABASE_URL || '';
@@ -12,12 +16,13 @@ if (!supabaseUrl || !supabaseAnonKey) {
 }
 
 export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
-  auth: {
-    autoRefreshToken: true,
-    persistSession: true,
-    detectSessionInUrl: false,
-  },
+  auth: sessionOptions(Platform.OS === 'web' ? undefined : AsyncStorage),
 });
+
+export const backendScope = supabaseUrl;
+
+export const consentSync = createConsentSync(AsyncStorage, supabaseUrl, row =>
+  supabase.from('user_consents').upsert(row));
 
 function mapSupabaseUser(user: any): AuthUser | null {
   if (!user) return null;
