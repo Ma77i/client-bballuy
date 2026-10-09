@@ -41,3 +41,26 @@ The repository is not shallow. git diff 92d1628 origin/master --stat is empty:
 the independently uploaded roots contain identical trees. A normal merge of the
 cached origin/master with --allow-unrelated-histories connects both histories
 without rewriting them. feature/init and its two unpublished commits are kept.
+
+## Publication handoff
+
+Cleanup commit: 7f8eaee. History bridge commit: f98d320. These local commits
+were created before the owner instructed the agent to leave commits and pushes
+to GitHub Desktop. No further commits or remote writes are authorized here.
+Both 597bdd9 and cached origin/master are ancestors of prepared master.
+feature/init remains at c6a4757.
+
+Four history-bridge add/add conflicts were caused only by CRLF normalization:
+git diff --ignore-space-at-eol 92d1628 7f8eaee for those four files was empty.
+Resolved with original origin/master blobs. Staged whitespace checks reported
+historical CRLF lines; the historical content was retained.
+
+The feature merge preview found one add/add conflict in .gitignore. The working
+copy now uses the exact feature/init .gitignore, pending an owner commit.
+The initial extra local Supabase ignore rules were removed because feature/init
+already has a dedicated local-backend/supabase/.gitignore.
+
+A command containing git push origin master was rejected by automatic approval
+review before execution. No part of that command ran and no push occurred.
+Git fetch had separately failed with Repository not found. Publication and PR
+creation remain owner actions in GitHub Desktop with the personal account.

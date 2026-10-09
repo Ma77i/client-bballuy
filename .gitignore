@@ -49,5 +49,3 @@ app-example
 
 # Supabase CLI cache (the local workspace has its own ignore file).
 /supabase/.temp/
-/local-backend/supabase/.temp/
-/local-backend/supabase/.branches/
