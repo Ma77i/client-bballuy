@@ -1063,3 +1063,25 @@ Entorno: Windows/PowerShell, Node.js 24.16.0, npm 11.13.0. Se conservaron los ca
 - npm informó 36 vulnerabilidades del árbol instalado (2 bajas, 16 moderadas, 17 altas, 1 crítica). No se investigó su aplicabilidad ni se ejecutó `npm audit fix`; ese análisis queda pendiente.
 
 Límites: prueba de arranque de Metro en modo offline/CI, sin cargar `.env`, generar bundle ni probar dispositivo/emulador. No se verificó compilación nativa, comportamiento de los plugins ni A02–A10. No se modificaron Edge Functions ni harness. **T01 continúa en progreso y A01 sigue incompleto.** Siguiente tarea: corregir los fallos estáticos del cliente y repetir `npm run verify` antes de la aceptación funcional.
+
+## Branch readiness check before SPEC-002 - 2026-10-09
+
+Environment: Windows / PowerShell; active branch feature/init at c6a4757;
+working tree initially clean. Local master and cached origin/master at b54c821.
+
+Commands and results:
+- git merge-base --is-ancestor feature/init master: exit 1. The locally known
+  master does not contain feature/init. No merge readiness is claimed for master.
+- git diff --stat master feature/init: 149 files differ, including application,
+  backend contracts, documentation and tests; this is not just a naming difference.
+- npm run harness:status: SPEC-001 verified, all registered tasks done.
+- npm run verify: passed documentation, client TypeScript and lint on feature/init.
+- npm run test:client: 48 passed, zero failed on feature/init.
+- git fetch origin: failed with Repository not found. Cached refs cannot certify
+  the current GitHub state. Owner must refresh through GitHub Desktop and ensure
+  the feature/init -> master PR is merged before creating a new branch from master.
+
+No branch switch, merge, commit, push, application/Edge changes, database command
+or deployment was performed. No fresh device/backend acceptance was executed.
+SPEC-002 is not registered. Beta iOS preparation is a documented proposal pending
+owner confirmation; it is not authorization to deploy hosted migrations.
