@@ -1,0 +1,12 @@
+{
+  "tasks": [
+    {
+      "id": "T01",
+      "title": "Recover ignore rules and deleted historical configuration",
+      "requirements": ["R1", "R2", "R3"],
+      "dependencies": [],
+      "status": "done",
+      "evidence": "verification.md"
+    }
+  ]
+}
