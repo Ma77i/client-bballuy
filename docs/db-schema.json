@@ -1,0 +1,76 @@
+{
+  "enums": {
+    "match_status": ["scheduled", "in_progress", "finished", "cancelled"],
+    "game_mode": ["1v1", "2v2", "3v3", "4v4", "5v5"],
+    "game_side": ["a", "b"],
+    "app_role": ["player", "admin", "moderator"]
+  },
+  "tables": {
+    "courts": {
+      "id": "uuid",
+      "name": "text",
+      "coords": "geography(Point,4326)",
+      "surface": "text",
+      "lighting": "text",
+      "notes": "text",
+      "half_court": "boolean",
+      "created_at": "timestamptz"
+    },
+    "games": {
+      "id": "uuid",
+      "mode": "game_mode",
+      "status": "match_status",
+      "created_by": "uuid (fk users_public.id)",
+      "court_id": "uuid (fk courts.id)",
+      "is_public": "boolean",
+      "scheduled_at": "timestamptz",
+      "started_at": "timestamptz",
+      "finished_at": "timestamptz",
+      "score_a": "int",
+      "score_b": "int",
+      "note": "text",
+      "created_at": "timestamptz"
+    },
+    "game_participants": {
+      "game_id": "uuid (fk games.id)",
+      "user_id": "uuid (fk users_public.id)",
+      "side": "game_side",
+      "joined_at": "timestamptz"
+    },
+    "users_public": {
+      "id": "uuid",
+      "display_name": "text",
+      "avatar_url": "text",
+      "app_role": "app_role",
+      "discoverable": "boolean",
+      "profile_visibility": "text",
+      "location_mode": "text",
+      "created_at": "timestamptz",
+      "level": "int",
+      "games_played": "int",
+      "points_total": "int",
+      "assists_total": "int",
+      "rebounds_total": "int"
+    },
+    "teams": {
+      "id": "uuid",
+      "name": "text",
+      "captain_id": "uuid (fk users_public.id)",
+      "logo_url": "text",
+      "is_public": "boolean",
+      "created_at": "timestamptz",
+      "description": "text",
+      "type": "text",
+      "home_court_id": "uuid (fk courts.id)",
+      "requires_approval": "boolean",
+      "minimum_players": "int"
+    },
+    "team_members": {
+      "team_id": "uuid (fk teams.id)",
+      "user_id": "uuid (fk users_public.id)",
+      "role": "app_role",
+      "joined_at": "timestamptz",
+      "status": "text"
+    }
+  }
+}

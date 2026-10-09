@@ -1,5 +1,6 @@
+import Text from '@/components/AppText';
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { View, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 import { ArrowLeft, Link } from 'lucide-react-native';
 import * as Clipboard from 'expo-clipboard';
@@ -12,6 +13,7 @@ import RadioButtonGroup from '@/components/ui/radio-button';
 import ToggleSwitch from '@/components/ui/toggle-switch';
 import Dropdown from '@/components/ui/dropdown';
 import AvatarGroup from '@/components/ui/avatar-group';
+import AvatarBubble from '@/components/ui/avatar-bubble';
 
 const privacyOptions = [
   {
@@ -43,13 +45,6 @@ export default function InviteMembersStep() {
   const [searchResults, setSearchResults] = useState<InvitedMember[]>([]);
   const [isSearchingUsers, setIsSearchingUsers] = useState(false);
 
-  // Add current user to roster for display
-  const currentRoster = user ? [{
-    id: user.id,
-    name: user.display_name || 'You',
-    avatar_url: user.avatar_url,
-  }] : [];
-
   const handlePrevious = () => {
     setCurrentStep(1);
     router.push('/create-team/step1');
@@ -69,7 +64,8 @@ export default function InviteMembersStep() {
     setIsSearchingUsers(true);
     try {
       const results = await searchUsers(query);
-      setSearchResults(results);
+      const filtered = results.filter((u) => u.id !== user?.id); // Excluir al usuario logueado
+      setSearchResults(filtered);
     } catch (error) {
       console.error('Error searching users:', error);
       setSearchResults([]);
@@ -109,11 +105,11 @@ export default function InviteMembersStep() {
     updatePrivacy({ minimumPlayers: parseInt(value) });
   };
 
-  const allMembers = [...currentRoster, ...data.invitedMembers.map(member => ({
-    id: member.id,
-    name: member.display_name,
-    avatar_url: member.avatar_url,
-  }))];
+  // Current Roster (esto mantiene tu AvatarGroup, pero si no muestra nada, reemplázalo por una fila de AvatarBubble)
+  const allMembers = [
+    ...(user ? [{ id: user.id, name: user.display_name || 'You', avatar_url: user.avatar_url }] : []),
+    ...data.invitedMembers.map(m => ({ id: m.id, name: m.display_name, avatar_url: m.avatar_url })),
+  ];
 
   return (
     <>
@@ -153,9 +149,7 @@ export default function InviteMembersStep() {
               onSearch={handleUserSearch}
               onSelectResult={(result) => {
                 const user = searchResults.find(u => u.id === result.id);
-                if (user) {
-                  handleUserSelect(user);
-                }
+                if (user) handleUserSelect(user);
               }}
               isLoading={isSearchingUsers}
             />
@@ -183,14 +177,9 @@ export default function InviteMembersStep() {
                   <View key={member.id} style={styles.memberItem}>
                     <View style={styles.memberInfo}>
                       <View style={styles.memberAvatar}>
-                        {member.avatar_url ? (
-                          <Text>Avatar</Text>
-                        ) : (
-                          <Text style={styles.memberInitial}>
-                            {member.display_name.charAt(0).toUpperCase()}
-                          </Text>
-                        )}
+                        <AvatarBubble avatarPath={member.avatar_url} name={member.display_name} size={40} />
                       </View>
+
                       <View>
                         <Text style={styles.memberName}>{member.display_name}</Text>
                         <Text style={styles.memberEmail}>{member.email}</Text>
@@ -261,6 +250,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
+    marginTop: 16,
   },
   backButton: {
     padding: 8,

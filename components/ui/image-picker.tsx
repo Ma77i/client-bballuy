@@ -1,5 +1,6 @@
+import Text from '@/components/AppText';
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, Alert, ActivityIndicator } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Image, Alert, ActivityIndicator } from 'react-native';
 import { Upload, Camera, X } from 'lucide-react-native';
 import Colors from '@/constants/colors';
 
@@ -59,7 +60,7 @@ export default function ImagePicker({
     <View style={styles.container}>
       <Text style={styles.label}>Team Logo</Text>
       
-      {imageUri ? (
+      {imageUri && (
         <View style={styles.imagePreview}>
           <Image source={{ uri: imageUri }} style={styles.image} />
           {onRemove && (
@@ -73,10 +74,6 @@ export default function ImagePicker({
               <Text style={styles.uploadingText}>Uploading...</Text>
             </View>
           )}
-        </View>
-      ) : (
-        <View style={styles.placeholder}>
-          <Text style={styles.placeholderText}>{placeholder}</Text>
         </View>
       )}
       

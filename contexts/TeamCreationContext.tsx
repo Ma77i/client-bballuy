@@ -2,11 +2,12 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import { supabase } from '@/lib/backend/supabase';
+import type { TablesInsert } from '@/lib/backend/database.types';
 
 export interface TeamDetails {
   name: string;
-  logoPreview: string | null; // signed URL for UI
-  logoPath: string | null;    // storage path to persist in DB
+  logoPreview: string | null; // signed URL para UI
+  logoPath: string | null;    // ruta en Storage para guardar en DB
   description: string;
   type: 'Casual' | 'Competitive';
   homeCourt: string | null;
@@ -23,7 +24,7 @@ export interface InvitedMember {
   id: string;
   display_name: string;
   avatar_url: string | null;
-  email: string;
+  email?: string; // opcional si no lo traés de DB
 }
 
 export interface TeamCreationData {
@@ -42,7 +43,7 @@ interface TeamCreationContextType {
   pickImageFromGallery: () => Promise<void>;
   takePhoto: () => Promise<void>;
   removeLogo: () => void;
-  searchCourts: (query: string) => Promise<Array<{ id: string; name: string; address: string }>>;
+  searchCourts: (query: string) => Promise<Array<{ id: string; name: string }>>;
   searchUsers: (query: string) => Promise<InvitedMember[]>;
   createTeam: () => Promise<{ success: boolean; teamId?: string; error?: string }>;
   resetForm: () => void;
@@ -68,31 +69,30 @@ const initialData: TeamCreationData = {
 
 const TeamCreationContext = createContext<TeamCreationContextType | undefined>(undefined);
 
-// Utility functions for image upload
+// ---------- Helpers de imagen / storage ----------
+
 const uploadImageAsync = async (localUri: string): Promise<{ path: string; signedUrl: string }> => {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) throw new Error('User not authenticated');
 
-  // Fetch the file and get blob
+  // Obtener blob (en web funciona directo; en nativo, si falla, cambiar a expo-file-system)
   const response = await fetch(localUri);
   const blob = await response.blob();
-  
-  // Check file size (5MB limit)
+
+  // Validaciones
   if (blob.size > 5 * 1024 * 1024) {
     throw new Error('File size must be less than 5MB');
   }
-
-  // Check if it's an image
   if (!blob.type.startsWith('image/')) {
     throw new Error('File must be an image');
   }
 
-  // Generate storage path
+  // Ruta en Storage: <uid>/<timestamp>.<ext>
   const timestamp = Date.now();
-  const extension = blob.type.split('/')[1] || 'jpg';
+  const extension = (blob.type.split('/')[1] || 'jpg').toLowerCase();
   const storagePath = `${user.id}/${timestamp}.${extension}`;
 
-  // Upload to Supabase Storage
+  // Subir al bucket team_logos (RLS: primer segmento = auth.uid())
   const { error: uploadError } = await supabase.storage
     .from('team_logos')
     .upload(storagePath, blob, {
@@ -102,31 +102,32 @@ const uploadImageAsync = async (localUri: string): Promise<{ path: string; signe
 
   if (uploadError) throw uploadError;
 
-  // Generate signed URL
+  // URL firmada para previsualizar
   const { data: signedData, error: signedError } = await supabase.storage
     .from('team_logos')
-    .createSignedUrl(storagePath, 3600); // 1 hour TTL
+    .createSignedUrl(storagePath, 3600);
 
   if (signedError || !signedData) throw signedError || new Error('Failed to generate signed URL');
 
   return {
-    path: `team_logos/${storagePath}`,
-    signedUrl: signedData.signedUrl,
+    path: `team_logos/${storagePath}`, // esto guardás en DB
+    signedUrl: signedData.signedUrl,   // esto mostrás en UI
   };
 };
 
 const revokePreviousIfNeeded = async (prevPath?: string) => {
   if (!prevPath || !prevPath.startsWith('team_logos/')) return;
-  
   const relativePath = prevPath.replace('team_logos/', '');
-  
+
   try {
     await supabase.storage.from('team_logos').remove([relativePath]);
   } catch (error) {
     console.warn('Failed to remove previous image:', error);
-    // Don't throw - this is not critical
+    // No cortamos el flujo si falla el borrado
   }
 };
+
+// ---------- Provider ----------
 
 export function TeamCreationProvider({ children }: { children: ReactNode }) {
   const [currentStep, setCurrentStep] = useState(1);
@@ -169,14 +170,12 @@ export function TeamCreationProvider({ children }: { children: ReactNode }) {
 
       if (!result.canceled && result.assets[0]) {
         const localUri = result.assets[0].uri;
-        
-        // Revoke previous image if exists
+
         await revokePreviousIfNeeded(data.teamDetails.logoPath || undefined);
-        
-        // Upload new image
+
         const { path, signedUrl } = await uploadImageAsync(localUri);
-        
-        updateTeamDetails({ 
+
+        updateTeamDetails({
           logoPreview: signedUrl,
           logoPath: path,
         });
@@ -202,14 +201,12 @@ export function TeamCreationProvider({ children }: { children: ReactNode }) {
 
       if (!result.canceled && result.assets[0]) {
         const localUri = result.assets[0].uri;
-        
-        // Revoke previous image if exists
+
         await revokePreviousIfNeeded(data.teamDetails.logoPath || undefined);
-        
-        // Upload new image
+
         const { path, signedUrl } = await uploadImageAsync(localUri);
-        
-        updateTeamDetails({ 
+
+        updateTeamDetails({
           logoPreview: signedUrl,
           logoPath: path,
         });
@@ -221,13 +218,8 @@ export function TeamCreationProvider({ children }: { children: ReactNode }) {
   };
 
   const removeLogo = () => {
-    // Optionally revoke previous image
     revokePreviousIfNeeded(data.teamDetails.logoPath || undefined);
-    
-    updateTeamDetails({
-      logoPreview: null,
-      logoPath: null,
-    });
+    updateTeamDetails({ logoPreview: null, logoPath: null });
   };
 
   const searchCourts = async (query: string) => {
@@ -236,7 +228,7 @@ export function TeamCreationProvider({ children }: { children: ReactNode }) {
 
       const { data: courts, error } = await supabase
         .from('courts')
-        .select('id, name, address')
+        .select('id, name') // columnas que existen
         .ilike('name', `%${query}%`)
         .limit(10);
 
@@ -254,12 +246,12 @@ export function TeamCreationProvider({ children }: { children: ReactNode }) {
 
       const { data: users, error } = await supabase
         .from('users_public')
-        .select('id, display_name, avatar_url, email')
-        .or(`display_name.ilike.%${query}%,email.ilike.%${query}%`)
+        .select('id, display_name, avatar_url') // email no está en users_public
+        .ilike('display_name', `%${query}%`)
         .limit(10);
 
       if (error) throw error;
-      return users || [];
+      return (users || []) as InvitedMember[];
     } catch (error) {
       console.error('Error searching users:', error);
       return [];
@@ -268,48 +260,49 @@ export function TeamCreationProvider({ children }: { children: ReactNode }) {
 
   const createTeam = async () => {
     try {
-      // Get current user first
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
-        console.log('current user id:', user?.id);
-      // Create team in database
-      const { data: team, error: teamError } = await supabase
+      console.log('current user id:', user.id);
+
+      // 1) Crear team y pedir sólo id (evita SELECT completo con RLS extra)
+      const { data: teamRow, error: teamError } = await supabase
         .from('teams')
         .insert({
           name: data.teamDetails.name,
           description: data.teamDetails.description,
           type: data.teamDetails.type,
           home_court_id: data.teamDetails.homeCourtId,
-          captain_id: user.id, // Set the creator as captain
+          captain_id: user.id, // requerido por policy INSERT
           is_public: data.privacy.isPublic,
           requires_approval: data.privacy.requiresApproval,
           minimum_players: data.privacy.minimumPlayers,
-          logo_url: data.teamDetails.logoPath, // Store the storage path
+          logo_url: data.teamDetails.logoPath, // guardamos la ruta de storage
         })
-        .select()
+        .select('id')
         .single();
 
       if (teamError) throw teamError;
+      const teamId = teamRow!.id;
 
-      // Add current user as captain
+      // 2) Agregar current user como capitán (coincidir enum app_role)
       const { error: captainError } = await supabase
         .from('team_members')
         .insert({
-          team_id: team.id,
+          team_id: teamId,
           user_id: user.id,
-          role: 'captain',
-          status: 'active',
+          role: 'team_captain', // 👈 si usás enum app_role
+          status: 'active',      // quitalo si tu tabla no tiene esta columna
         });
 
       if (captainError) throw captainError;
 
-      // Add invited members
+      // 3) Agregar invitados (como 'player')
       if (data.invitedMembers.length > 0) {
-        const memberInserts = data.invitedMembers.map(member => ({
-          team_id: team.id,
-          user_id: member.id,
-          role: 'member',
-          status: 'pending',
+        const memberInserts: TablesInsert<'team_members'>[] = data.invitedMembers.map(m => ({
+          team_id: teamId,
+          user_id: m.id,
+          role: 'player',
+          status: 'pending'
         }));
 
         const { error: membersError } = await supabase
@@ -319,7 +312,7 @@ export function TeamCreationProvider({ children }: { children: ReactNode }) {
         if (membersError) throw membersError;
       }
 
-      return { success: true, teamId: team.id };
+      return { success: true, teamId };
     } catch (error) {
       console.error('Error creating team:', error);
       return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };

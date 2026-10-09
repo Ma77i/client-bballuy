@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/array-type */
+import Text from '@/components/AppText';
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
+import { View, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 import { ArrowLeft } from 'lucide-react-native';
 import Colors from '@/constants/colors';
@@ -20,7 +20,8 @@ export default function TeamDetailsStep() {
   const router = useRouter();
   const { data, updateTeamDetails, setCurrentStep, searchCourts, pickImageFromGallery, takePhoto, removeLogo } = useTeamCreation();
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [courtSearchResults, setCourtSearchResults] = useState<Array<{ id: string; name: string; address: string }>>([]);
+  type CourtSearchResult = Awaited<ReturnType<typeof searchCourts>>[number];
+  const [courtSearchResults, setCourtSearchResults] = useState<CourtSearchResult[]>([]);
   const [isSearchingCourts, setIsSearchingCourts] = useState(false);
 
   const handleNext = () => {
@@ -58,7 +59,7 @@ export default function TeamDetailsStep() {
     }
   };
 
-  const handleCourtSelect = (court: { id: string; name: string; address: string }) => {
+  const handleCourtSelect = (court: CourtSearchResult) => {
     updateTeamDetails({
       homeCourt: court.name,
       homeCourtId: court.id,
@@ -86,7 +87,7 @@ export default function TeamDetailsStep() {
       />
       
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        <StepIndicator 
+        <StepIndicator
           currentStep={1} 
           totalSteps={3}
           stepTitles={['Team Details', 'Invite Members', 'Review & Create']}
@@ -152,11 +153,7 @@ export default function TeamDetailsStep() {
             <Text style={styles.label}>Home Court (Optional)</Text>
             <SearchInput
               placeholder="Search for a court"
-              searchResults={courtSearchResults.map(court => ({
-                id: court.id,
-                name: court.name,
-                subtitle: court.address,
-              }))}
+              searchResults={courtSearchResults}
               onSearch={handleCourtSearch}
               onSelectResult={(result) => {
                 const court = courtSearchResults.find(c => c.id === result.id);
@@ -191,6 +188,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
+    marginTop: 16,
   },
   backButton: {
     padding: 8,

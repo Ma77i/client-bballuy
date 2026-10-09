@@ -1,0 +1,192 @@
+{
+  "specId": "SPEC-001",
+  "tasks": [
+    {
+      "id": "T00",
+      "title": "Document the project and prepare the harness",
+      "status": "done",
+      "requirements": [
+        "R01"
+      ],
+      "dependsOn": [],
+      "acceptance": "Documentation and traceability are valid; checks report failures honestly.",
+      "evidence": [
+        "specs/001-core-journey/verification.md",
+        "scripts/harness.test.mjs"
+      ]
+    },
+    {
+      "id": "T01",
+      "title": "Restore client checks",
+      "status": "done",
+      "requirements": [
+        "R01"
+      ],
+      "dependsOn": [
+        "T00"
+      ],
+      "acceptance": "The local CLI starts Metro without the global CLI or @types/react-native; dependency compatibility and limitations are recorded; verify has no errors; warnings are reviewed and a proportionate test strategy is documented.",
+      "evidence": [
+        "specs/001-core-journey/verification.md",
+        "tests/profanity.test.cjs",
+        "docs/development.md"
+      ]
+    },
+    {
+      "id": "T09",
+      "title": "Upgrade Expo to SDK 57 and prepare local iPhone testing",
+      "status": "done",
+      "requirements": [
+        "R01"
+      ],
+      "dependsOn": [
+        "T01"
+      ],
+      "acceptance": "SDK 57 dependencies and lockfile agree; verify and regression tests pass; iOS/web bundles compile; local LAN launcher is verified without remote changes. Device acceptance remains T04.",
+      "evidence": [
+        "specs/001-core-journey/verification.md",
+        "docs/decisions/0006-expo-sdk57.md",
+        "tests/local-device.test.cjs",
+        "local-backend/README.md"
+      ]
+    },
+    {
+      "id": "T02",
+      "title": "Reconcile profiles, courts and membership data",
+      "status": "done",
+      "requirements": [
+        "R02"
+      ],
+      "dependsOn": [
+        "T01"
+      ],
+      "acceptance": "An identified development schema is inspected; migrations/types/queries agree; a disposable backend and verified court catalog can be reproduced.",
+      "evidence": [
+        "specs/001-core-journey/verification.md",
+        "local-backend/README.md",
+        "local-backend/tests/core-contract.sql",
+        "lib/backend/database.types.ts",
+        "supabase/snapshots/README.md"
+      ]
+    },
+    {
+      "id": "T03",
+      "title": "Protect privileges, the court catalog and membership ownership",
+      "status": "done",
+      "requirements": [
+        "R03"
+      ],
+      "dependsOn": [
+        "T02"
+      ],
+      "acceptance": "Direct requests as A, B and anonymous prove allowed/denied operations, including global-role edits, catalog writes and another user's memberships.",
+      "evidence": [
+        "specs/001-core-journey/verification.md",
+        "local-backend/tests/authorization.mjs",
+        "local-backend/supabase/migrations/20260921000100_core_permissions.sql",
+        "docs/decisions/0004-core-permission-boundary.md"
+      ]
+    },
+    {
+      "id": "T04",
+      "title": "Complete registration, minimal profile and persistent sessions",
+      "status": "done",
+      "requirements": [
+        "R04",
+        "R05",
+        "R06"
+      ],
+      "dependsOn": [
+        "T01",
+        "T03"
+      ],
+      "acceptance": "Registration with/without an immediate session, completed onboarding, restart, refresh and revocation are verified. Pending consent persists for the matching backend/account, retries after failure without a second signup and is cleared only after a successful write.",
+      "evidence": [
+        "specs/001-core-journey/verification.md",
+        "tests/auth-controller.test.cjs",
+        "local-backend/tests/sessions.mjs",
+        "docs/decisions/0005-auth-session-lifecycle.md",
+        "tests/consent.test.cjs",
+        "lib/auth/consent.ts"
+      ]
+    },
+    {
+      "id": "T05",
+      "title": "Isolate personal data and My Courts between accounts",
+      "status": "done",
+      "requirements": [
+        "R07"
+      ],
+      "dependsOn": [
+        "T04"
+      ],
+      "acceptance": "A -> logout -> B never displays A's private data as B's profile, personal court list or local notifications; late responses and notification hydration cannot cross identities.",
+      "evidence": [
+        "specs/001-core-journey/verification.md",
+        "tests/account-isolation.test.cjs",
+        "local-backend/tests/sessions.mjs",
+        "docs/decisions/0007-account-scoped-state.md"
+      ]
+    },
+    {
+      "id": "T06",
+      "title": "Validate native maps and connect court discovery",
+      "status": "done",
+      "requirements": [
+        "R08"
+      ],
+      "dependsOn": [
+        "T03",
+        "T04"
+      ],
+      "acceptance": "A compatible native map renders real catalog markers and details; map/list agree; permission denial, empty/error states and manual browsing are verified on the chosen platform.",
+      "evidence": [
+        "specs/001-core-journey/verification.md",
+        "tests/court-catalog.test.cjs",
+        "local-backend/tests/sessions.mjs",
+        "docs/decisions/0008-sdk57-court-map.md"
+      ]
+    },
+    {
+      "id": "T07",
+      "title": "Implement court community membership and My Courts",
+      "status": "done",
+      "requirements": [
+        "R09"
+      ],
+      "dependsOn": [
+        "T05",
+        "T06"
+      ],
+      "acceptance": "Join/leave/rejoin and restart preserve the intended state without duplicates; no team is required; no automatic expiry; server rejects identity spoofing and invalid courts.",
+      "evidence": [
+        "specs/001-core-journey/verification.md",
+        "tests/membership.test.cjs",
+        "local-backend/tests/sessions.mjs",
+        "docs/decisions/0009-confirmed-court-membership.md"
+      ]
+    },
+    {
+      "id": "T08",
+      "title": "Verify the complete court-community MVP",
+      "status": "done",
+      "requirements": [
+        "R01",
+        "R02",
+        "R03",
+        "R04",
+        "R05",
+        "R06",
+        "R07",
+        "R08",
+        "R09",
+        "R10"
+      ],
+      "dependsOn": [
+        "T07"
+      ],
+      "acceptance": "A01-A10 have evidence on a confirmed platform with two accounts; errors are recoverable and no simulated events or unfinished controls are presented as working features.",
+      "evidence": ["specs/001-core-journey/verification.md", "specs/001-core-journey/closure-review.md", "tests/development-consent.test.cjs"]
+    }
+  ]
+}

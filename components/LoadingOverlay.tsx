@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, StyleSheet, Animated, Modal } from 'react-native';
+import Text from '@/components/AppText';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, Animated, Modal } from 'react-native';
 import Colors from '@/constants/colors';
 
 const loadingMessages = [
@@ -29,8 +30,8 @@ interface LoadingOverlayProps {
 }
 
 export default function LoadingOverlay({ visible }: LoadingOverlayProps) {
-  const circleRotation = useRef(new Animated.Value(0)).current;
-  const ballRotation = useRef(new Animated.Value(0)).current;
+  const [circleRotation] = useState(() => new Animated.Value(0));
+  const [ballRotation] = useState(() => new Animated.Value(0));
   const [messageIndex, setMessageIndex] = useState(0);
   const [subMessageIndex, setSubMessageIndex] = useState(0);
 

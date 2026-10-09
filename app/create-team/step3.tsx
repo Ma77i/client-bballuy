@@ -1,5 +1,6 @@
+import Text from '@/components/AppText';
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert, ActivityIndicator, Image } from 'react-native';
+import { View, StyleSheet, ScrollView, TouchableOpacity, Alert, ActivityIndicator, Image } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 import { ArrowLeft, Shield } from 'lucide-react-native';
 import Colors from '@/constants/colors';
@@ -34,7 +35,7 @@ export default function ReviewCreateStep() {
               text: 'OK',
               onPress: () => {
                 resetForm();
-                router.push(`/team/${result.teamId}` as any);
+                router.replace(`/team/${result.teamId}`);
               },
             },
           ]
@@ -198,6 +199,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
+    marginTop: 16,
   },
   backButton: {
     padding: 8,

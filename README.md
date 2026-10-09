@@ -1,50 +1,59 @@
-# Welcome to your Expo app 👋
+# BBallUY — proyecto en estabilización
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Read from your phone: [documentation and project navigation](docs/mobile-guide.md).
 
-## Get started
+Aplicación móvil para encontrar personas con quienes jugar al básquet y organizar equipos. Cliente Expo / React Native y recursos de Supabase. El nombre comercial definitivo está pendiente; algunas pantallas todavía dicen StreetHoops.
 
-1. Install dependencies
+**No listo para producción.** Hay funcionalidades parciales, errores conocidos y diferencias entre código y esquemas SQL. Ver [estado actual](docs/status.md).
 
-   ```bash
-   npm install
-   ```
+SPEC-001 is verified for the local MVP as of 2026-10-09: sign up/sign in, court
+discovery and persistent community membership have browser and owner-reported
+iPhone evidence. Formal audit findings are resolved: introduction/consent copy
+matches the development preview, and the owner confirmed all three court positions.
+See the [closure review](specs/001-core-journey/closure-review.md).
+Hosted migration, release builds and production readiness remain separate work.
 
-2. Start the app
+## Retomar el proyecto
 
-   ```bash
-   npx expo start
-   ```
+1. Leer [producto](docs/product.md) y [arquitectura](docs/architecture.md).
+2. Preparar el entorno con la [guía de desarrollo](docs/development.md).
+3. Leer la [primera especificación](specs/001-core-journey/spec.md) y sus [tareas](specs/001-core-journey/tasks.json).
+4. Ejecutar `npm run harness:status` y `npm run verify` antes de cambiar código.
 
-In the output, you'll find options to open the app in a
+Current MVP direction (2026-09-19): sign up/sign in, discover real courts and join their communities. Membership persists until leaving and does not require a team. See [SPEC-001](specs/001-core-journey/spec.md) and the [map recommendation](docs/decisions/0002-court-first-mvp.md). The earlier team-first journey is deferred; existing setup and stabilization work are preserved.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+The [local backend workflow](local-backend/README.md) reproduces the inspected
+schema and three existing courts without changing hosted data. It includes
+database contract tests, two-account permission checks and type generation.
+Membership storage and owner-only permissions are implemented locally; no hosted
+schema upgrade has been deployed by these tasks.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Inicio local
 
-## Get a fresh project
+Instalar con `npm ci`, crear `.env` a partir de [.env.example](.env.example) con un proyecto Supabase de desarrollo y ejecutar `npm start`. Las versiones observadas y limitaciones están en la guía de desarrollo.
 
-When you're ready, run:
+Usar `npm start` o `npx expo start`, que ejecutan el CLI local. El comando directo `expo start` puede invocar el CLI global obsoleto y fallar con `ExpoMetroConfig.loadAsync is not a function`. En PowerShell con scripts bloqueados, usar `npm.cmd start`. Ver [diagnóstico de arranque](docs/development.md).
 
-```bash
-npm run reset-project
+Las comprobaciones no necesitan credenciales:
+
+```sh
+npm run verify:docs
+npm run verify
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+`verify` returns an error when a check fails. As of 2026-09-19, the client static baseline passes; also run `npm run test:client` for the focused regression suite. Green local checks do not replace device or database-permission acceptance. See the dated evidence for remaining limitations.
 
-## Learn more
+## Trabajo guiado por especificaciones (SDD)
 
-To learn more about developing your project with Expo, look at the following resources:
+Requisitos y aceptación viven en `specs/`; después se concreta el plan, se implementan tareas pequeñas y se registra evidencia. Ver [flujo de trabajo](docs/workflow.md).
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Para agentes, [AGENTS.md](AGENTS.md) es la entrada. El [harness](docs/harness.md) ofrece instrucciones, tareas y verificaciones locales; no depende de un proveedor de agentes ni de Harness.io.
 
-## Join the community
+- [Índice de documentación](docs/README.md)
+- [Base de datos y discrepancias](docs/db-context.md)
+- [Decisión de adoptar SDD](docs/decisions/0001-spec-driven-workflow.md)
+- [Catálogo de especificaciones](specs/README.md)
 
-Join our community of developers creating universal apps.
+Los documentos antiguos [equipos](README-create-team.md) e [imágenes](README-image-upload.md) se conservan como referencia histórica, no como evidencia de funcionalidad completa.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+El comando reset-project es un resto del generador de Expo que mueve o elimina código. No forma parte de la instalación ni del mantenimiento normal.
