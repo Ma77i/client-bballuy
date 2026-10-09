@@ -1,5 +1,25 @@
 # SPEC-001 formal closure review
 
+## Resolution update - 2026-10-09
+
+C01-C03 are resolved for local MVP acceptance. C01: all four introduction slides
+and welcome now describe catalog/community/My Courts only; fresh-entry and direct
+browser routes passed. C02: consent visibly identifies provisional development
+notices, removes external policy links/unsupported promises, and records test
+acknowledgements as dev-preview-1 through the existing draft/sync contract. Both
+selections are required; storage failure retains them and supports retry. This is
+not legal-policy approval or authorization for public registration. C03: the owner
+explicitly confirms Palermo, Parque Rodo and Parque Rodó Court are at their actual
+locations. No court rows were changed or merged; this is owner evidence, not a survey.
+
+See the dated verification entry for 48 client tests, browser evidence and limits.
+T08 is done and SPEC-001 verified within the local scope. Remaining release debt
+below still applies. The repository was clean at aae45d5 before this change; the
+older inventory and commit-group proposal describe the September audit, not the
+current uncommitted delta. No SPEC-002, new commit, push or remote operation occurred.
+
+## Historical audit (superseded by the resolution above)
+
 Reviewed 2026-09-24 against the working tree at HEAD 5027fe0, not a published
 release. This review supersedes the earlier unconditional closure statement.
 No application code, database, Git index, commit or remote was changed by the audit.

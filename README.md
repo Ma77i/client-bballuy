@@ -6,11 +6,11 @@ Aplicación móvil para encontrar personas con quienes jugar al básquet y organ
 
 **No listo para producción.** Hay funcionalidades parciales, errores conocidos y diferencias entre código y esquemas SQL. Ver [estado actual](docs/status.md).
 
-The local MVP's sign up/sign in, court discovery and persistent membership journey
-has browser and owner-reported iPhone evidence. The formal 2026-09-24 audit reopens
-SPEC-001 closure: onboarding/consent still overstates available features, and
-physical court-location accuracy needs explicit confirmation. See the
-[closure review and proposed commits](specs/001-core-journey/closure-review.md).
+SPEC-001 is verified for the local MVP as of 2026-10-09: sign up/sign in, court
+discovery and persistent community membership have browser and owner-reported
+iPhone evidence. Formal audit findings are resolved: introduction/consent copy
+matches the development preview, and the owner confirmed all three court positions.
+See the [closure review](specs/001-core-journey/closure-review.md).
 Hosted migration, release builds and production readiness remain separate work.
 
 ## Retomar el proyecto

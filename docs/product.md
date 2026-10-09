@@ -1,7 +1,7 @@
 # Product and MVP scope
 
-Updated 2026-09-24. The main local journey is implemented; formal closure still
-has the [C01-C03 findings](../specs/001-core-journey/closure-review.md).
+Updated 2026-10-09. The local MVP is implemented and its
+[C01-C03 findings](../specs/001-core-journey/closure-review.md) are resolved.
 
 ## Purpose
 
@@ -27,7 +27,8 @@ Validated interaction target: the owner's iPhone with Expo Go SDK 57, using Appl
 Maps through react-native-maps 1.27.2. The local catalog preserves the three
 owner-supplied court records. Web supports list/search/details. Android acceptance,
 expansion to 10-20 courts and a full web map are not delivered. Source-coordinate
-preservation is verified; explicit physical accuracy confirmation remains pending.
+preservation is verified; the owner confirmed all three real-world positions on
+2026-10-09. No independent field survey is claimed.
 
 ## Deferred features
 
@@ -44,5 +45,6 @@ Users manage their own profile and court memberships. Joining grants no administ
 The development backend is unlinked local Supabase and iPhone is the confirmed
 validation platform. Public member counts/rosters, catalog expansion and hosted
 email configuration remain undecided. Age policy, consent content and public
-URLs are provisional; existing text is not legal validation. Misleading onboarding
-and consent claims are acceptance findings to fix now, not deferred feature delivery.
+URLs remain release work. The preview explicitly labels its development notices
+and stores acknowledgements with a distinct version; this is not legal validation.
+Misleading onboarding and consent claims were corrected within SPEC-001.

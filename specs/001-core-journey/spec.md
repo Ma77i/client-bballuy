@@ -2,10 +2,9 @@
 
 Execution state: [registry](../registry.json). Revised on 2026-09-19 following the user's clarification: joining a court means belonging to its community, without needing a team.
 
-Formal audit 2026-09-24: requirements below are unchanged. The main local journey
-has evidence, but [closure review](closure-review.md) identifies R10/A10 gaps and
-the limit of physical-location evidence. Do not treat earlier closure notes as
-waiving those acceptance criteria.
+Formal audit findings from 2026-09-24 are resolved on 2026-10-09 without waiving
+acceptance criteria: public copy/consent now matches the local preview and the
+owner confirmed the three court positions. See [closure review](closure-review.md).
 
 ## Revision history
 
@@ -160,6 +159,14 @@ data. Logout exposes an inline retryable error and only navigates after success.
 Profile-save failures retain the entered name and show a safe connection/retry
 message. Verify blocked requests and lost membership acknowledgements in a local
 browser, and record physical iPhone acceptance separately.
+
+C01/C02 closure (2026-10-09): onboarding and welcome describe only catalog,
+community membership and My Courts. Consent clearly labels this development
+preview and its provisional notices, has no external policy links or unsupported
+privacy promises, and requires both acknowledgements before continuing. Persist
+the existing draft shape with version dev-preview-1, distinguishing these test
+acknowledgements from approved legal policies; existing records stay unchanged.
+Storage failure must retain the selections and allow retry without navigation.
 
 ## Acceptance
 

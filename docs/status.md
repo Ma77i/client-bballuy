@@ -1,5 +1,26 @@
 # Estado del proyecto
 
+## SPEC-001 findings resolved and local closure - 2026-10-09
+
+C01/C02: public onboarding/welcome describes only implemented court communities;
+consent identifies provisional development notices, removes example links and
+unsupported promises, and uses dev-preview-1 acknowledgements. The existing sync
+contract is preserved. Both selections gate continuation; failed storage displays
+Retry and retains selections. Browser fresh-entry/direct-route and fault tests pass.
+C03: the owner confirms all three courts are at their real locations. No rows
+were modified or merged. T08 is done and SPEC-001 is verified for the local MVP.
+
+The starting tree was clean at aae45d5. Dependencies were missing; npm ci restored
+the locked install without dependency changes. Client checks and 48 tests pass.
+No remote calls, signup/account writes, database migrations, commits or push were
+performed. Native functional evidence is retained from the owner's previous runs;
+this text/acknowledgement update was exercised in browser and unit tests.
+
+Production policies, hosted schema/RLS upgrade, dependency triage, independent
+builds and legacy Deno services remain release debt in the
+[closure review](../specs/001-core-journey/closure-review.md). Development notices
+are not legal policies. No SPEC-002 work started. Earlier entries are history.
+
 ## Formal closure audit supersedes the previous closure - 2026-09-24
 
 The main local journey works, but SPEC-001 is not formally closed. T08 and the

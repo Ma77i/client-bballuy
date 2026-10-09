@@ -12,9 +12,10 @@ player details and notification settings; legacy source/data is preserved.
 These route guards are product boundaries, not server authorization.
 
 AuthGate coordinates signin, incomplete-profile setup and authenticated discovery.
-The first-run onboarding, age and consent screens remain reachable. Their outdated
-feature claims and placeholder policy links are open R10 findings, not evidence
-that the corresponding features work. Profile editing/avatar upload is not exposed.
+The first-run onboarding, age and consent screens remain reachable. As of
+2026-10-09 their copy reflects the court MVP; consent has provisional development
+notices without policy links, using dev-preview-1 acknowledgement drafts. Approved
+policies remain release work. Profile editing/avatar upload is not exposed.
 AppText preserves the Lexend font through public Text props.
 
 ## Session and personal state

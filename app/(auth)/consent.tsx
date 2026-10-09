@@ -6,40 +6,37 @@ import {
   ScrollView,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Shield, Check } from "lucide-react-native";
 import Colors from "@/constants/colors";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as WebBrowser from "expo-web-browser";
+import { saveDevelopmentConsent } from '@/lib/auth/consent';
 
 export default function ConsentScreen() {
   const router = useRouter();
   const [tosAccepted, setTosAccepted] = useState<boolean>(false);
   const [ppAccepted, setPpAccepted] = useState<boolean>(false);
 
-  const canContinue = tosAccepted && ppAccepted;
-
-  const CONSENT_VERSION = "1.0.0";
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const submitting = useRef(false);
+  const canContinue = tosAccepted && ppAccepted && !saving;
 
   const handleContinue = async () => {
-    if (!canContinue) return;
-    await AsyncStorage.setItem(
-      "pendingConsent",
-      JSON.stringify({
-        tos: true,
-        privacy: true,
-        version: CONSENT_VERSION,
-        acceptedAt: new Date().toISOString(),
-      })
-    );
-    router.push("/signup");
+    if (!canContinue || submitting.current) return;
+    submitting.current = true;
+    setSaving(true);
+    setError(null);
+    try {
+      await saveDevelopmentConsent(AsyncStorage, tosAccepted, ppAccepted);
+      router.push("/signup");
+    } catch {
+      setError('Unable to save your acknowledgements. Please retry.');
+    } finally {
+      submitting.current = false;
+      setSaving(false);
+    }
   };
-
-  // para abrir ToS/Privacy en web
-  const openTOS = () =>
-    WebBrowser.openBrowserAsync("https://tu-dominio.com/terms");
-  const openPrivacy = () =>
-    WebBrowser.openBrowserAsync("https://tu-dominio.com/privacy");
   return (
     <View style={styles.container}>
       <View style={{ paddingTop: 40 }} />
@@ -50,13 +47,18 @@ export default function ConsentScreen() {
           </View>
           <Text style={styles.title}>Privacy & Terms</Text>
           <Text style={styles.subtitle}>
-            Please review and accept our Terms of Service and Privacy Policy to
-            continue.
+            Development preview: the terms and privacy notices are provisional.
+            Approved policies are not available in this version.
           </Text>
         </View>
 
         <View style={styles.consentSection}>
           <TouchableOpacity
+            accessibilityRole="checkbox"
+            accessibilityLabel="Acknowledge development terms"
+            aria-checked={tosAccepted}
+            accessibilityState={{ checked: tosAccepted, disabled: saving }}
+            disabled={saving}
             style={styles.checkboxRow}
             onPress={() => setTosAccepted(!tosAccepted)}
           >
@@ -66,12 +68,16 @@ export default function ConsentScreen() {
               {tosAccepted && <Check color={Colors.white} size={16} />}
             </View>
             <Text style={styles.checkboxLabel}>
-              I agree to the <Text style={styles.link} onPress={openTOS}>Terms of Service</Text>
-              {/* I agree to the <Text style={styles.link}>Terms of Service</Text> */}
+              I understand this is a development preview with provisional terms.
             </Text>
           </TouchableOpacity>
 
           <TouchableOpacity
+            accessibilityRole="checkbox"
+            accessibilityLabel="Acknowledge development privacy notice"
+            aria-checked={ppAccepted}
+            accessibilityState={{ checked: ppAccepted, disabled: saving }}
+            disabled={saving}
             style={styles.checkboxRow}
             onPress={() => setPpAccepted(!ppAccepted)}
           >
@@ -81,32 +87,34 @@ export default function ConsentScreen() {
               {ppAccepted && <Check color={Colors.white} size={16} />}
             </View>
             <Text style={styles.checkboxLabel}>
-              I agree to the <Text style={styles.link} onPress={openPrivacy}>Privacy Policy</Text>
-              {/* I agree to the <Text style={styles.link}>Privacy Policy</Text> */}
+              I understand the privacy notice is provisional and will use test information.
             </Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.infoBox}>
-          <Text style={styles.infoTitle}>Your Privacy Matters</Text>
+          <Text style={styles.infoTitle}>For development testing</Text>
           <Text style={styles.infoText}>
-            • We encrypt your data at rest and in transit{"\n"}• You control
-            your profile visibility{"\n"}• You can export or delete your data
-            anytime{"\n"}• We never sell your personal information
+            Use test information when trying this preview. These acknowledgements
+            are recorded for the test flow; they are not acceptance of finalized
+            legal policies. Public registration requires approved policies first.
           </Text>
         </View>
       </ScrollView>
 
       <View style={styles.actions}>
+        {error && <Text accessibilityRole="alert" style={styles.infoText}>{error}</Text>}
         <TouchableOpacity
+          accessibilityRole="button"
           style={[styles.primaryButton, !canContinue && styles.buttonDisabled]}
           onPress={handleContinue}
           disabled={!canContinue}
         >
-          <Text style={styles.primaryButtonText}>Continue</Text>
+          <Text style={styles.primaryButtonText}>{saving ? 'Saving...' : error ? 'Retry' : 'Continue'}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.secondaryButton}
+          disabled={saving}
           onPress={() => router.back()}
         >
           <Text style={styles.secondaryButtonText}>Go Back</Text>
@@ -175,10 +183,6 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     color: Colors.text,
-  },
-  link: {
-    color: Colors.primary,
-    textDecorationLine: "underline" as const,
   },
   infoBox: {
     backgroundColor: Colors.surface,

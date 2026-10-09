@@ -5,10 +5,10 @@ Reading update 2026-09-23: T04 has local acceptance, including owner iPhone test
 T05 has local account-isolation evidence. T06 integrates the SDK 57 native map
 and the three-court catalog; local iPhone acceptance is complete. T07 join/leave/My Courts
 has local acceptance, including the owner's iPhone report on 2026-09-24.
-Formal audit on 2026-09-24 reopens T08: public onboarding/consent still overstates
-the MVP and location-accuracy evidence needs explicit confirmation. The implemented
-local journey retains its passing evidence. See [closure review](closure-review.md).
-Do not begin another specification until these closure findings are resolved.
+The 2026-09-24 audit reopened T08. Its C01-C03 findings are resolved on 2026-10-09:
+onboarding/consent copy and retry behavior are verified, and the owner confirmed
+the three physical locations. See [closure review](closure-review.md). T08 is done;
+SPEC-001 is verified for the local MVP. No subsequent specification has started.
 Execution
 states live in [tasks.json](tasks.json), and dated results in [verification.md](verification.md).
 

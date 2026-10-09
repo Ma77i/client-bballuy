@@ -4,6 +4,15 @@ type Storage = {
   removeItem(key: string): Promise<void>;
 };
 type Consent = { tos: true; privacy: true; version: string; acceptedAt: string };
+
+// Development acknowledgements retain the sync contract, with a distinct version.
+export async function saveDevelopmentConsent(storage: Pick<Storage, 'setItem'>,
+  termsAcknowledged: boolean, privacyAcknowledged: boolean) {
+  if (!termsAcknowledged || !privacyAcknowledged) throw new Error('Both acknowledgements are required.');
+  const draft: Consent = { tos: true, privacy: true, version: 'dev-preview-1',
+    acceptedAt: new Date().toISOString() };
+  await storage.setItem('pendingConsent', JSON.stringify(draft));
+}
 type ConsentRow = {
   user_id: string; tos_version: string; privacy_version: string;
   accepted_at: string; source: string;

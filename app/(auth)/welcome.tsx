@@ -21,9 +21,9 @@ export default function WelcomeScreen() {
             }}
             style={styles.image}
           />
-          <Text style={styles.title}>Find Your Game.{'\n'}Anytime. Anywhere.</Text>
+          <Text style={styles.title}>Find Your Court.{'\n'}Join Its Community.</Text>
           <Text style={styles.subtitle}>
-            Discover basketball courts, track your stats, and join games with players in your city.
+            Discover the courts in our catalog, join their communities and find them again in My Courts.
           </Text>
         </View>
 

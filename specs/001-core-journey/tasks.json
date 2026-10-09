@@ -169,7 +169,7 @@
     {
       "id": "T08",
       "title": "Verify the complete court-community MVP",
-      "status": "in_progress",
+      "status": "done",
       "requirements": [
         "R01",
         "R02",
@@ -186,7 +186,7 @@
         "T07"
       ],
       "acceptance": "A01-A10 have evidence on a confirmed platform with two accounts; errors are recoverable and no simulated events or unfinished controls are presented as working features.",
-      "evidence": ["specs/001-core-journey/verification.md", "specs/001-core-journey/closure-review.md"]
+      "evidence": ["specs/001-core-journey/verification.md", "specs/001-core-journey/closure-review.md", "tests/development-consent.test.cjs"]
     }
   ]
 }

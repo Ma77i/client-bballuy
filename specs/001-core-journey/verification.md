@@ -1,5 +1,64 @@
 # Verificación de SPEC-001
 
+## 2026-10-09 - C01-C03 resolved; local SPEC-001 closure
+
+Starting state: clean feature/init at aae45d5 (owner-created commit). Read project
+instructions/status/workflow and harness state. The sandbox process could not
+start (setup refresh error); approved local execution restored file/command
+access. Initial verify passed docs but failed type/lint because TypeScript/ESLint
+were absent. npm.cmd ci --no-audit --no-fund restored 936 locked packages; no
+package/lockfile change. This installation is not a fresh vulnerability audit.
+
+C01: all four onboarding slides and direct welcome now describe catalog search,
+court details, membership without teams or attendance, and persistent My Courts.
+C02: consent explicitly says development preview/provisional notices. Removed
+placeholder policy links and unsupported privacy promises. Both acknowledgements
+remain required; draft fields and account/backend sync are preserved, with
+dev-preview-1 distinguishing test notices from finalized legal acceptance. Existing
+rows/versions are not rewritten. Storage failure keeps selections and shows Retry.
+
+C03: the owner explicitly confirms Palermo, Parque Rodo and Parque Rodó Court
+appear at their actual locations. This is owner-reported geographical evidence,
+not an independent survey or permission to merge the two Parque Rodo entries.
+No court IDs, names, coordinates or other stored data changed.
+
+Verification performed:
+
+- npm.cmd run verify passed after implementation (docs, client TypeScript, lint).
+- npm.cmd run test:client: 48 passed. New development-consent tests reject either
+  missing selection without writes, retry storage failure and confirm the distinct
+  version survives prepare/sync and cleanup. Existing consent/identity tests pass.
+- Browser localhost:8094 with EXPO_NO_DOTENV=1, EXPO_OFFLINE=1, loopback API URL
+  and synthetic public-key placeholder. No user signup or database write; these
+  public screens need no backend. Initial compilation exceeded navigation timeout;
+  retry after bundling succeeded. Early ambiguous selectors were corrected to
+  target the visible route. A checkbox assertion exposed missing web aria-checked;
+  explicit aria-checked fixed it and the full scenario then passed after restart.
+- Fresh entry with this isolated origin's hasSeenOnboarding removed: root -> four
+  slides via Next -> age -> consent. All new copy appears; no policy links exist.
+  Direct URLs for each slide and /welcome also show the corrected copy.
+- Continue is disabled with zero/one acknowledgement, enabled with both. Override
+  Storage.prototype.setItem to throw only for pendingConsent; Continue stays on
+  consent with an alert and both boxes checked. Restore storage and Retry: signup
+  appears, and the draft has true/true plus version dev-preview-1. No account is
+  submitted. Browser assertion confirms both visual controls' accessible state.
+- Source scan finds no former real-time/stats/match/privacy promises or example
+  policy domain in app/(auth). Historical documentation retains the audit record.
+
+Limits: updated public UI was not independently rerun on physical iPhone; prior
+owner auth/map/membership/error acceptance remains. No new API permission or Edge
+test is claimed, since those contracts did not change. Legacy step4 illustration
+uses an invalid inline SVG URI and can generate an image error; existing web
+style/driver warnings also remain presentation debt, not a failed consent action.
+No new privacy policy, hosted email assurance, production consent validation or
+distribution readiness is claimed. Release debt in closure-review.md remains.
+
+With C01-C03 resolved, T08 is done and SPEC-001 verified for the local MVP. No
+commit, push, deployment, hosted write, court merge or SPEC-002 work occurred.
+Final verify passed all three checks (30 Markdown files, TypeScript, lint),
+test:client passed 48/48 and git diff --check passed. Final harness:status reports
+all tasks done. The temporary 8094 preview was stopped after testing.
+
 ## 2026-09-24 - Formal audit corrects the closure assessment
 
 See [closure review](closure-review.md) for criterion-by-criterion coverage,
