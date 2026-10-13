@@ -9,6 +9,8 @@ Start on your phone: [mobile reading guide](mobile-guide.md).
   legacy function dependencies and hosted inventory needed before migration.
 
 ## Entender y retomar
+- [Product vision and next MVP discussion](product-vision.md): owner ideas,
+  pickup-session proposal, motivation, visual direction and open product rules.
 - [Producto](product.md): propósito, primer objetivo y decisiones pendientes.
 - [Estado](status.md): problemas observados y límites de la revisión.
 - [Arquitectura](architecture.md): responsabilidades actuales.
@@ -18,6 +20,10 @@ Start on your phone: [mobile reading guide](mobile-guide.md).
 - [Local backend](../local-backend/README.md): inspected baseline, original court seed, replay and contract checks.
 
 ## Cambiar el proyecto
+- [Next player-first MVP](../specs/002-player-pickup/spec.md): session discovery,
+  joining, recorded matches and final results; T00-T02 complete locally, T03 next.
+- [Player-first sequencing decision](decisions/0010-player-first-next-mvp.md):
+  next MVP before iOS beta; beta has no registered specification or reserved ID.
 - [Flujo SDD](workflow.md): del requisito a la evidencia.
 - [Harness](harness.md): instrucciones y verificaciones para agentes.
 - [Especificaciones](../specs/README.md): trabajos planificados y plantilla.

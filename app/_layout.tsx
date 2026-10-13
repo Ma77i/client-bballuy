@@ -18,6 +18,14 @@ function RootLayoutNav() {
       <Stack.Screen name="(auth)" options={{ headerShown: false }} />
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen name="court/[id]" options={{ headerShown: true, title: "Court Details" }} />
+      <Stack.Screen name="organize/create" options={{ headerShown: true }} />
+      <Stack.Screen name="organize/quick" options={{ headerShown: true }} />
+      <Stack.Screen name="pickup/[id]" options={{ headerShown: true }} />
+      <Stack.Screen name="pickup/mine" options={{ headerShown: true }} />
+      <Stack.Screen name="matches/mine" options={{ headerShown: true }} />
+      <Stack.Screen name="matches/create" options={{ headerShown: true }} />
+      <Stack.Screen name="matches/[id]" options={{ headerShown: true }} />
+      <Stack.Screen name="organize/[id]" options={{ headerShown: true }} />
       {/* Retain legacy code without exposing unfinished flows in the MVP. */}
       <Stack.Protected guard={false}>
         <Stack.Screen name="team/[id]" />

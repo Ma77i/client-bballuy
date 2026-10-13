@@ -16,14 +16,14 @@ See the dated verification entry for 48 client tests, browser evidence and limit
 T08 is done and SPEC-001 verified within the local scope. Remaining release debt
 below still applies. The repository was clean at aae45d5 before this change; the
 older inventory and commit-group proposal describe the September audit, not the
-current uncommitted delta. No SPEC-002, new commit, push or remote operation occurred.
+current uncommitted delta. No future feature work, new commit, push or remote operation occurred.
 
 ## Historical audit (superseded by the resolution above)
 
 Reviewed 2026-09-24 against the working tree at HEAD 5027fe0, not a published
 release. This review supersedes the earlier unconditional closure statement.
 No application code, database, Git index, commit or remote was changed by the audit.
-SPEC-002 was not created or started.
+No future feature specification was created or started.
 
 ## Verdict
 
@@ -203,4 +203,4 @@ acceptance is the dated evidence in verification.md, not a new audit observation
 Final documentation/static checks are recorded in the audit entry in verification.md.
 
 Next action remains inside SPEC-001: resolve C01/C02, collect C03 evidence and
-rerun affected acceptance before restoring verified. Do not start SPEC-002.
+rerun affected acceptance before restoring verified. Close the core findings before starting future feature work.

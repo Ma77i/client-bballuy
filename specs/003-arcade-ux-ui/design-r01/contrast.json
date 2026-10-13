@@ -1,0 +1,38 @@
+[
+  {
+    "usage": "brand/action text",
+    "fg": "#0C1220",
+    "bg": "#FF8A43",
+    "ratio": 7.99
+  },
+  {
+    "usage": "primary text/background",
+    "fg": "#F8FAFC",
+    "bg": "#0C1220",
+    "ratio": 17.87
+  },
+  {
+    "usage": "muted/surface",
+    "fg": "#B8C3D6",
+    "bg": "#171F30",
+    "ratio": 9.27
+  },
+  {
+    "usage": "cream panel text",
+    "fg": "#0C1220",
+    "bg": "#FFF7ED",
+    "ratio": 17.61
+  },
+  {
+    "usage": "control boundary/surface",
+    "fg": "#53647E",
+    "bg": "#171F30",
+    "ratio": 2.74
+  },
+  {
+    "usage": "white on orange rejected",
+    "fg": "#FFFFFF",
+    "bg": "#FF8A43",
+    "ratio": 2.34
+  }
+]

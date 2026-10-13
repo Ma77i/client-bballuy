@@ -10,6 +10,17 @@
 
 Una corrección dentro del alcance puede actualizar una especificación existente. No crear una nueva por cada ajuste de formato.
 
+## Task numbering and execution order
+
+Task IDs must follow execution order in every new plan. If scope, dependencies
+or task insertion changes that order, renumber the affected tasks and update
+dependencies, plans, status references and evidence mappings together before
+continuing. Do not append a higher-numbered task ahead of a lower-numbered
+execution step merely to preserve old numbering. Record old-to-new mappings
+when existing evidence refers to previous IDs.
+
+The owner requested this convention for future planning on 2026-10-13.
+
 ## Estados
 Especificación: `draft`, `ready`, `in_progress`, `verified` o `blocked`. `ready` significa lista para ejecutar; `verified`, aceptación comprobada.
 

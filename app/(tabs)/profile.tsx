@@ -4,6 +4,7 @@ import Text from '@/components/AppText';
 import SignOutButton from '@/components/SignOutButton';
 import Colors from '@/constants/colors';
 import { useAuth } from '@/contexts/AuthContext';
+import ReportProblem from '@/components/ReportProblem';
 
 export default function ProfileScreen() {
   const { user } = useAuth();
@@ -19,6 +20,7 @@ export default function ProfileScreen() {
         <Text style={{ color: Colors.primary }}>My Courts</Text>
       </TouchableOpacity>
       <SignOutButton />
+      <ReportProblem />
     </ScrollView>
   </>;
 }

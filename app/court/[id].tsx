@@ -1,11 +1,14 @@
 import CourtMembership from '@/components/courts/CourtMembership';
 import { ActivityIndicator, ScrollView, TouchableOpacity } from 'react-native';
-import { Stack, useLocalSearchParams } from 'expo-router';
+import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
+import { GameButton } from '@/components/pickup/Kit';
 import Text from '@/components/AppText';
 import Colors from '@/constants/colors';
 import { useCourtCatalog } from '@/hooks/catalog';
+import CourtActivity from '@/components/pickup/CourtActivity';
 export default function CourtDetails() {
   const { id } = useLocalSearchParams<{ id: string }>();
+  const router = useRouter();
   const catalog = useCourtCatalog();
   const court = catalog.data?.find(row => row.id === id);
   return <ScrollView style={{ flex: 1, backgroundColor: Colors.background }} contentContainerStyle={{ padding: 24, gap: 20 }}>
@@ -19,7 +22,9 @@ export default function CourtDetails() {
       <Text style={{ color: Colors.text }}>Court size: {court.half_court === null ? 'Not recorded' : court.half_court ? 'Half court' : 'Full court'}</Text>
       <Text style={{ color: Colors.text }}>Surface: {court.surface || 'Not recorded'}</Text>
       <Text style={{ color: Colors.text }}>Lighting: {court.lighting || 'Not recorded'}</Text>
+      <CourtActivity courtId={court.id} courtName={court.name} />
       <CourtMembership key={court.id} courtId={court.id} />
+      <GameButton label="Organize a game here" onPress={() => router.push({ pathname: '/organize/create', params: { courtId: court.id } })} />
       {court.notes && <Text style={{ color: Colors.text }}>{court.notes}</Text>}
     </> : <Text style={{ color: Colors.text }}>Court not found.</Text>}
   </ScrollView>;

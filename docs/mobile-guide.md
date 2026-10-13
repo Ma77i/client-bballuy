@@ -6,6 +6,14 @@ If GitHub asks you to sign in, use an account with access to this repository.
 
 ## Reading order
 
+For the current organizer UI, start the computer preview with
+`npm.cmd run db:local:device`. On the same Wi-Fi, open
+`http://YOUR_PC_WIFI_IP:8090/_expo/loading?platform=ios` in iPhone Safari and
+choose Expo Go. Sign in to the local preview, then open Play -> Organize a game.
+The computer and local backend must remain running. localhost on an iPhone
+refers to the phone itself. See
+[the organizer evidence](../specs/002-player-pickup/verification.md) for scope.
+
 1. [Current status and open issues](status.md): read the newest dated section
    first. Older entries explain previous findings and may already be superseded.
 2. [MVP specification](../specs/001-core-journey/spec.md): the intended account,

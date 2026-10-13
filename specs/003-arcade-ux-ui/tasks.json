@@ -1,0 +1,126 @@
+{
+  "specId": "SPEC-003",
+  "tasks": [
+    {
+      "id": "T00",
+      "title": "Document UX/UI-only scope, audit and gates",
+      "status": "done",
+      "requirements": [
+        "R01",
+        "R02",
+        "R06",
+        "R07",
+        "R08"
+      ],
+      "dependsOn": [],
+      "acceptance": "Draft documents and registry pass checks; scope and unsatisfied gates are explicit.",
+      "evidence": [
+        "specs/003-arcade-ux-ui/verification.md"
+      ]
+    },
+    {
+      "id": "T01",
+      "title": "Prepare and obtain approval for reviewable visual designs",
+      "status": "in_progress",
+      "requirements": [
+        "R02",
+        "R03",
+        "R04",
+        "R05",
+        "R06",
+        "R07",
+        "R08"
+      ],
+      "dependsOn": [
+        "T00"
+      ],
+      "acceptance": "Owner approves exact visual revision covering List, Map, Bottom Sheet, Detail, My Courts, principal Play flows, Profile/shared states, tokens, original placeholders and motion. Design only.",
+      "evidence": [
+        "specs/003-arcade-ux-ui/verification.md"
+      ]
+    },
+    {
+      "id": "T02",
+      "title": "Implement approved presentation foundations after both gates",
+      "status": "todo",
+      "requirements": [
+        "R01",
+        "R02",
+        "R06",
+        "R07"
+      ],
+      "dependsOn": [
+        "T01"
+      ],
+      "acceptance": "Start only after complete SPEC-002 acceptance, exact T01 approval and implementation authorization are recorded. Approved primitives preserve contracts/states and pass checks.",
+      "evidence": []
+    },
+    {
+      "id": "T03",
+      "title": "Redesign list-first discovery, markers and preview",
+      "status": "todo",
+      "requirements": [
+        "R03",
+        "R06",
+        "R07"
+      ],
+      "dependsOn": [
+        "T02"
+      ],
+      "acceptance": "Approved discovery preserves filtering, context, location denial, web fallback and accessible interrupted/reduced-motion states.",
+      "evidence": []
+    },
+    {
+      "id": "T04",
+      "title": "Redesign court detail, My Courts and Profile",
+      "status": "todo",
+      "requirements": [
+        "R01",
+        "R04",
+        "R06",
+        "R07"
+      ],
+      "dependsOn": [
+        "T03"
+      ],
+      "acceptance": "Approved styling preserves confirmed membership, attributes, activity freshness, organizing shortcut and logout/account recovery.",
+      "evidence": []
+    },
+    {
+      "id": "T05",
+      "title": "Unify existing Play and entry flows with approved motion",
+      "status": "todo",
+      "requirements": [
+        "R01",
+        "R02",
+        "R05",
+        "R07"
+      ],
+      "dependsOn": [
+        "T04"
+      ],
+      "acceptance": "Existing invitation/organizer/participation/match/history and entry flows use approved styling without new capabilities or changed recovery/confirmations.",
+      "evidence": []
+    },
+    {
+      "id": "T06",
+      "title": "Verify complete redesign and preserved journeys",
+      "status": "todo",
+      "requirements": [
+        "R01",
+        "R02",
+        "R03",
+        "R04",
+        "R05",
+        "R06",
+        "R07",
+        "R08"
+      ],
+      "dependsOn": [
+        "T05"
+      ],
+      "acceptance": "A01-A08 have regression/browser/iPhone/accessibility/performance evidence; failures explicit; no backend/RLS or functional scope change.",
+      "evidence": []
+    }
+  ]
+}

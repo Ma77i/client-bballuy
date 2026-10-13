@@ -1,5 +1,164 @@
 # Estado del proyecto
 
+## SPEC-002 local acceptance verified - 2026-10-13
+
+T00-T06 are done for the local specification. Owner-reported iPhone checks cover
+creation, keyboard/save, guest match scoring/correction, participation, network
+recovery, account separation, persisted sessions and court activity. Report
+fallback/retry was confirmed; successful native composer opening remains
+unobserved. Browser handoff/failure tests passed after preserving the Linking
+receiver. Organizer focus during writes no longer loses pending state.
+
+Passed: verify, 94 client tests, 11 harness tests, 111 permission assertions,
+42 session assertions, 197 pickup assertions and preserved-court checks.
+See [closure evidence](../specs/002-player-pickup/closure-review.md).
+Hosted parity and player usefulness/retention remain unverified.
+
+The MVP is not finished. SPEC-003 remains draft; continuation requires explicit
+owner instruction and readiness. No beta/release planning, hosted change or
+publication occurred. The local preview remains available.
+
+## SPEC-002 T05 match recording verified locally - 2026-10-13
+
+T05 (formerly T06) is done for local client/server/browser scope: standalone and
+linked match records, account/guest sides, declared final scores and revision
+history. Reviewed revisions cannot silently rebase; only organizers write scores.
+Linked scoring closes the active source invitation in the same transaction.
+Local incremental migration/types and guarded cleanup preserved existing data.
+
+Passed: verify, 90 client tests, 197 local permission/integrity assertions,
+original-court checks and real two-account browser create/score retry, correction,
+lookup, linked closure and non-owner scenarios. SDK 57 iOS manifest/native bundle
+and LAN backend health returned 200; actual iPhone acceptance remains T06.
+See [evidence](../specs/002-player-pickup/verification.md) and
+[ADR 0015](decisions/0015-match-recording-and-score-history.md).
+
+Pending numbering now follows execution: T05 matches/results, T06 acceptance.
+Older entries retain their prior numbers; the mapping is recorded in evidence.
+Next: T06 verify the SPEC-002 slice and fix remaining issues. Completing SPEC-002
+does not complete the MVP. Stop before further work unless the owner instructs
+continuation and SPEC-003 is ready. No post-MVP/beta/release planning is active.
+
+
+## SPEC-002 T04 participation verified locally - 2026-10-13
+
+T04 is done for local client/server/browser scope. Public details provide
+confirmed join/leave with explicit leave confirmation and account-bound request
+recovery. My sessions combines organized and registered invitations once,
+retains cancellations and shows actual lifecycle states. Failed reads remain
+labelled and retryable; full/started sessions cannot accept new changes.
+
+Passed: verify, 79 client tests, 180 anonymous/two-account server assertions,
+preserved-court checks and real browser recovery/account-switch/race scenarios.
+SDK 57 iOS manifest and updated bundle returned 200; LAN backend health is 200.
+Physical iPhone acceptance remains T05. See the latest
+[evidence](../specs/002-player-pickup/verification.md) and
+[ADR 0014](decisions/0014-player-registration-recovery.md).
+
+Two synthetic browser accounts and four invitations were removed with guarded
+cleanup; other data is preserved. Expo/backend remain available for owner review.
+Next: T06 assembled-match registration and final-score entry/correction history.
+Push notifications remain deferred; no hosted change, beta, commit or publication.
+
+
+## SPEC-002 T03 discovery verified locally - 2026-10-13
+
+T03 is done for local client/server/browser scope. Play shows public immediate/
+future invitations with court/format filters, safe names, capacity and details.
+Court list/details show organizer-reported started activity, start time, focused
+foreground polling and last-check/error/retry states. Closed/cancelled direct
+details stay readable; join/leave remains T04.
+
+Passed: verify, 68 client regressions, 174 anonymous/two-account local assertions,
+preserved-court checks and real two-account browser lifecycle/error scenarios.
+Background polling paused and foreground return refreshed. SDK 57 iOS manifest
+and updated bundle returned 200; physical iPhone acceptance remains T05.
+
+Docker engine recovery restored local auth health (200 on loopback and LAN).
+Expo preview and backend remain available. Two synthetic browser accounts and
+three invitations were removed with guards preserving other data. Previous
+backend-outage statements below are historical. See the latest
+[evidence](../specs/002-player-pickup/verification.md).
+Next: T04 join/leave and personal sessions. Push notifications remain deferred;
+no hosted change, beta, commit, push or publication occurred.
+
+
+## SPEC-002 timing refinement - 2026-10-13
+
+T02 creation entry now ends at timing. Plan ahead reveals scheduled setup; Now
+opens quick setup preserving court/format and account-bound pending recovery.
+Verify passed and 62 client tests passed; browser branching/recovery checks used
+isolated API fixtures. Updated SDK 57 iOS manifest and bundle returned HTTP 200.
+See the latest [evidence](../specs/002-player-pickup/verification.md) and
+[ADR 0013](decisions/0013-pickup-timing-and-court-activity.md).
+
+Current limitation: local backend health stopped responding; preserving startup
+and Docker inspection stalled and were interrupted. Backend availability and
+physical iPhone acceptance remain unresolved. Earlier running-backend statements
+below are historical. Metro remains available on the existing LAN preview.
+Next: T03 public discovery plus organizer-reported court activity after explicit
+start, with start time, refresh and closure handling. This indicator is planned
+for this MVP but not implemented yet; push notifications are deferred.
+
+
+## SPEC-002 T02 organizer UI verified locally
+
+T02 is done for local/browser scope: Play, create-now/future form, owned invitation
+management, locked core edits and confirmed start/cancel/close. Original dark/orange
+sports presentation uses the existing Expo structure. Pending UUID/payload survive
+reload with backend/account/screen isolation; expected-actor RPC binding prevents
+cross-account transport races. See [ADR 0012](decisions/0012-organizer-request-recovery.md)
+and [T02 evidence](../specs/002-player-pickup/verification.md).
+
+Passed: verify, 61 client tests, 166 local pickup assertions, preservation checks
+and browser behavior/fault scenarios at 390x844. SDK 57 iOS manifest and final
+native bundle return HTTP 200. Two generated browser accounts and four synthetic
+invitations were removed; user data remains intact. Requested LAN Expo preview
+and the local backend stay running for iPhone review.
+
+Next: T03 public upcoming-session discovery. iPhone touch/keyboard acceptance is
+not yet reported; served bundles and browser checks do not certify it. No hosted
+change, deployment, beta, commit or push occurred. Older entries retain their dates.
+
+## SPEC-002 T01 local contract verified - 2026-10-12
+
+T01 is done for its local data/permission scope. Added separate pickup invitation,
+occupancy, match/side and score-history tables plus authenticated read projections
+and a request-keyed atomic RPC. Row locks protect combined guest/account capacity
+and start/join races; revision checks/history protect result corrections.
+Migration applied incrementally to the existing unlinked local backend without
+resetting data. All three court records and original contracts remain preserved.
+
+Passed: 164 new anonymous/two-account pickup assertions including rollback replay,
+111 previous permission assertions, 42 session assertions, 48 client tests,
+11 harness tests and verify. Generated types match the local schema. See
+[T01 evidence](../specs/002-player-pickup/verification.md) and
+[ADR 0011](decisions/0011-atomic-pickup-contract.md).
+
+Next: T02 organizer creation/management UI. No new feature UI/device acceptance,
+hosted migration, remote operation, beta or publication is claimed. Existing
+working changes and unrelated containers were preserved; the already-running
+local backend stays running. The preceding planning entries are historical.
+
+## Player-first pickup MVP is SPEC-002 - 2026-10-12
+
+The owner confirmed players looking to join as the initial audience.
+[SPEC-002](../specs/002-player-pickup/spec.md) is the next product priority:
+draft pickup-session discovery, participation and minimal organizer support.
+The draft now also captures immediate invitations and already-assembled match
+registration with organizer-declared final scores. Live scoring is deferred.
+Confirmed rules include guests in recorded matches, fixed 2/4/10 capacities,
+present-player occupancy and explicit organizer start. Saving the final score
+closes the match; organizer corrections retain history. T00 planning is complete
+and SPEC-002 is ready for T01. No new feature is implemented or accepted yet.
+[ADR 0010](decisions/0010-player-first-next-mvp.md) records the accepted direction.
+
+SPEC-001 remains verified for its existing local scope. iOS beta is future work
+without a registered specification or reserved ID. At the owner's request its
+previous specification, tasks and preparation evidence were removed.
+No feature implementation, remote change, build or distribution occurred.
+Check results and limits are in SPEC-002 verification.
+
 ## SPEC-001 findings resolved and local closure - 2026-10-09
 
 C01/C02: public onboarding/welcome describes only implemented court communities;
@@ -19,7 +178,7 @@ this text/acknowledgement update was exercised in browser and unit tests.
 Production policies, hosted schema/RLS upgrade, dependency triage, independent
 builds and legacy Deno services remain release debt in the
 [closure review](../specs/001-core-journey/closure-review.md). Development notices
-are not legal policies. No SPEC-002 work started. Earlier entries are history.
+are not legal policies. No future feature work started. Earlier entries are history.
 
 ## Formal closure audit supersedes the previous closure - 2026-09-24
 
@@ -34,7 +193,7 @@ courts is also missing; source-coordinate equality is not a field accuracy check
 Fresh checks: verify passes, 46 client tests and 11 harness tests pass; verify:edge
 fails because Deno is missing. Existing local API/browser/iPhone results remain
 valid within their recorded limits. Only documentation/task states changed in
-this audit. No commits, staging, resets, remote changes or SPEC-002 work occurred.
+this audit. No commits, staging, resets, remote changes or future feature work occurred.
 The review contains the acceptance-by-criterion assessment, debt register and
 proposed commit groups. Next: close its C01-C03 findings within SPEC-001.
 
@@ -424,3 +583,13 @@ Consultar `npm run harness:status`. Los estados y dependencias viven en [tasks.j
 
 ## Actualización de arranque — 2026-09-18
 Se comprobó el arranque de Metro con el CLI local mediante `npm start`, se retiró `@types/react-native` y se alinearon dependencias dentro de SDK 54 (Expo 54.0.37, React Native 0.81.5). La comprobación de compatibilidad de Expo pasa. El CLI agregó plugins de font, secure-store y web-browser; no se verificó compilación nativa. `verify` mantiene 6 errores de tipos y 4 errores / 4 advertencias de lint. npm reportó 36 vulnerabilidades pendientes de evaluar. T01 sigue en progreso; consultar [evidencia y límites](../specs/001-core-journey/verification.md). Próximo paso: corregir los errores estáticos del cliente.
+
+## SPEC-003 T01 R01 visual review prepared - 2026-10-13
+
+Owner authorized design-only T01 and confirmed Spanish initial UI. Reviewable
+static compositions prioritize Court List, Map, Preview and Detail, and cover
+Play/supporting states, alternatives, tokens and motion. See
+[the R01 review](../specs/003-arcade-ux-ui/design-r01/review.md).
+T01 remains in_progress awaiting exact owner approval. SPEC-003 remains draft;
+T02 is not authorized. Verify passes; no runtime/device accessibility/performance
+acceptance, functional code, backend, deployment, commits or push in this step.

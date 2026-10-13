@@ -5,6 +5,17 @@ Updated 2026-10-09. The local MVP is implemented and its
 
 ## Purpose
 
+The owner confirmed players seeking to join as the initial audience and placed
+the next product MVP before iOS beta on 2026-10-12. The next priority is
+[SPEC-002](../specs/002-player-pickup/spec.md), ready for implementation after
+T00 planning closure. It includes invitations and organizer-declared final match
+results; T01's local contract and T02 browser organizer UI are verified; T03 public
+discovery is next. See
+[ADR 0010](decisions/0010-player-first-next-mvp.md). Broader ideas in
+[the product vision discussion](product-vision.md) remain proposals. SPEC-001
+remains the accepted local scope. iOS beta is future work without a registered
+specification; define it later against the completed product.
+
 BBallUY helps people discover basketball courts and become part of their communities. The commercial name remains undecided; some existing screens still use StreetHoops.
 
 ## Current MVP direction

@@ -9,9 +9,13 @@ import Colors from '@/constants/colors';
 import { useCourtCatalog } from '@/hooks/catalog';
 import { filterCourts, type Coordinate } from '@/lib/courts/catalog';
 import { locateUser } from '@/lib/courts/location';
+import { usePublicSessions } from '@/hooks/pickup';
+import { dateLabel, sessionGroups } from '@/lib/pickup/discovery';
 
 export default function MapScreen() {
   const router = useRouter(); const catalog = useCourtCatalog();
+  const activity = usePublicSessions();
+  const playing = sessionGroups(activity.data ?? []).playing;
   const [search, setSearch] = useState('');
   const [location, setLocation] = useState<Coordinate | null>(null);
   const [locating, setLocating] = useState(false);
@@ -40,11 +44,16 @@ export default function MapScreen() {
       {!catalog.isPending && !catalog.isError && <>
         <CourtMap courts={courts} location={location} onSelect={openCourt} />
         <Text style={{ color: Colors.text, fontSize: 22 }}>Court catalog ({courts.length})</Text>
+        {activity.isPending && <ActivityIndicator accessibilityLabel="Checking reported games" color={Colors.primary} />}
+        {activity.isError && <View style={{ gap: 8 }}><Text accessibilityRole="alert" style={{ color: Colors.text }}>Unable to check court activity. Previous reports may be outdated.</Text>
+          <TouchableOpacity accessibilityRole="button" onPress={() => void activity.refetch()}><Text style={{ color: Colors.primary }}>Retry activity</Text></TouchableOpacity></View>}
+        {activity.data && <Text style={{ color: Colors.textSecondary }}>Activity last checked {dateLabel(activity.dataUpdatedAt)}</Text>}
         {courts.length === 0 && <Text style={{ color: Colors.textSecondary }}>{catalog.data?.length ? 'No courts match your search.' : 'No courts are available yet.'}</Text>}
         {courts.map(court => <TouchableOpacity accessibilityRole="button" accessibilityLabel={`View ${court.name}`} key={court.id} onPress={() => openCourt(court.id)}
           style={{ backgroundColor: Colors.surface, padding: 18, borderRadius: 12, gap: 8 }}>
           <Text style={{ color: Colors.text, fontSize: 18 }}>{court.name}</Text>
           <Text style={{ color: Colors.textSecondary }}>{court.surface || 'Surface not recorded'}</Text>
+          {playing.some(game => game.court_id === court.id) && <Text style={{ color: '#ff8a43' }}>Playing · reported by organizer{activity.isError ? ' · check failed' : ''}</Text>}
           <Text style={{ color: Colors.primary }}>View details</Text>
         </TouchableOpacity>)}
       </>}

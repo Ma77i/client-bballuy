@@ -19,6 +19,8 @@
     "db:local:start": "node scripts/local-backend.mjs start",
     "db:local:stop": "node scripts/local-backend.mjs stop",
     "db:local:reset": "node scripts/local-backend.mjs reset",
+    "db:local:migrate": "node scripts/local-backend.mjs migrate",
+    "db:local:pickup": "node scripts/local-backend.mjs pickup",
     "db:local:types": "node scripts/local-backend.mjs types",
     "db:local:verify": "node scripts/local-backend.mjs verify",
     "verify:docs": "node scripts/harness.mjs docs",

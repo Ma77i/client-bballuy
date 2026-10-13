@@ -7,6 +7,7 @@ import { networkInterfaces } from 'node:os';
 import { selectLanAddress } from './local-device.mjs';
 import { verifyAuthorization } from '../local-backend/tests/authorization.mjs';
 import { verifySessions } from '../local-backend/tests/sessions.mjs';
+import { verifyPickup } from '../local-backend/tests/pickup.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const workspace = path.join(root, 'local-backend');
@@ -66,6 +67,10 @@ switch (action) {
   case 'reset':
     supabase(['db', 'reset', '--local', '--yes']);
     console.log('Replayed migrations and seed in bballuy-local only.');
+    break;
+  case 'migrate':
+    supabase(['migration', 'up', '--local']);
+    console.log('Applied pending incremental migrations to bballuy-local; existing data retained.');
     break;
   case 'types': {
     const types = supabase(['gen', 'types', '--local', '--lang', 'typescript', '--schema', 'public']);
@@ -132,6 +137,13 @@ switch (action) {
     await verifyAuthorization({ publicKey, database });
     break;
   }
+  case 'pickup': {
+    const status = JSON.parse(supabase(['status', '-o', 'json']));
+    const publicKey = status.PUBLISHABLE_KEY ?? status.ANON_KEY;
+    if (!publicKey) throw new Error('Local public API key unavailable.');
+    await verifyPickup({ publicKey, database });
+    break;
+  }
   case 'sessions': {
     const status = JSON.parse(supabase(['status', '-o', 'json']));
     const publicKey = status.PUBLISHABLE_KEY ?? status.ANON_KEY;
@@ -152,6 +164,16 @@ switch (action) {
     const publicKey = status.PUBLISHABLE_KEY ?? status.ANON_KEY;
     if (!publicKey) throw new Error('Local public API key unavailable.');
     const apiUrl = `http://${host}:55431`;
+    // Keep the owner contact out of versioned files and launch diagnostics.
+    const supportPath = path.join(root, '.harness/local-support.json');
+    let supportEmail = process.env.EXPO_PUBLIC_SUPPORT_EMAIL ?? '';
+    if (!supportEmail && existsSync(supportPath)) {
+      try {
+        const support = JSON.parse(readFileSync(supportPath, 'utf8'));
+        if (typeof support.email !== 'string') throw new Error('Invalid contact');
+        supportEmail = support.email;
+      } catch { throw new Error('Invalid private local support configuration.'); }
+    }
     const health = await fetch(`${apiUrl}/auth/v1/health`, {
       headers: { apikey: publicKey }, signal: AbortSignal.timeout(5000), redirect: 'error',
     });
@@ -165,6 +187,7 @@ switch (action) {
           REACT_NATIVE_PACKAGER_HOSTNAME: host,
           EXPO_PUBLIC_SUPABASE_URL: apiUrl,
           EXPO_PUBLIC_SUPABASE_ANON_KEY: publicKey, EXPO_PUBLIC_PROVIDER: 'supabase',
+          EXPO_PUBLIC_SUPPORT_EMAIL: supportEmail,
         },
       });
     if (preview.error) throw preview.error;
@@ -172,5 +195,5 @@ switch (action) {
     break;
   }
   default:
-    throw new Error('Use start, stop, reset, types, verify, permissions, sessions, web or device. No remote operations supported.');
+    throw new Error('Use start, stop, reset, migrate, types, verify, permissions, pickup, sessions, web or device. No remote operations supported.');
 }

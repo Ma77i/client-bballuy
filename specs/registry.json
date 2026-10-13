@@ -6,7 +6,50 @@
       "title": "Account, courts and community membership",
       "path": "specs/001-core-journey",
       "status": "verified",
-      "requirements": ["R01", "R02", "R03", "R04", "R05", "R06", "R07", "R08", "R09", "R10"]
+      "requirements": [
+        "R01",
+        "R02",
+        "R03",
+        "R04",
+        "R05",
+        "R06",
+        "R07",
+        "R08",
+        "R09",
+        "R10"
+      ]
+    },
+    {
+      "id": "SPEC-002",
+      "title": "Player-first pickup MVP",
+      "path": "specs/002-player-pickup",
+      "status": "verified",
+      "requirements": [
+        "R01",
+        "R02",
+        "R03",
+        "R04",
+        "R05",
+        "R06",
+        "R07",
+        "R08"
+      ]
+    },
+    {
+      "id": "SPEC-003",
+      "title": "BBallUY Arcade UX/UI Redesign",
+      "path": "specs/003-arcade-ux-ui",
+      "status": "draft",
+      "requirements": [
+        "R01",
+        "R02",
+        "R03",
+        "R04",
+        "R05",
+        "R06",
+        "R07",
+        "R08"
+      ]
     }
   ]
 }

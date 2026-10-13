@@ -1,0 +1,143 @@
+{
+  "specId": "SPEC-002",
+  "tasks": [
+    {
+      "id": "T00",
+      "title": "Finalize player-first MVP rules and acceptance",
+      "status": "done",
+      "requirements": [
+        "R01",
+        "R07"
+      ],
+      "dependsOn": [],
+      "acceptance": "Pilot audience and organizers, visibility, formats/capacity, lifecycle, support and acceptance are recorded; specification is ready before behavior changes.",
+      "evidence": [
+        "specs/002-player-pickup/verification.md"
+      ]
+    },
+    {
+      "id": "T01",
+      "title": "Establish local session contract and server permissions",
+      "status": "done",
+      "requirements": [
+        "R01",
+        "R03",
+        "R04",
+        "R06",
+        "R08"
+      ],
+      "dependsOn": [
+        "T00"
+      ],
+      "acceptance": "Preserving local migrations/types and anonymous/two-account tests prove visibility, owner lifecycle rules, duplicate prevention and atomic capacity enforcement.",
+      "evidence": [
+        "specs/002-player-pickup/verification.md",
+        "local-backend/tests/pickup.mjs",
+        "local-backend/supabase/migrations/20261012000100_pickup_contract.sql",
+        "docs/decisions/0011-atomic-pickup-contract.md"
+      ]
+    },
+    {
+      "id": "T02",
+      "title": "Implement organizer creation and session management",
+      "status": "done",
+      "requirements": [
+        "R03"
+      ],
+      "dependsOn": [
+        "T01"
+      ],
+      "acceptance": "Eligible organizers create and manage sessions with validation and recoverable errors; non-owners cannot mutate them; no attendance/results are implied.",
+      "evidence": [
+        "specs/002-player-pickup/verification.md",
+        "tests/pickup-organizer.test.cjs",
+        "docs/decisions/0012-organizer-request-recovery.md",
+        "docs/decisions/0013-pickup-timing-and-court-activity.md"
+      ]
+    },
+    {
+      "id": "T03",
+      "title": "Implement upcoming session discovery and details",
+      "status": "done",
+      "requirements": [
+        "R02",
+        "R07"
+      ],
+      "dependsOn": [
+        "T02"
+      ],
+      "acceptance": "Players find real upcoming opportunities and inspect accurate details; loading/empty/error/retry states and agreed visibility work. Authenticated court viewers see organizer-reported started activity with start time, refreshed lifecycle state and recoverable read failures; push is deferred.",
+      "evidence": [
+        "specs/002-player-pickup/verification.md",
+        "tests/pickup-discovery.test.cjs",
+        "local-backend/tests/pickup.mjs",
+        "docs/decisions/0013-pickup-timing-and-court-activity.md"
+      ]
+    },
+    {
+      "id": "T04",
+      "title": "Implement registration and personal upcoming sessions",
+      "status": "done",
+      "requirements": [
+        "R04",
+        "R05"
+      ],
+      "dependsOn": [
+        "T03"
+      ],
+      "acceptance": "Join/leave/retry/reopen, cancellation visibility and account switching preserve confirmed account-scoped state; full sessions cannot be overbooked.",
+      "evidence": [
+        "specs/002-player-pickup/verification.md",
+        "tests/pickup-participation.test.cjs",
+        "local-backend/tests/pickup.mjs",
+        "docs/decisions/0014-player-registration-recovery.md"
+      ]
+    },
+    {
+      "id": "T05",
+      "title": "Implement assembled-match registration and final-score entry",
+      "status": "done",
+      "requirements": [
+        "R08",
+        "R06"
+      ],
+      "dependsOn": [
+        "T04"
+      ],
+      "acceptance": "Assembled matches support guests and linked users, validated organizer-declared final scores and atomic closing; organizer corrections retain history and retries do not duplicate entries; no ranking credit or live scoring.",
+      "evidence": [
+        "specs/002-player-pickup/verification.md",
+        "tests/pickup-matches.test.cjs",
+        "local-backend/tests/pickup.mjs",
+        "docs/decisions/0015-match-recording-and-score-history.md",
+        "local-backend/supabase/migrations/20261013000100_match_recording.sql"
+      ]
+    },
+    {
+      "id": "T06",
+      "title": "Verify the complete SPEC-002 local journey",
+      "status": "done",
+      "requirements": [
+        "R01",
+        "R02",
+        "R03",
+        "R04",
+        "R05",
+        "R06",
+        "R07",
+        "R08"
+      ],
+      "dependsOn": [
+        "T04",
+        "T05"
+      ],
+      "acceptance": "A01-A08 for the SPEC-002 slice have reproducible functional, integrity, permissions and browser/iPhone evidence; remaining fixes and measured limits are explicit. Completing this specification does not close the MVP or authorize another phase; owner instruction and a ready SPEC-003 are required.",
+      "evidence": [
+        "specs/002-player-pickup/verification.md",
+        "specs/002-player-pickup/closure-review.md",
+        "tests/pickup-organizer.test.cjs",
+        "tests/support.test.cjs"
+      ]
+    }
+  ]
+}

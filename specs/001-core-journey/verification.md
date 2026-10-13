@@ -54,7 +54,7 @@ No new privacy policy, hosted email assurance, production consent validation or
 distribution readiness is claimed. Release debt in closure-review.md remains.
 
 With C01-C03 resolved, T08 is done and SPEC-001 verified for the local MVP. No
-commit, push, deployment, hosted write, court merge or SPEC-002 work occurred.
+commit, push, deployment, hosted write, court merge or future feature work occurred.
 Final verify passed all three checks (30 Markdown files, TypeScript, lint),
 test:client passed 48/48 and git diff --check passed. Final harness:status reports
 all tasks done. The temporary 8094 preview was stopped after testing.
@@ -71,7 +71,7 @@ for all three courts (C03). Passing earlier functional results remain evidence;
 they do not waive these findings. T08 and SPEC-001 return to in_progress.
 
 This is a documentation-only audit: no behavior, database, Git index/history or
-remote changes. No SPEC-002 started. Fresh initial verify passed; test:client
+remote changes. No future feature work started. Fresh initial verify passed; test:client
 46/46 and test:harness 11/11 passed. verify:edge failed with deno ENOENT; it was
 not skipped or claimed green. No functions changed. Database/browser/device tests
 were reviewed from preceding dated evidence, not rerun in this audit.
@@ -1064,7 +1064,7 @@ Entorno: Windows/PowerShell, Node.js 24.16.0, npm 11.13.0. Se conservaron los ca
 
 Límites: prueba de arranque de Metro en modo offline/CI, sin cargar `.env`, generar bundle ni probar dispositivo/emulador. No se verificó compilación nativa, comportamiento de los plugins ni A02–A10. No se modificaron Edge Functions ni harness. **T01 continúa en progreso y A01 sigue incompleto.** Siguiente tarea: corregir los fallos estáticos del cliente y repetir `npm run verify` antes de la aceptación funcional.
 
-## Branch readiness check before SPEC-002 - 2026-10-09
+## Core branch readiness check - 2026-10-09
 
 Environment: Windows / PowerShell; active branch feature/init at c6a4757;
 working tree initially clean. Local master and cached origin/master at b54c821.
@@ -1083,5 +1083,3 @@ Commands and results:
 
 No branch switch, merge, commit, push, application/Edge changes, database command
 or deployment was performed. No fresh device/backend acceptance was executed.
-SPEC-002 is not registered. Beta iOS preparation is a documented proposal pending
-owner confirmation; it is not authorization to deploy hosted migrations.

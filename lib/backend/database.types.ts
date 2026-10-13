@@ -407,6 +407,308 @@ export type Database = {
           },
         ]
       }
+      pickup_match_players: {
+        Row: {
+          guest_label: string | null
+          id: string
+          match_id: string
+          side: string
+          user_id: string | null
+        }
+        Insert: {
+          guest_label?: string | null
+          id?: string
+          match_id: string
+          side: string
+          user_id?: string | null
+        }
+        Update: {
+          guest_label?: string | null
+          id?: string
+          match_id?: string
+          side?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pickup_match_players_match_id_fkey"
+            columns: ["match_id"]
+            isOneToOne: false
+            referencedRelation: "pickup_matches"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pickup_match_players_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pickup_match_players_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users_public"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pickup_matches: {
+        Row: {
+          closed_at: string | null
+          court_id: string
+          created_at: string
+          format: string
+          id: string
+          organizer_id: string
+          revision: number
+          score_a: number | null
+          score_b: number | null
+          source_session_id: string | null
+          state: string
+        }
+        Insert: {
+          closed_at?: string | null
+          court_id: string
+          created_at?: string
+          format: string
+          id?: string
+          organizer_id: string
+          revision?: number
+          score_a?: number | null
+          score_b?: number | null
+          source_session_id?: string | null
+          state?: string
+        }
+        Update: {
+          closed_at?: string | null
+          court_id?: string
+          created_at?: string
+          format?: string
+          id?: string
+          organizer_id?: string
+          revision?: number
+          score_a?: number | null
+          score_b?: number | null
+          source_session_id?: string | null
+          state?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pickup_matches_court_id_fkey"
+            columns: ["court_id"]
+            isOneToOne: false
+            referencedRelation: "court_catalog"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pickup_matches_court_id_fkey"
+            columns: ["court_id"]
+            isOneToOne: false
+            referencedRelation: "courts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pickup_matches_organizer_id_fkey"
+            columns: ["organizer_id"]
+            isOneToOne: false
+            referencedRelation: "user_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pickup_matches_organizer_id_fkey"
+            columns: ["organizer_id"]
+            isOneToOne: false
+            referencedRelation: "users_public"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pickup_matches_source_session_id_fkey"
+            columns: ["source_session_id"]
+            isOneToOne: false
+            referencedRelation: "pickup_session_catalog"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pickup_matches_source_session_id_fkey"
+            columns: ["source_session_id"]
+            isOneToOne: false
+            referencedRelation: "pickup_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pickup_places: {
+        Row: {
+          guest_label: string | null
+          id: string
+          joined_at: string
+          session_id: string
+          user_id: string | null
+        }
+        Insert: {
+          guest_label?: string | null
+          id?: string
+          joined_at?: string
+          session_id: string
+          user_id?: string | null
+        }
+        Update: {
+          guest_label?: string | null
+          id?: string
+          joined_at?: string
+          session_id?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pickup_places_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "pickup_session_catalog"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pickup_places_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "pickup_sessions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pickup_places_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pickup_places_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users_public"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pickup_score_history: {
+        Row: {
+          changed_at: string
+          match_id: string
+          previous_a: number | null
+          previous_b: number | null
+          revision: number
+          score_a: number
+          score_b: number
+        }
+        Insert: {
+          changed_at?: string
+          match_id: string
+          previous_a?: number | null
+          previous_b?: number | null
+          revision: number
+          score_a: number
+          score_b: number
+        }
+        Update: {
+          changed_at?: string
+          match_id?: string
+          previous_a?: number | null
+          previous_b?: number | null
+          revision?: number
+          score_a?: number
+          score_b?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pickup_score_history_match_id_fkey"
+            columns: ["match_id"]
+            isOneToOne: false
+            referencedRelation: "pickup_matches"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pickup_sessions: {
+        Row: {
+          capacity: number | null
+          closed_at: string | null
+          core_locked: boolean
+          court_id: string
+          created_at: string
+          description: string
+          format: string
+          id: string
+          organizer_id: string
+          organizer_plays: boolean
+          scheduled_at: string
+          started_at: string | null
+          state: string
+          timing: string
+        }
+        Insert: {
+          capacity?: number | null
+          closed_at?: string | null
+          core_locked?: boolean
+          court_id: string
+          created_at?: string
+          description?: string
+          format: string
+          id?: string
+          organizer_id: string
+          organizer_plays: boolean
+          scheduled_at: string
+          started_at?: string | null
+          state?: string
+          timing: string
+        }
+        Update: {
+          capacity?: number | null
+          closed_at?: string | null
+          core_locked?: boolean
+          court_id?: string
+          created_at?: string
+          description?: string
+          format?: string
+          id?: string
+          organizer_id?: string
+          organizer_plays?: boolean
+          scheduled_at?: string
+          started_at?: string | null
+          state?: string
+          timing?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pickup_sessions_court_id_fkey"
+            columns: ["court_id"]
+            isOneToOne: false
+            referencedRelation: "court_catalog"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pickup_sessions_court_id_fkey"
+            columns: ["court_id"]
+            isOneToOne: false
+            referencedRelation: "courts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pickup_sessions_organizer_id_fkey"
+            columns: ["organizer_id"]
+            isOneToOne: false
+            referencedRelation: "user_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pickup_sessions_organizer_id_fkey"
+            columns: ["organizer_id"]
+            isOneToOne: false
+            referencedRelation: "users_public"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       reports: {
         Row: {
           created_at: string
@@ -880,6 +1182,129 @@ export type Database = {
         }
         Relationships: []
       }
+      pickup_match_roster: {
+        Row: {
+          display_name: string | null
+          guest_label: string | null
+          id: string | null
+          match_id: string | null
+          side: string | null
+          user_id: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pickup_match_players_match_id_fkey"
+            columns: ["match_id"]
+            isOneToOne: false
+            referencedRelation: "pickup_matches"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pickup_match_players_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pickup_match_players_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users_public"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pickup_roster: {
+        Row: {
+          display_name: string | null
+          guest_label: string | null
+          id: string | null
+          joined_at: string | null
+          session_id: string | null
+          user_id: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pickup_places_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "pickup_session_catalog"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pickup_places_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "pickup_sessions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pickup_places_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pickup_places_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users_public"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pickup_session_catalog: {
+        Row: {
+          available_places: number | null
+          capacity: number | null
+          closed_at: string | null
+          court_id: string | null
+          created_at: string | null
+          description: string | null
+          format: string | null
+          id: string | null
+          occupied_places: number | null
+          organizer_id: string | null
+          organizer_name: string | null
+          organizer_plays: boolean | null
+          scheduled_at: string | null
+          started_at: string | null
+          state: string | null
+          timing: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pickup_sessions_court_id_fkey"
+            columns: ["court_id"]
+            isOneToOne: false
+            referencedRelation: "court_catalog"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pickup_sessions_court_id_fkey"
+            columns: ["court_id"]
+            isOneToOne: false
+            referencedRelation: "courts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pickup_sessions_organizer_id_fkey"
+            columns: ["organizer_id"]
+            isOneToOne: false
+            referencedRelation: "user_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pickup_sessions_organizer_id_fkey"
+            columns: ["organizer_id"]
+            isOneToOne: false
+            referencedRelation: "users_public"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_stats: {
         Row: {
           display_name: string | null
@@ -1170,6 +1595,22 @@ export type Database = {
         Returns: undefined
       }
       longtransactionsenabled: { Args: never; Returns: boolean }
+      pickup_command: {
+        Args: {
+          p_action: string
+          p_data: Json
+          p_expected_actor?: string
+          p_request_id: string
+        }
+        Returns: Json
+      }
+      pickup_player_search: {
+        Args: { p_search: string }
+        Returns: {
+          display_name: string
+          id: string
+        }[]
+      }
       populate_geometry_columns:
         | { Args: { tbl_oid: unknown; use_typmod?: boolean }; Returns: number }
         | { Args: { use_typmod?: boolean }; Returns: string }

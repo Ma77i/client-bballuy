@@ -64,3 +64,21 @@ A command containing git push origin master was rejected by automatic approval
 review before execution. No part of that command ran and no push occurred.
 Git fetch had separately failed with Repository not found. Publication and PR
 creation remain owner actions in GitHub Desktop with the personal account.
+
+## Post-PR verification - 2026-10-09
+
+Environment: Windows / PowerShell; master at a0afd0e (PR #1 merge), initially
+clean and equal to the cached origin/master ref (0 ahead / 0 behind).
+git merge-base --is-ancestor c6a4757 master exits 0: all MVP implementation
+commits are included. The only feature/init commit missing from master is
+ ee6e3dd, which adds a historical readiness note to verification.md, not code.
+Remote freshness is limited to the owner's GitHub Desktop refresh; this session
+has no working GitHub authentication and did not repeat the known failed fetch.
+
+Initial npm run verify failed only because specs/master-recovery was not a
+registered product specification. Moved that historical Git recovery record to
+docs/master-recovery, preserving all three files and the existing harness rules.
+No application, harness or Edge source changed. npm run test:client passed all
+48 tests. Final npm run verify passed docs, client TypeScript and lint.
+No device/backend acceptance, commit, push, branch creation or deployment occurred.
+Future product scope remains pending owner confirmation.

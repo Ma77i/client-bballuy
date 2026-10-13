@@ -15,6 +15,13 @@ Hosted migration, release builds and production readiness remain separate work.
 
 ## Retomar el proyecto
 
+Priority updated 2026-10-12: help players find and join pickup sessions first.
+[SPEC-002](specs/002-player-pickup/spec.md) is locally verified, including
+owner-reported iPhone acceptance. See its [closure review](specs/002-player-pickup/closure-review.md).
+The MVP remains open for further improvements. Stop until the owner explicitly
+requests continuation and SPEC-003 is ready; no beta or release is planned.
+See [the sequencing decision](docs/decisions/0010-player-first-next-mvp.md).
+
 1. Leer [producto](docs/product.md) y [arquitectura](docs/architecture.md).
 2. Preparar el entorno con la [guía de desarrollo](docs/development.md).
 3. Leer la [primera especificación](specs/001-core-journey/spec.md) y sus [tareas](specs/001-core-journey/tasks.json).

@@ -22,9 +22,11 @@ the developer explicitly changes its environment.
 
 ```sh
 npm run db:local:start
+npm run db:local:migrate
 npm run db:local:verify
 npm run db:local:permissions
 npm run db:local:sessions
+npm run db:local:pickup
 npm run db:local:types
 npm run db:local:stop
 ```
@@ -57,6 +59,17 @@ publicly: historical areas outside the T03 core boundary retain source permissio
 run leaves these containers stopped. Existing unrelated containers are untouched.
 
 ## Source and migration boundaries
+
+`db:local:migrate` applies only pending incremental migrations to this unlinked
+local workspace without resetting existing data. SPEC-002/T01 adds pickup tables,
+read-only authenticated projections and an atomic command RPC in
+20261012000100_pickup_contract.sql. `db:local:pickup` exercises anonymous/two-account
+permissions, guests/capacity, lifecycle races, idempotency and result corrections,
+then removes only its generated fixtures. See
+[ADR 0011](../docs/decisions/0011-atomic-pickup-contract.md).
+The T02 client pins p_expected_actor for account-switch safety; the local RPC
+keeps it optional for older callers. See
+[organizer recovery](../docs/decisions/0012-organizer-request-recovery.md).
 
 The [reviewed snapshot](../supabase/snapshots/2026-09-19-dependencies.json) supplies
 the public schema, application functions and three court records. Rebuild the
@@ -162,3 +175,11 @@ Expo Go 57 requires matching CLI/device login; see the
 The root app and tooling have separate lockfiles so the CLI's React runtime does
 not enter the Expo dependency tree. Do not remove the tooling lockfile or install
 its dependencies at the app root.
+
+### Optional problem-report contact
+
+Set EXPO_PUBLIC_SUPPORT_EMAIL before the device/web launcher, or set the email
+field in ignored .harness/local-support.json. It injects this public support
+contact without printing it. Keep the real contact out of tracked docs/tests.
+Missing configuration hides the Profile entry. Reports open a user-reviewed
+draft; nothing is sent automatically.
