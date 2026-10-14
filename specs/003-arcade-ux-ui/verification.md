@@ -1,5 +1,46 @@
 # SPEC-003 - Verification
 
+## T04 closure / T05 local implementation — 2026-10-14
+
+Owner explicitly closes T04: [closure](t04-closure.md), retaining unobserved native
+cases rather than inferring device acceptance. T05 authorized only within
+[scope](t05-scope.md); [implementation evidence](t05-verification.md) records verify,
+109 client tests, 61 actual local browser checks and full iOS compilation.
+[Native walkthrough](t05-iphone-review.md) is prepared with physical cases pending.
+T05 in_progress for review; T06 remains todo and not started. SPEC-003 not verified.
+No commits/push. Earlier authorization/status boundaries below are historical.
+
+## T03 owner closure / T04 local execution — 2026-10-14
+
+T03 closed/approved explicitly; see [closure](t03-closure.md). T04 authorized and
+implemented within [scope](t04-scope.md), [ADR 0018](../../docs/decisions/0018-arcade-detail-and-account-presentation.md).
+Verify, 105 client tests, 40 real local browser checks and full iOS export pass;
+[T04 evidence](t04-verification.md) includes captures, source inventory and QA cleanup.
+[New iPhone review](t04-iphone-review.md) is pending; no new physical result inferred
+from T03 approval or compilation. T04 in_progress, SPEC-003 not verified, T05/T06 todo.
+No commits/push or automatic T05. This entry supersedes prior task boundaries as history.
+
+## T03 focused visual refinement — 2026-10-14
+
+Owner authorized compact discovery/preview refinement after iPhone visual feedback.
+See [differences and observed evidence](t03-visual-refinement.md). Verify, 105 client
+tests, 17 focused tests and full iOS export pass; measured web controls/reflow and
+content-driven sheet checked. Original capture retained; refined captures separate.
+New iPhone retest is pending; prior device cases are not implicitly marked verified.
+T03 in_progress, SPEC-003 not verified, T04–T06 todo. No commits/push or T04 work.
+
+## T03 current execution ledger — 2026-10-14
+
+Owner authorized T03 on SPEC-003/design; T00–T02 remain done. T03 implementation and
+local/browser evidence are recorded in [t03-verification](t03-verification.md),
+[ADR 0017](../../docs/decisions/0017-list-first-court-preview.md) and
+[prepared device review](t03-iphone-review.md). Verify and 105 client tests pass;
+10 focused discovery/catalog tests pass. Actual shared web components, fallback,
+states and simulated context return checked. iOS transform is not device acceptance.
+T03 remains in_progress pending physical checks; SPEC-003 not verified, T04–T06
+todo. No backend/RLS/business/dependency change, commit or push. Stop before T04.
+This entry supersedes earlier dated authorization boundaries without rewriting history.
+
 ## T02 current completion ledger - 2026-10-13
 
 Owner explicitly authorized t02-scope.md only. T02 is done for local foundation
@@ -269,3 +310,14 @@ backend/RLS/hooks/lib contracts, real entities, commits or push changed. Existin
 owner changes preserved. No automatic T03 execution. No Edge/harness edits, so
 verify:edge/test:harness not required for this foundation-only change.
 
+
+## R03 visual fidelity design package — 2026-10-14
+
+Design/documentation-only owner request. See [R03 design evidence](design-r03/verification.md),
+[boards and proposed decisions](design-r03/README.md) and
+[fidelity acceptance contract](design-r03/fidelity-contract.md). Five annotated
+402 × 874 design boards plus shared visual states; two newly generated original
+review illustrations; no runtime UI/contract/backend modifications. Native iPhone
+comparison is not executed. T00–T04 history unchanged, T05 in_progress, T06 todo;
+R03 unapproved and no implementation authorization. Local static result is recorded
+in the R03 evidence after checks complete.

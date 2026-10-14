@@ -4,8 +4,9 @@ import { useRouter } from 'expo-router';
 import Text from '@/components/AppText';
 import Colors from '@/constants/colors';
 import { useAuth } from '@/contexts/AuthContext';
+import { Button, Notice } from '@/components/foundation/Primitives';
 
-export default function SignOutButton() {
+export default function SignOutButton({ arcade = false }: { arcade?: boolean }) {
   const { signOut } = useAuth();
   const router = useRouter();
   const locked = useRef(false);
@@ -27,6 +28,11 @@ export default function SignOutButton() {
       setPending(false);
     }
   }
+  if (arcade) return <View style={{ gap: 12 }}>
+    {failed && <Notice>No pudimos cerrar la sesión. Revisá la conexión y reintentá.</Notice>}
+    <Button danger label={pending ? 'Cerrando sesión' : failed ? 'Reintentar cierre de sesión' : 'Cerrar sesión'}
+      busy={pending} onPress={() => void logout()} />
+  </View>;
   return <View style={{ gap: 12 }}>
     {failed && <Text accessibilityRole="alert" style={{ color: Colors.text }}>
       Unable to sign out. Check your connection and retry.

@@ -2,9 +2,17 @@
 
 ## Authorization and strategy
 
-T01 design approved; owner explicitly authorized only T02 on 2026-10-13.
-T02 foundations are locally verified; SPEC-003 in_progress, T03-T06 todo.
-See t02-verification.md and ADR 0016. Stop before T03 pending owner review.
+Current boundary, 2026-10-14: owner explicitly closed T04 (t04-closure.md) and
+authorized only T05 on the preserved current branch. T05 implemented/local checks
+ready; remains in_progress for visual/native review. T06 is not started. See
+t05-scope.md, t05-verification.md, t05-iphone-review.md and ADR 0019. Earlier task
+boundary paragraphs below are historical, not current continuation authorization.
+
+T00–T03 are done; owner explicitly closed/approved T03 and authorized only T04 on
+SPEC-003/design on 2026-10-14. T04 uses approved R02/R02.1/T02/T03 presentation for
+detail, My Courts and Profile. Local/browser/iOS compilation evidence is separate
+from new pending physical cases. T04 in_progress; SPEC-003 not verified, T05–T06 todo.
+Stop before T05. See t03-closure.md, t04-scope.md, t04-verification.md and ADR 0018.
 Earlier dated entries describe their original approval boundaries.
 
 ## Execution sequence
@@ -95,3 +103,16 @@ R02 artistic direction approved generally, not final T01 acceptance. Prepare onl
 the requested compact-sheet, eligibility, scheduling/participant patches and three
 four-frame sequences in design-r02-1/. Preserve R02 originals and all other direction.
 T01 remains in_progress; no implementation authorization, commits or push.
+
+## R03 design-only fidelity review — 2026-10-14
+
+The owner requested a new [R03 review package](design-r03/README.md) after reporting
+native visual divergence. R03 is proposed, not approved or implementation-ready.
+Current authorization is design/documentation only; do not continue UI implementation
+or final verification from earlier T05 authorization. T00–T04 completed history is
+preserved; T05 stays in_progress and T06 todo. No registry state/numbering changed.
+The [proposed refinement sequence](design-r03/task-proposal.md) requires approval
+before insertion/renumbering. Once approved, frozen R03 boards/specifications become
+the visual baseline; until then R02/R02.1 remain historical approved references.
+Actual iPhone comparison, text settings, safe insets and native acceptance remain
+pending. No backend/RLS, contracts, app source, commits or push in this review.

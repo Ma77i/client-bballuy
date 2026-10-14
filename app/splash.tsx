@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { View, Image, ActivityIndicator } from "react-native";
+import { View, Image } from "react-native";
 import { useRootNavigationState, useRouter } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Colors from "@/constants/colors";
+import { palette } from '@/constants/design';
+import { StateView } from '@/components/foundation/Primitives';
 import { useAuth } from "@/contexts/AuthContext";
 import { authDestination } from '@/lib/auth/controller';
 
@@ -40,7 +41,7 @@ export default function SplashScreen() {
     <View
       style={{
         flex: 1,
-        backgroundColor: Colors.background,
+        backgroundColor: palette.navy,
         alignItems: "center",
         justifyContent: "center",
       }}
@@ -54,7 +55,7 @@ export default function SplashScreen() {
           marginBottom: 20,
         }}
       />
-      <ActivityIndicator size="large" color={Colors.primary} />
+      <StateView title="Preparando tu sesión" loading />
     </View>
   );
 }

@@ -1,0 +1,24 @@
+[
+  {
+    "platform": "web",
+    "url": "http://localhost:8094/tests/fixtures/DiscoveryPreview.bundle?platform=web&dev=false&minify=false&hot=false",
+    "httpStatus": 200,
+    "bytes": 5225224,
+    "nativeMapModule": false,
+    "nativeMapViewManager": false,
+    "physicalExecutionVerified": false,
+    "sourceMapUrl": "http://localhost:8094/tests/fixtures/DiscoveryPreview.map?platform=web&dev=false&minify=false&hot=false",
+    "nativeMapSourceCount": 0
+  },
+  {
+    "platform": "ios",
+    "url": "http://localhost:8094/tests/fixtures/DiscoveryPreview.bundle?platform=ios&dev=false&minify=false&hot=false",
+    "httpStatus": 200,
+    "bytes": 6347280,
+    "nativeMapModule": true,
+    "nativeMapViewManager": true,
+    "physicalExecutionVerified": false,
+    "sourceMapUrl": "http://localhost:8094/tests/fixtures/DiscoveryPreview.map?platform=ios&dev=false&minify=false&hot=false",
+    "nativeMapSourceCount": 35
+  }
+]

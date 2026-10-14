@@ -1,0 +1,28 @@
+{
+  "status": "proposed-not-approved",
+  "date": "2026-10-14",
+  "files": {
+    "README.md": "2417e244924253be7133c9d47dc32a4b304f96e9e694ce249b12ed340c2c2ec1",
+    "art/court-action.png": "a69dec66738134d3ac90da78a317a447467b28c113d6891e72d2d0fdb2cc0ed1",
+    "art/court-secondary.webp": "9bc65656049ad945d95f8848fc317182b392785b8d098f7954eea2d9c9042ddf",
+    "art/player-action.webp": "94b69a0a08c1ec75949edb07dda49294bf960c73a7b5f49fb5e37d3d7f9168f2",
+    "art/player-portrait.png": "98905af5f2f91b5ebd8d9ce869c6f3a22ebbe0b15a048a3c4a3e4730fffc5a73",
+    "boards/courts.png": "db7df859f97c8b170064685b3d4b01e56838c2e1867338189fcdab569a79f565",
+    "boards/detail.png": "bcbab57a56de43db4146fe70edfab7fa4861dd01f7f2a349c61e302090796514",
+    "boards/my-courts.png": "13de240814905231e3bad18c639d5c326f47c6acc31de0d9cdb716d0dad7815f",
+    "boards/play.png": "f6a8c56db434cb67d5c81fa7262179edd33b95a9ffe3861902e158462e54aa43",
+    "boards/profile.png": "8f6b0dedddd8ff9d8326ffc3cddb9fae5d7385d06d5efbfd3a9c084a5a5f6744",
+    "boards/states.png": "01f6aec540a1bc1839fd12c8063c565810b4d045a12ffb8c12f0f60a11af4e72",
+    "change-log.md": "21e5b2a5efc0c6511220ef6fce1de837e01f0d658b82c2f6f395f6ab1446e118",
+    "components.md": "1a0c362e3654977603ad14f5400118e6e16f26e26c4c3bad6be859c8b2f5d465",
+    "fidelity-contract.md": "3cc9781388361fbf070c776b9acdbd91b84d880d759de5d2f46eb5938b8650cd",
+    "future-functional-requirements.md": "2df8a023092395ca289e3730dd2c226ce7259540502c5c55c495758e2caf8516",
+    "generation.json": "807e96507da4ed197474921fdedb811f0fca69a1c41e0d6ae0a7fd071237f155",
+    "illustrations.md": "88e8209d050f3c35be12fb085f2ef6fab2f3a73ca85d923f7b566caf6f042b79",
+    "interaction-motion.md": "517a2c48b17b38b44794d2a8a4204668ac1b0f57e39df989c86526f64d7f47bb",
+    "layout.md": "df0b6ec66503d5f9d87076dc7eafd004ccd2c8c91271674ddd94429beaeecd77",
+    "review.html": "884a7904598c57d79f8b50a31d18f8744babbc9b464a1a7be2771e61c9798b15",
+    "task-proposal.md": "0d87a5590c76f14215f41b70e4e332089c22ebc719dd3d149ac4df7ea924a76d",
+    "verification.md": "c0857e419dc063f9f68692bf150b769c9a27df859d41308085233d32cd72e94d"
+  }
+}

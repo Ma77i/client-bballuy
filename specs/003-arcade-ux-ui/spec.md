@@ -2,8 +2,10 @@
 
 Execution state: [registry](../registry.json). Owner-approved planning scope dated
 2026-10-13. T01 design is approved; T02 foundations are implemented and locally verified.
-SPEC-003 is in_progress; T03-T06 remain todo. Owner authorization covered T02 only.
-No T03 continuation, backend/RLS changes, commits or push.
+SPEC-003 is in_progress. Owner closed T03 and T04 and authorized T05 on 2026-10-14;
+T05 is implemented/local checks ready, in_progress for review. T06 remains todo and
+has not started. Physical native limits remain explicit in each task's evidence.
+No backend/RLS changes, commits or push.
 
 ## Problem and goal
 
@@ -185,3 +187,16 @@ motion/reduced-motion utilities. Preserve architecture/APIs and all SPEC-001/002
 contracts. No screen/navigation/map/sheet integration, backend/RLS/new features,
 commits/push or T03 continuation. Add meaningful primitive/recovery-regression checks
 and reproducible foundation preview evidence; native acceptance remains separate.
+
+## R03 design-only fidelity review — 2026-10-14
+
+The owner requested a new [R03 review package](design-r03/README.md) after reporting
+native visual divergence. R03 is proposed, not approved or implementation-ready.
+Current authorization is design/documentation only; do not continue UI implementation
+or final verification from earlier T05 authorization. T00–T04 completed history is
+preserved; T05 stays in_progress and T06 todo. No registry state/numbering changed.
+The [proposed refinement sequence](design-r03/task-proposal.md) requires approval
+before insertion/renumbering. Once approved, frozen R03 boards/specifications become
+the visual baseline; until then R02/R02.1 remain historical approved references.
+Actual iPhone comparison, text settings, safe insets and native acceptance remain
+pending. No backend/RLS, contracts, app source, commits or push in this review.

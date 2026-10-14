@@ -1,9 +1,11 @@
-import Text from '@/components/AppText';
+import EntryFrame from '@/components/entry/EntryFrame';
+import { Button, Field, Notice } from '@/components/foundation/Primitives';
+import { errorText } from '@/components/pickup/error-copy';
 import { useRef, useState } from 'react';
-import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+
 import { useRouter } from 'expo-router';
 import { supabase } from '@/lib/backend/supabase';
-import Colors from '@/constants/colors';
+
 import { useAuth } from '@/contexts/AuthContext';
 import { validateDisplayName } from '@/lib/utils/validation';
 
@@ -41,27 +43,9 @@ export default function ProfileSetupScreen() {
       setSaving(false);
     }
   };
-  return <View style={styles.container}>
-    <Text style={styles.title}>Create your profile</Text>
-    {formError && <Text accessibilityRole="alert" style={{ color: Colors.error }}>{formError}</Text>}
-    <Text style={{ color: Colors.textSecondary }}>Choose a display name to join court communities.</Text>
-    <View style={{ gap: 8 }}>
-      <Text style={{ color: Colors.text }}>Display name *</Text>
-      <TextInput accessibilityLabel="Display name" style={styles.input} placeholder="e.g. Matti"
-        placeholderTextColor={Colors.textMuted} value={displayName} onChangeText={setDisplayName}
-        editable={!saving} autoCapitalize="words" />
-    </View>
-    <TouchableOpacity accessibilityRole="button" style={[styles.saveBtn, saving && { opacity: 0.6 }]}
-      onPress={() => void onSave()} disabled={saving}>
-      <Text style={{ color: Colors.white, fontWeight: '700' }}>{saving ? 'Saving...' : 'Continue'}</Text>
-    </TouchableOpacity>
-  </View>;
+  return <EntryFrame title="TU NOMBRE EN LA CANCHA" description="Elegí un nombre visible para tu cuenta.">
+    {formError && <Notice>{errorText(formError)}</Notice>}
+    <Field label="Nombre visible" placeholder="Tu nombre" value={displayName} onChangeText={setDisplayName} editable={!saving} autoCapitalize="words" />
+    <Button label="Continuar" busy={saving} onPress={() => void onSave()} />
+  </EntryFrame>;
 }
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: Colors.background, padding: 24, gap: 20 },
-  title: { fontSize: 28, fontWeight: '800', color: Colors.text },
-  input: { backgroundColor: Colors.surface, borderRadius: 12, padding: 14, color: Colors.text,
-    borderWidth: 1, borderColor: Colors.border },
-  saveBtn: { marginTop: 'auto', backgroundColor: Colors.primary, paddingVertical: 16,
-    borderRadius: 16, alignItems: 'center' },
-});

@@ -1,14 +1,16 @@
-import { ActivityIndicator, Pressable, RefreshControl, ScrollView, View } from 'react-native';
+import MotionLink from '@/components/pickup/MotionLink';
+import { RefreshControl, ScrollView, View } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ArrowUpRight, CalendarDays, Plus, Zap } from 'lucide-react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import Text from '@/components/AppText';
-import Colors from '@/constants/colors';
-import { GameButton, GameNotice, GamePanel, gameColors, kit } from '@/components/pickup/Kit';
+import { ArrowUpRight, CalendarDays, Plus } from 'lucide-react-native';
+import Text from '@/components/pickup/GameText';
+
+import { GameLoading as ActivityIndicator, GameButton, ArcadeNotice as GameNotice, GamePanel, gameColors, kit } from '@/components/pickup/Kit';
 import { useOrganizedSessions } from '@/hooks/organizer';
 import { useCourtCatalog } from '@/hooks/catalog';
-import { sessionStateLabel } from '@/lib/pickup/organizer';
+import { sessionStatus } from '@/components/pickup/presentation';
+import { GenericMedia } from '@/components/foundation/GenericMedia';
+import { palette } from '@/constants/design';
 import DiscoverGames from '@/components/pickup/DiscoverGames';
 import { usePublicSessions } from '@/hooks/pickup';
 
@@ -18,50 +20,45 @@ export default function PlayScreen() {
   const courts = useCourtCatalog();
   const discovery = usePublicSessions();
   return <SafeAreaView style={kit.page} edges={['top', 'left', 'right']}>
-    <Stack.Screen options={{ title: 'Play', headerShown: false }} />
+    <Stack.Screen options={{ headerBackTitle: 'Volver', title: 'Jugar', headerShown: false }} />
     <ScrollView contentContainerStyle={kit.content}
       refreshControl={<RefreshControl refreshing={(games.isFetching && !games.isPending) || (discovery.isFetching && !discovery.isPending)} onRefresh={() => void Promise.all([games.refetch(), discovery.refetch()])} tintColor={gameColors.orange} />}>
       <View style={{ gap: 6 }}>
-        <Text style={kit.kicker}>MAKE THE NEXT GAME HAPPEN</Text>
-        <Text style={kit.title}>Your court.{ '\n' }Your next game.</Text>
-        <Text style={kit.body}>Find people to play with, or bring a new game together.</Text>
+        <Text style={kit.kicker}>ENCONTRÁ CON QUIÉN JUGAR</Text>
+        <Text style={kit.title}>TU CANCHA.{ '\n' }TU PRÓXIMO PARTIDO.</Text>
+        <Text style={kit.body}>Buscá una convocatoria o armá tu próximo partido.</Text>
       </View>
-      <LinearGradient colors={['#3b261e', '#1d2536']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
-        style={{ borderRadius: 24, borderWidth: 1, borderColor: '#754429', padding: 22, gap: 20, overflow: 'hidden' }}>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Text style={kit.kicker}>OPEN INVITATION</Text><Zap color={gameColors.orange} size={28} />
-        </View>
-        <Text style={{ color: Colors.text, fontSize: 25, fontFamily: 'Lexend-Bold' }}>A spot for your{ '\n' }kind of basketball.</Text>
-        <View style={kit.row}>{['1v1', '2v2', '5v5'].map(format => <Text key={format}
-          style={{ color: gameColors.orange, paddingHorizontal: 12, paddingVertical: 6, borderRadius: 8, backgroundColor: '#372923', fontFamily: 'Lexend-SemiBold' }}>{format}</Text>)}</View>
-        <GameButton label="Organize a game" icon={<Plus size={20} color={gameColors.ink} />} onPress={() => router.push('/organize/create')} />
-        <GameButton secondary label="My sessions" onPress={() => router.push('/pickup/mine')} />
-        <GameButton secondary label="Recorded matches" onPress={() => router.push('/matches/mine')} />
-        <Text style={kit.help}>Play now or plan ahead. No team or court membership needed.</Text>
-      </LinearGradient>
+      <GamePanel style={{ borderLeftWidth: 5, borderLeftColor: palette.orange, gap: 12 }}>
+        <GenericMedia compact asset="player" size={36} />
+        <Text variant="display" style={{ color: palette.orange }}>1v1 · 2v2 · 5v5</Text>
+        <GameButton label="Organizar convocatoria" icon={<Plus size={20} color={gameColors.ink} />} onPress={() => router.push('/organize/create')} />
+        <GameButton secondary label="Mis convocatorias" onPress={() => router.push('/pickup/mine')} />
+        <GameButton secondary label="Historial de partidos" onPress={() => router.push('/matches/mine')} />
+        <Text style={kit.help}>Jugá ahora o planificá. No necesitás un equipo ni agregar la cancha.</Text>
+      </GamePanel>
       <DiscoverGames games={discovery} />
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Text style={kit.section}>Games you organize</Text>
-        <Pressable accessibilityRole="button" onPress={() => void games.refetch()}><Text style={kit.badge}>Refresh</Text></Pressable>
+        <Text style={kit.section}>CONVOCATORIAS QUE ORGANIZÁS</Text>
+        <GameButton secondary label="Actualizar mis convocatorias" busy={games.isFetching && !games.isPending} onPress={() => void games.refetch()} />
       </View>
-      {games.isPending ? <ActivityIndicator accessibilityLabel="Loading your games" color={gameColors.orange} /> : games.isError ? <GamePanel>
-        <GameNotice>Unable to load your games.</GameNotice><GameButton secondary label="Retry" onPress={() => void games.refetch()} />
+      {games.isPending ? <ActivityIndicator accessibilityLabel="Cargando tus convocatorias" color={gameColors.orange} /> : games.isError ? <GamePanel>
+        <GameNotice>No pudimos cargar tus convocatorias.</GameNotice><GameButton secondary label="Reintentar" onPress={() => void games.refetch()} />
       </GamePanel> : !games.data?.length ? <GamePanel>
         <CalendarDays size={30} color={gameColors.muted} />
-        <Text style={kit.section}>Your first invitation starts here.</Text>
-        <Text style={kit.body}>Organize at a court you know. Your invitations will stay here so you can manage them.</Text>
-      </GamePanel> : games.data.map(game => <Pressable key={game.id} accessibilityRole="button"
-        accessibilityLabel={`Manage ${game.format} at ${courts.data?.find(c => c.id === game.court_id)?.name ?? 'court'}`}
+        <Text style={kit.section}>TU PRIMERA CONVOCATORIA EMPIEZA ACÁ.</Text>
+        <Text style={kit.body}>Organizá en una cancha que conozcas. Tus convocatorias quedan acá para gestionarlas.</Text>
+      </GamePanel> : games.data.map(game => <MotionLink key={game.id} accessibilityRole="button"
+        accessibilityLabel={`Gestionar ${game.format} en ${courts.data?.find(c => c.id === game.court_id)?.name ?? 'cancha'}`}
         onPress={() => router.push({ pathname: '/organize/[id]', params: { id: game.id } })}>
-        <GamePanel>
+        <GamePanel tone="light" style={{ borderLeftWidth: 5, borderLeftColor: palette.orange }}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Text style={kit.badge}>{sessionStateLabel(game.state)}</Text><ArrowUpRight size={20} color={gameColors.muted} />
+            <Text style={kit.badge}>{sessionStatus(game)}</Text><ArrowUpRight accessible={false} size={20} color={palette.navy} />
           </View>
-          <Text style={{ color: Colors.text, fontFamily: 'Lexend-Bold', fontSize: 22 }}>{game.format} · {courts.data?.find(c => c.id === game.court_id)?.name ?? 'Court'}</Text>
-          <Text style={kit.body}>{game.timing === 'now' ? 'Organized for now' : new Date(game.scheduled_at).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })}</Text>
-          <Text style={kit.help}>{game.occupied_places}/{game.capacity} places occupied{game.state === 'open' ? ` · ${game.available_places} available` : ''}</Text>
+          <Text variant="display">{game.format} · {courts.data?.find(c => c.id === game.court_id)?.name ?? 'Cancha'}</Text>
+          <Text style={kit.body}>{game.timing === 'now' ? 'Para jugar ahora' : new Date(game.scheduled_at).toLocaleString('es-UY', { dateStyle: 'medium', timeStyle: 'short' })}</Text>
+          <Text style={kit.help}>{game.occupied_places}/{game.capacity} lugares ocupados{game.state === 'open' ? ` · ${game.available_places} disponibles` : ''}</Text>
         </GamePanel>
-      </Pressable>)}
+      </MotionLink>)}
     </ScrollView>
   </SafeAreaView>;
 }

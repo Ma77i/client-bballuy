@@ -2,6 +2,7 @@ import { Tabs } from "expo-router";
 import { Map, User, Bookmark, CircleDot } from "lucide-react-native";
 import React from "react";
 import Colors from "@/constants/colors";
+import { palette } from '@/constants/design';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function TabLayout() {
@@ -29,13 +30,14 @@ export default function TabLayout() {
       <Tabs.Screen
         name="map"
         options={{
-          title: "Courts",
+          title: "Canchas",
+          tabBarActiveTintColor: palette.orange,
           tabBarIcon: ({ color }) => <Map color={color} size={24} />,
         }}
       />
-      <Tabs.Screen name="my-courts" options={{ title: 'My Courts',
+      <Tabs.Screen name="my-courts" options={{ title: 'Mis canchas', tabBarActiveTintColor: palette.orange,
         tabBarIcon: ({ color }) => <Bookmark color={color} size={24} /> }} />
-      <Tabs.Screen name="play" options={{ title: 'Play',
+      <Tabs.Screen name="play" options={{ title: 'Jugar', tabBarActiveTintColor: palette.orange,
         tabBarIcon: ({ color }) => <CircleDot color={color} size={24} /> }} />
       <Tabs.Protected guard={false}>
         <Tabs.Screen name="teams" />
@@ -43,7 +45,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="profile"
         options={{
-          title: "Profile",
+          title: "Perfil",
+          tabBarActiveTintColor: palette.orange,
           tabBarIcon: ({ color }) => <User color={color} size={24} />,
         }}
       />

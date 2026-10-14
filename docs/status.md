@@ -1,5 +1,92 @@
 # Estado del proyecto
 
+## T04 owner closure; T05 implemented for review — 2026-10-14
+
+Owner explicitly closed T04, with existing evidence and native limits retained in
+[closure](../specs/003-arcade-ux-ui/t04-closure.md), and authorized only T05.
+Play/organizer/participation/match/history and entry/auth presentation now reuse the
+approved arcade foundations and Spanish copy. Business hooks/contracts/dependencies
+unchanged. verify and 109 client tests pass; 61 real local browser checks cover
+2/4/10, create/join/leave/lifecycle, saved-request readback/UUID replay, score conflict/
+correction/history, entry/signup/isolation, reduced motion and narrow/text reflow.
+Full iOS entry exports to Hermes. Five owned QA identities/profiles, three sessions
+and one match cleaned; original catalog fingerprint unchanged. Physical T05 native
+review remains pending; T05 in_progress for owner review, T06 todo/not started.
+No commit/push. See [evidence](../specs/003-arcade-ux-ui/t05-verification.md) and
+[iPhone walkthrough](../specs/003-arcade-ux-ui/t05-iphone-review.md).
+Earlier in_progress T04/unauthorized T05 statements are historical and superseded.
+
+## T04 explicit map target — 2026-10-14
+
+Owner superseded context-only location return. Detail now sends its real court ID;
+discovery opens Map, selects one compact preview and centers the native camera on
+catalog coordinates. Only this minimal T03 handoff changed; ordinary entry/back and
+marker/preview design remain. verify, 106 client tests, 10 browser location checks and
+full iOS Hermes export pass. Physical iPhone centering/gesture/accessibility checks
+remain pending; T04 in_progress, T05 not started. No commit/push.
+See [target evidence](../specs/003-arcade-ux-ui/t04-map-target.md).
+
+## T04 targeted final refinement — 2026-10-14
+
+Approved direction preserved. My Courts copy, secondary add/remove actions, orange
+organizer priority, Volver detail back title and compact reported activity implemented.
+verify and 105 client tests pass; 40 browser checks rerun successfully. Owned local QA
+fixtures removed and original catalog fingerprint unchanged. Owner selected the
+existing map; secondary location action implemented with 7 additional browser checks
+passing for retained search/view/results and direct-entry fallback. Physical iPhone
+camera and accessibility checks remain
+explicitly pending. T04 in_progress, T05 not started. No commit/push.
+See [refinement evidence](../specs/003-arcade-ux-ui/t04-final-refinement.md).
+
+## T03 approved/closed; T04 locally implemented — 2026-10-14
+
+Owner explicitly closed T03 and authorized T04 only. Court detail, My Courts and
+Profile reuse approved arcade foundations, retaining existing server/account state.
+Verify and 105 client tests pass; 40 real local browser checks cover community
+join/leave/rejoin/readback/error recovery, logout/report, A -> B -> A and pending/
+reduced-motion/narrow presentation. Full iOS Hermes export passes; actual T04 device
+cases remain pending. See [T03 closure](../specs/003-arcade-ux-ui/t03-closure.md),
+[T04 evidence](../specs/003-arcade-ux-ui/t04-verification.md) and
+[iPhone review](../specs/003-arcade-ux-ui/t04-iphone-review.md).
+Two isolated QA accounts were cleaned up; original three-court data fingerprint
+unchanged. No backend/RLS/contracts/dependency/Play redesign, commit or push.
+T04 in_progress awaiting native acceptance; SPEC-003 not verified; stop before T05.
+Earlier dated pending T03 statements are historical, superseded by owner closure.
+
+## T03 visual refinement prepared for iPhone retest — 2026-10-14
+
+Owner's iPhone visual feedback requested compact Courts header/search/cards/sheet
+and one prominent Ver cancha CTA. Refinement uses opt-in T02 primitive/media styles,
+preserving the existing selection/focus/motion/business paths. Browser measures and
+controls, 105 client tests, verify and full iOS Hermes export pass. See
+[refinement evidence](../specs/003-arcade-ux-ui/t03-visual-refinement.md).
+No My Courts/Play/Profile/backend/RLS/dependency change, commit or push. T03 remains
+in_progress for another actual iPhone visual/accessibility review; T04 not started.
+
+## Metro navigation import corrected — 2026-10-14
+
+T03's map focus hook now imports from `expo-router/react-navigation`, resolving
+SDK 57's rejection of the external React Navigation import. Verify and 105 client
+tests pass; the full iOS app exports to Hermes bytecode with the compatibility
+guard enabled. Default sandbox temporary-directory permissions required a local
+temporary directory for the export. See [evidence](../specs/003-arcade-ux-ui/t03-verification.md).
+This corrects a gap in the earlier isolated-fixture verification. Physical iPhone
+acceptance remains pending and T03 remains in_progress; T04 has not started.
+
+## SPEC-003 T03 implemented locally; iPhone acceptance pending — 2026-10-14
+
+Owner authorized T03 only on SPEC-003/design. List-first discovery, shared search,
+native basketball markers and one compact/expandable preview use T02 foundations.
+Catalog IDs/coordinates, existing reads/location/detail routes and business rules
+remain. Verify and 105 client tests pass; browser shared-component checks cover
+filter/view fallback, loading/empty/retry, keyboard, layout and simulated return.
+See [T03 evidence](../specs/003-arcade-ux-ui/t03-verification.md),
+[prepared iPhone review](../specs/003-arcade-ux-ui/t03-iphone-review.md) and
+[ADR 0017](decisions/0017-list-first-court-preview.md).
+T03 in_progress pending actual iPhone markers/gestures/VoiceOver/text/camera evidence;
+SPEC-003 not verified. T04–T06 todo; stop before T04. No backend/RLS, dependency,
+commit or push. Earlier dated authorization/status entries are historical.
+
 ## SPEC-003 T02 foundations locally verified - 2026-10-13
 
 Owner authorized T02 only. Shared tokens/adapters, accessible primitives, pooled
@@ -645,3 +732,16 @@ contains compact/expanded court preview, eligibility/schedule/participant patche
 and three four-frame sequences. See
 [the R02.1 review](../specs/003-arcade-ux-ui/design-r02-1/review.md).
 R02 preserved. T01 remains in_progress; no implementation, commits or push.
+
+## R03 design-only fidelity review — 2026-10-14
+
+The owner requested a new [R03 review package](../specs/003-arcade-ux-ui/design-r03/README.md) after reporting
+native visual divergence. R03 is proposed, not approved or implementation-ready.
+Current authorization is design/documentation only; do not continue UI implementation
+or final verification from earlier T05 authorization. T00–T04 completed history is
+preserved; T05 stays in_progress and T06 todo. No registry state/numbering changed.
+The [proposed refinement sequence](../specs/003-arcade-ux-ui/design-r03/task-proposal.md) requires approval
+before insertion/renumbering. Once approved, frozen R03 boards/specifications become
+the visual baseline; until then R02/R02.1 remain historical approved references.
+Actual iPhone comparison, text settings, safe insets and native acceptance remain
+pending. No backend/RLS, contracts, app source, commits or push in this review.

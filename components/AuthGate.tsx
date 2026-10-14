@@ -1,10 +1,11 @@
-import Text from '@/components/AppText';
 import { useEffect } from 'react';
 import { useRouter, useSegments, useRootNavigationState } from 'expo-router';
-import { ActivityIndicator, Alert, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Alert, StyleSheet, View } from 'react-native';
 import { useAuth } from '@/contexts/AuthContext';
 import { authDestination } from '@/lib/auth/controller';
-import Colors from '@/constants/colors';
+import { palette } from '@/constants/design';
+import { Button, Notice, StateView } from '@/components/foundation/Primitives';
+import { errorText } from '@/components/pickup/error-copy';
 
 export default function AuthGate() {
   const auth = useAuth();
@@ -31,22 +32,17 @@ export default function AuthGate() {
 
   if (!auth.isLoading && !auth.error) return null;
   return <View style={styles.overlay}>
-    {auth.isLoading ? <ActivityIndicator color={Colors.primary} /> : <>
-      <Text style={styles.message}>{auth.error}</Text>
-      <TouchableOpacity onPress={() => void auth.retry()} style={styles.button}>
-        <Text style={styles.label}>Retry</Text>
-      </TouchableOpacity>
-      {auth.session && <TouchableOpacity onPress={async () => {
+    {auth.isLoading ? <StateView title="Comprobando tu sesión" loading /> : <>
+      <Notice>{errorText(auth.error ?? undefined)}</Notice>
+      <Button label="Reintentar" onPress={() => void auth.retry()} />
+      {auth.session && <Button secondary label="Cerrar sesión" onPress={async () => {
         const { error } = await auth.signOut();
-        if (error) Alert.alert('Sign out failed', error.message);
-      }}><Text style={styles.message}>Sign out</Text></TouchableOpacity>}
+        if (error) Alert.alert('No pudimos cerrar la sesión', errorText(error.message));
+      }} />}
     </>}
   </View>;
 }
 const styles = StyleSheet.create({
-  overlay: { ...StyleSheet.absoluteFill, backgroundColor: Colors.background,
-    justifyContent: 'center', alignItems: 'center', padding: 24, gap: 20, zIndex: 1000 },
-  message: { color: Colors.text, textAlign: 'center' },
-  button: { backgroundColor: Colors.primary, padding: 16, borderRadius: 12 },
-  label: { color: Colors.white },
+  overlay: { ...StyleSheet.absoluteFill, backgroundColor: palette.navy,
+    justifyContent: 'center', padding: 24, gap: 20, zIndex: 1000 },
 });

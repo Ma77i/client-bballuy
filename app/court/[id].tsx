@@ -1,9 +1,10 @@
 import CourtMembership from '@/components/courts/CourtMembership';
-import { ActivityIndicator, ScrollView, TouchableOpacity } from 'react-native';
+import { ScrollView } from 'react-native';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
-import { GameButton } from '@/components/pickup/Kit';
 import Text from '@/components/AppText';
-import Colors from '@/constants/colors';
+import { Button, Panel, StateView } from '@/components/foundation/Primitives';
+import { GenericMedia } from '@/components/foundation/GenericMedia';
+import { palette, spacing } from '@/constants/design';
 import { useCourtCatalog } from '@/hooks/catalog';
 import CourtActivity from '@/components/pickup/CourtActivity';
 export default function CourtDetails() {
@@ -11,21 +12,24 @@ export default function CourtDetails() {
   const router = useRouter();
   const catalog = useCourtCatalog();
   const court = catalog.data?.find(row => row.id === id);
-  return <ScrollView style={{ flex: 1, backgroundColor: Colors.background }} contentContainerStyle={{ padding: 24, gap: 20 }}>
-    <Stack.Screen options={{ title: court?.name ?? 'Court details', headerStyle: { backgroundColor: Colors.surface }, headerTintColor: Colors.text }} />
-    {catalog.isPending ? <ActivityIndicator accessibilityLabel="Loading court" color={Colors.primary} /> : catalog.isError ? <>
-      <Text style={{ color: Colors.text }}>Unable to load this court.</Text>
-      <TouchableOpacity accessibilityRole="button" onPress={() => void catalog.refetch()}><Text style={{ color: Colors.primary }}>Retry</Text></TouchableOpacity>
-    </> : court ? <>
-      <Text style={{ color: Colors.text, fontSize: 26 }}>{court.name}</Text>
-      <Text style={{ color: Colors.textSecondary }}>Location: {court.latitude.toFixed(6)}, {court.longitude.toFixed(6)}</Text>
-      <Text style={{ color: Colors.text }}>Court size: {court.half_court === null ? 'Not recorded' : court.half_court ? 'Half court' : 'Full court'}</Text>
-      <Text style={{ color: Colors.text }}>Surface: {court.surface || 'Not recorded'}</Text>
-      <Text style={{ color: Colors.text }}>Lighting: {court.lighting || 'Not recorded'}</Text>
-      <CourtActivity courtId={court.id} courtName={court.name} />
-      <CourtMembership key={court.id} courtId={court.id} />
-      <GameButton label="Organize a game here" onPress={() => router.push({ pathname: '/organize/create', params: { courtId: court.id } })} />
-      {court.notes && <Text style={{ color: Colors.text }}>{court.notes}</Text>}
-    </> : <Text style={{ color: Colors.text }}>Court not found.</Text>}
+  return <ScrollView style={{ flex: 1, backgroundColor: palette.navy }} contentContainerStyle={{ padding: spacing.lg, gap: spacing.lg, paddingBottom: spacing.section }}>
+    <Stack.Screen options={{ title: court?.name ?? 'Detalle de cancha', headerBackTitle: 'Volver', headerStyle: { backgroundColor: palette.navy }, headerTintColor: palette.text }} />
+    {catalog.isPending ? <StateView title="Cargando cancha" loading /> : catalog.isError ?
+      <StateView title="No pudimos cargar esta cancha" kind="error" action={<Button label="Reintentar" onPress={() => void catalog.refetch()} />} />
+      : court ? <>
+        <Panel tone="light" style={{ borderLeftWidth: 5, borderLeftColor: palette.orange, gap: spacing.sm }}>
+          <Text variant="display" tone="light" accessibilityRole="header">{court.name}</Text>
+          <GenericMedia compact size={48} />
+          <Text variant="body" tone="light">Tamaño: {court.half_court === null ? 'Sin registrar' : court.half_court ? 'Media cancha' : 'Cancha completa'}</Text>
+          <Text variant="body" tone="light">Superficie: {court.surface || 'Sin registrar'}</Text>
+          <Text variant="body" tone="light">Iluminación: {court.lighting || 'Sin registrar'}</Text>
+          <Button secondary tone="light" label="Ver ubicación en el mapa" onPress={() => router.dismissTo({ pathname: '/map', params: { focusCourtId: court.id, focusCourtRequest: String(Date.now()) } })} />
+          <Text variant="caption" tone="light">Coordenadas: {court.latitude.toFixed(6)}, {court.longitude.toFixed(6)}</Text>
+          {Boolean(court.notes) && <Text variant="body" tone="light">{court.notes}</Text>}
+        </Panel>
+        <Button label="Organizar convocatoria" onPress={() => router.push({ pathname: '/organize/create', params: { courtId: court.id } })} />
+        <CourtMembership key={court.id} courtId={court.id} />
+        <CourtActivity courtId={court.id} courtName={court.name} arcade />
+      </> : <StateView title="Cancha no encontrada" />}
   </ScrollView>;
 }

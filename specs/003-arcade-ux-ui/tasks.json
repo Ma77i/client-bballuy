@@ -63,7 +63,7 @@
     {
       "id": "T03",
       "title": "Redesign list-first discovery, markers and preview",
-      "status": "todo",
+      "status": "done",
       "requirements": [
         "R03",
         "R06",
@@ -73,12 +73,18 @@
         "T02"
       ],
       "acceptance": "Approved discovery preserves filtering, context, location denial, web fallback and accessible interrupted/reduced-motion states.",
-      "evidence": []
+      "evidence": [
+        "specs/003-arcade-ux-ui/t03-verification.md",
+        "specs/003-arcade-ux-ui/t03-iphone-review.md",
+        "docs/decisions/0017-list-first-court-preview.md",
+        "specs/003-arcade-ux-ui/t03-visual-refinement.md",
+        "specs/003-arcade-ux-ui/t03-closure.md"
+      ]
     },
     {
       "id": "T04",
       "title": "Redesign court detail, My Courts and Profile",
-      "status": "todo",
+      "status": "done",
       "requirements": [
         "R01",
         "R04",
@@ -89,12 +95,19 @@
         "T03"
       ],
       "acceptance": "Approved styling preserves confirmed membership, attributes, activity freshness, organizing shortcut and logout/account recovery.",
-      "evidence": []
+      "evidence": [
+        "specs/003-arcade-ux-ui/t04-verification.md",
+        "specs/003-arcade-ux-ui/t04-final-refinement.md",
+        "specs/003-arcade-ux-ui/t04-map-target.md",
+        "specs/003-arcade-ux-ui/t04-iphone-review.md",
+        "docs/decisions/0018-arcade-detail-and-account-presentation.md",
+        "specs/003-arcade-ux-ui/t04-closure.md"
+      ]
     },
     {
       "id": "T05",
       "title": "Unify existing Play and entry flows with approved motion",
-      "status": "todo",
+      "status": "in_progress",
       "requirements": [
         "R01",
         "R02",
@@ -105,7 +118,12 @@
         "T04"
       ],
       "acceptance": "Existing invitation/organizer/participation/match/history and entry flows use approved styling without new capabilities or changed recovery/confirmations.",
-      "evidence": []
+      "evidence": [
+        "specs/003-arcade-ux-ui/t05-scope.md",
+        "specs/003-arcade-ux-ui/t05-verification.md",
+        "specs/003-arcade-ux-ui/t05-iphone-review.md",
+        "docs/decisions/0019-arcade-pickup-presentation.md"
+      ]
     },
     {
       "id": "T06",

@@ -1,0 +1,34 @@
+{
+  "status": "proposed",
+  "device": "iPhone 16 Pro",
+  "viewportPoints": {
+    "width": 402,
+    "height": 874
+  },
+  "safeInsetsReferenceOnly": {
+    "top": 62,
+    "bottom": 34
+  },
+  "textSize": "owner does not know; default reference plus adaptation example",
+  "tool": "built-in image_gen",
+  "assets": [
+    "art/court-action.png",
+    "art/player-portrait.png"
+  ],
+  "reusedOriginalArt": [
+    "art/court-secondary.webp",
+    "art/player-action.webp"
+  ],
+  "boards": [
+    "courts",
+    "detail",
+    "my-courts",
+    "play",
+    "profile"
+  ],
+  "palermo": {
+    "latitude": -34.9135347,
+    "longitude": -56.1792215
+  },
+  "nativeValidation": false
+}

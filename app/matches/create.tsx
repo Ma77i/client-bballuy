@@ -1,7 +1,8 @@
+import { errorText } from '@/components/pickup/error-copy';
 import { useState } from 'react';
-import { ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
-import Text from '@/components/AppText';
+import Text from '@/components/pickup/GameText';
 import { useAuth } from '@/contexts/AuthContext';
 import { useCourtCatalog } from '@/hooks/catalog';
 import { usePublicSession } from '@/hooks/pickup';
@@ -9,7 +10,8 @@ import { useMatchAction } from '@/hooks/matches';
 import { matchPlayers, validateMatchDraft, type MatchDraft } from '@/lib/pickup/matches';
 import { pickupFormats, type PickupFormat } from '@/lib/pickup/organizer';
 import MatchPlayerSlot from '@/components/pickup/MatchPlayerSlot';
-import { GameButton, GameChoice, GameNotice, GamePanel, gameColors, kit } from '@/components/pickup/Kit';
+import FormatChoices from '@/components/pickup/FormatChoices';
+import { GameLoading as ActivityIndicator, GameButton, GameChoice, ArcadeNotice as GameNotice, GamePanel, gameColors, kit } from '@/components/pickup/Kit';
 
 export default function CreateMatchScreen() {
   const { courtId = '', format, sourceId = '' } = useLocalSearchParams<{ courtId?: string; format?: string; sourceId?: string }>();
@@ -33,31 +35,31 @@ export default function CreateMatchScreen() {
     }
   }
   return <KeyboardAvoidingView style={kit.page} behavior={Platform.OS === 'ios' ? 'padding' : undefined} keyboardVerticalOffset={96}>
-    <Stack.Screen options={{ title: 'Record a match', headerStyle: { backgroundColor: gameColors.ink }, headerTintColor: '#fff' }} />
+    <Stack.Screen options={{ headerBackTitle: 'Volver', title: 'Registrar partido', headerStyle: { backgroundColor: gameColors.ink }, headerTintColor: '#fff' }} />
     <ScrollView contentContainerStyle={kit.content} keyboardShouldPersistTaps="handled">
-      <View style={{ gap: 8 }}><Text style={kit.kicker}>CAPTURE THE GAME</Text><Text style={kit.title}>Two sides.{ '\n' }One match.</Text><Text style={kit.body}>Record the players who played. Add the final side-level score afterward.</Text></View>
+      <View style={{ gap: 8 }}><Text style={kit.kicker}>REGISTRÁ EL PARTIDO</Text><Text style={kit.title}>DOS LADOS.{ '\n' }UN PARTIDO.</Text><Text style={kit.body}>Registrá a quienes jugaron. Después agregá el resultado final de cada lado.</Text></View>
       {!action.ready && <ActivityIndicator color={gameColors.orange} />}
-      {action.pending ? <GamePanel><GameNotice>A saved match record needs confirmation. Its court and players are locked until you retry.</GameNotice>
-        <GameButton label="Retry saved match" busy={action.busy} disabled={!action.ready} onPress={() => void submit()} /></GamePanel> : <>
-        {sourceId && <GamePanel><Text style={kit.section}>Linked invitation</Text><Text style={kit.body}>Court and format come from the invitation. Select both sides explicitly.</Text>
+      {action.pending ? <GamePanel tone="light"><GameNotice>Hay un partido guardado sin confirmar. La cancha y los participantes quedan bloqueados hasta comprobarlo.</GameNotice>
+        <GameButton label="Reintentar comprobación" busy={action.busy} disabled={!action.ready} onPress={() => void submit()} /></GamePanel> : <>
+        {sourceId && <GamePanel tone="light"><Text style={kit.section}>CONVOCATORIA VINCULADA</Text><Text style={kit.body}>Cancha y formato vienen de la convocatoria. Elegí los participantes de ambos lados.</Text>
           {source.isPending && <ActivityIndicator color={gameColors.orange} />}
-          {(source.isError || (!source.isPending && !eligibleSource)) && <><GameNotice>Unable to use this invitation.</GameNotice><GameButton secondary label="Retry source invitation" onPress={() => void source.refetch()} /></>}
+          {(source.isError || (!source.isPending && !eligibleSource)) && <><GameNotice>No pudimos usar esta convocatoria.</GameNotice><GameButton secondary label="Reintentar convocatoria vinculada" onPress={() => void source.refetch()} /></>}
         </GamePanel>}
-        <GamePanel><Text style={kit.section}>Court</Text>{courts.data?.map(court => <GameChoice key={court.id} label={court.name} selected={draft.courtId === court.id} disabled={disabled || Boolean(sourceId)} onPress={() => setDraft(old => ({ ...old, courtId: court.id }))} />)}
+        <GamePanel tone="light"><Text style={kit.section}>CANCHA</Text>{courts.data?.map(court => <GameChoice key={court.id} label={court.name} selected={draft.courtId === court.id} disabled={disabled || Boolean(sourceId)} onPress={() => setDraft(old => ({ ...old, courtId: court.id }))} />)}
           {courts.isPending && <ActivityIndicator color={gameColors.orange} />}
-          {courts.isError && <><GameNotice>Unable to load courts.</GameNotice><GameButton secondary label="Retry courts" onPress={() => void courts.refetch()} /></>}
-          {errors.courtId && <GameNotice>{errors.courtId}</GameNotice>}
+          {courts.isError && <><GameNotice>No pudimos cargar las canchas.</GameNotice><GameButton secondary label="Reintentar canchas" onPress={() => void courts.refetch()} /></>}
+          {errors.courtId && <GameNotice>{errorText(errors.courtId)}</GameNotice>}
         </GamePanel>
-        <GamePanel><Text style={kit.section}>Format</Text><View style={kit.row}>{pickupFormats.map(value => <GameChoice key={value} label={value} selected={draft.format === value} disabled={disabled || Boolean(sourceId)} onPress={() => chooseFormat(value)} />)}</View></GamePanel>
-        {(['A','B'] as const).map(side => <GamePanel key={side}><Text style={kit.section}>Side {side}</Text>
+        <GamePanel tone="light"><Text style={kit.section}>FORMATO</Text><FormatChoices value={draft.format} disabled={disabled || Boolean(sourceId)} onChange={chooseFormat} /></GamePanel>
+        {(['A','B'] as const).map(side => <GamePanel tone="light" key={side}><Text style={kit.section}>Lado {side}</Text>
           {draft.players.map((player, index) => player.side === side && <MatchPlayerSlot key={`${draft.format}:${index}`} player={player} index={draft.players.slice(0,index).filter(p => p.side === side).length}
             disabled={disabled} error={errors[`player${index}`]} change={value => { setDraft(old => ({ ...old, players: old.players.map((p,i) => i === index ? value : p) })); setErrors(old => ({ ...old, [`player${index}`]: '' })); }} />)}
         </GamePanel>)}
         {errors.players && <GameNotice>{errors.players}</GameNotice>}{errors.sourceId && <GameNotice>{errors.sourceId}</GameNotice>}
-        <GameButton label="Create match record" busy={action.busy} disabled={disabled || courts.isPending || courts.isError || !eligibleSource || Boolean(sourceId && source.isError)} onPress={() => void submit()} />
+        <GameButton label="Registrar partido" busy={action.busy} disabled={disabled || courts.isPending || courts.isError || !eligibleSource || Boolean(sourceId && source.isError)} onPress={() => void submit()} />
       </>}
       {action.error && <GameNotice>{action.error}</GameNotice>}
-      <Text style={kit.help}>The organizer declares the players and result. This record grants no ranking points or verified attendance.</Text>
+      <Text style={kit.help}>Quien organiza declara participantes y resultado. El registro no confirma asistencia ni otorga puntos de ranking.</Text>
     </ScrollView>
   </KeyboardAvoidingView>;
 }

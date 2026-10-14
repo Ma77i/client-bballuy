@@ -1,12 +1,14 @@
-import Text from '@/components/AppText';
-import { View, StyleSheet, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native';
+import EntryFrame from '@/components/entry/EntryFrame';
+import { Button, Field, Notice } from '@/components/foundation/Primitives';
+import { errorText } from '@/components/pickup/error-copy';
+
 import { useRouter } from 'expo-router';
 import { useRef, useState } from 'react';
-import { Eye, EyeOff } from 'lucide-react-native';
+
 import { useAuth } from '@/contexts/AuthContext';
 import { validateEmail } from '@/lib/utils/validation';
-import Colors from '@/constants/colors';
-import LoadingOverlay from '@/components/LoadingOverlay';
+
+
 
 export default function SignInScreen() {
   const router = useRouter();
@@ -48,202 +50,12 @@ export default function SignInScreen() {
 
 
 
-  return (
-    <>
-    <LoadingOverlay visible={isLoading} />
-    <View style={styles.container}>
-      <View style={{ paddingTop: 60 }} />
-      <View style={styles.content}>
-        <View style={styles.header}>
-          <Text style={styles.title}>Welcome Back</Text>
-          <Text style={styles.subtitle}>Sign in to continue</Text>
-        </View>
-
-        <View style={styles.form}>
-          {formError && <Text accessibilityRole="alert" style={{ color: Colors.error }}>{formError}</Text>}
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Email</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="your@email.com"
-              placeholderTextColor={Colors.textMuted}
-              value={email}
-              onChangeText={setEmail}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoCorrect={false}
-            />
-          </View>
-
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Password</Text>
-            <View style={styles.passwordContainer}>
-              <TextInput
-                style={styles.passwordInput}
-                placeholder="Enter your password"
-                placeholderTextColor={Colors.textMuted}
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry={!showPassword}
-                autoCapitalize="none"
-              />
-              <TouchableOpacity
-                style={styles.eyeButton}
-                onPress={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? (
-                  <EyeOff color={Colors.textMuted} size={20} />
-                ) : (
-                  <Eye color={Colors.textMuted} size={20} />
-                )}
-              </TouchableOpacity>
-            </View>
-          </View>
-
-<TouchableOpacity
-            style={styles.primaryButton}
-            onPress={handleSignIn}
-            disabled={isLoading}
-          >
-            {isLoading ? (
-              <ActivityIndicator color={Colors.white} />
-            ) : (
-              <Text style={styles.primaryButtonText}>Sign In</Text>
-            )}
-          </TouchableOpacity>
-
-          <View style={styles.footer}>
-            <Text style={styles.footerText}>Don&apos;t have an account? </Text>
-            <TouchableOpacity onPress={() => router.push('/(auth)/age-gate')}>
-              <Text style={styles.footerLink}>Sign Up</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
-    </View>
-    </>
-  );
+  return <EntryFrame title="VOLVÉ A LA CANCHA" description="Iniciá sesión para seguir jugando.">
+    {formError && <Notice>{errorText(formError)}</Notice>}
+    <Field label="Correo electrónico" placeholder="tu@correo.com" value={email} onChangeText={setEmail} keyboardType="email-address" autoCapitalize="none" autoCorrect={false} autoComplete="email" />
+    <Field label="Contraseña" placeholder="Ingresá tu contraseña" value={password} onChangeText={setPassword} secureTextEntry={!showPassword} autoCapitalize="none" autoComplete="current-password" />
+    <Button secondary label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'} onPress={() => setShowPassword(!showPassword)} />
+    <Button label="Iniciar sesión" busy={isLoading} onPress={() => void handleSignIn()} />
+    <Button secondary label="Crear una cuenta" onPress={() => router.push('/(auth)/age-gate')} />
+  </EntryFrame>;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.background,
-  },
-  content: {
-    flex: 1,
-    padding: 24,
-  },
-  header: {
-    marginBottom: 32,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: '700' as const,
-    color: Colors.text,
-    marginBottom: 8,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: Colors.textSecondary,
-  },
-  form: {
-    gap: 16,
-  },
-  inputGroup: {
-    gap: 8,
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: '600' as const,
-    color: Colors.text,
-  },
-  input: {
-    backgroundColor: Colors.surface,
-    borderRadius: 12,
-    padding: 16,
-    fontSize: 16,
-    color: Colors.text,
-    borderWidth: 1,
-    borderColor: Colors.border,
-  },
-  passwordContainer: {
-    flexDirection: 'row' as const,
-    alignItems: 'center' as const,
-    backgroundColor: Colors.surface,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: Colors.border,
-  },
-  passwordInput: {
-    flex: 1,
-    padding: 16,
-    fontSize: 16,
-    color: Colors.text,
-  },
-  eyeButton: {
-    padding: 16,
-  },
-  forgotPassword: {
-    alignSelf: 'flex-end' as const,
-  },
-  forgotPasswordText: {
-    fontSize: 14,
-    color: Colors.primary,
-    fontWeight: '600' as const,
-  },
-  primaryButton: {
-    backgroundColor: Colors.primary,
-    paddingVertical: 18,
-    borderRadius: 16,
-    alignItems: 'center' as const,
-    marginTop: 8,
-  },
-  primaryButtonText: {
-    color: Colors.white,
-    fontSize: 18,
-    fontWeight: '600' as const,
-  },
-  divider: {
-    flexDirection: 'row' as const,
-    alignItems: 'center' as const,
-    gap: 12,
-    marginVertical: 8,
-  },
-  dividerLine: {
-    flex: 1,
-    height: 1,
-    backgroundColor: Colors.border,
-  },
-  dividerText: {
-    fontSize: 14,
-    color: Colors.textMuted,
-  },
-  oauthButton: {
-    backgroundColor: Colors.surface,
-    paddingVertical: 16,
-    borderRadius: 12,
-    alignItems: 'center' as const,
-    borderWidth: 1,
-    borderColor: Colors.border,
-  },
-  oauthButtonText: {
-    color: Colors.text,
-    fontSize: 16,
-    fontWeight: '600' as const,
-  },
-  footer: {
-    flexDirection: 'row' as const,
-    justifyContent: 'center' as const,
-    marginTop: 16,
-  },
-  footerText: {
-    fontSize: 14,
-    color: Colors.textSecondary,
-  },
-  footerLink: {
-    fontSize: 14,
-    color: Colors.primary,
-    fontWeight: '600' as const,
-  },
-});

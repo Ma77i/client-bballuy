@@ -25,17 +25,17 @@ function MediaImage({ source, asset }: { source?: MediaSource; asset: keyof type
     onError={() => setStage(stage === 'source' ? 'local' : 'symbol')} />;
 }
 
-export function GenericMedia({ source, asset = 'court', size = 96, style }: {
-  source?: MediaSource; asset?: keyof typeof illustrations; size?: number; style?: StyleProp<ViewStyle>;
+export function GenericMedia({ source, asset = 'court', size = 96, style, compact = false }: {
+  source?: MediaSource; asset?: keyof typeof illustrations; size?: number; style?: StyleProp<ViewStyle>; compact?: boolean;
 }) {
   const colors = surfaces[useSurfaceTone()];
   const usable = usableMediaSource(source);
   const key = `${asset}:${typeof usable === 'number' ? usable : usable?.uri ?? 'local'}`;
-  return <View style={[{ gap: 4 }, style]}>
+  return <View style={[{ gap: 4 }, compact && { flexDirection: 'row', alignItems: 'center', gap: 8 }, style]}>
     <View accessible={false} accessibilityElementsHidden importantForAccessibility="no-hide-descendants"
       style={{ width: size, height: size, backgroundColor: colors.panel, borderRadius: radii.control }}>
       <MediaImage key={key} source={usable} asset={asset} />
     </View>
-    <Text variant="caption" style={{ color: colors.muted }}>Ilustración · No es una foto</Text>
+    <Text variant="caption" style={[{ color: colors.muted }, compact && { flexShrink: 1 }]}>Ilustración · No es una foto</Text>
   </View>;
 }

@@ -4,7 +4,7 @@ import Text from '@/components/AppText';
 import { openSupportDraft, supportDraft } from '@/lib/support';
 import { GameButton, GameNotice, kit } from '@/components/pickup/Kit';
 
-export default function ReportProblem() {
+export default function ReportProblem({ arcade = false }: { arcade?: boolean }) {
   const email = process.env.EXPO_PUBLIC_SUPPORT_EMAIL;
   const [busy, setBusy] = useState(false), [failed, setFailed] = useState(false);
   const lock = useRef(false);
@@ -17,8 +17,8 @@ export default function ReportProblem() {
     finally { lock.current = false; setBusy(false); }
   }
   return <View style={{ gap: 12 }}>
-    <GameButton secondary label={failed ? 'Retry problem report' : 'Report a problem'} busy={busy} onPress={() => void report()} />
-    <Text style={kit.help}>Opens an email draft for you to review and send. No account information is attached automatically.</Text>
-    {failed && <><GameNotice>Unable to open your email app. Retry or use the contact below.</GameNotice><Text selectable style={kit.body}>{email}</Text></>}
+    <GameButton secondary label={arcade ? failed ? 'Reintentar reporte' : 'Reportar un problema' : failed ? 'Retry problem report' : 'Report a problem'} busy={busy} onPress={() => void report()} />
+    <Text style={kit.help}>{arcade ? 'Abre un borrador de correo para que lo revises y envíes. No adjunta datos de tu cuenta automáticamente.' : 'Opens an email draft for you to review and send. No account information is attached automatically.'}</Text>
+    {failed && <><GameNotice>{arcade ? 'No pudimos abrir tu app de correo. Reintentá o usá el contacto indicado.' : 'Unable to open your email app. Retry or use the contact below.'}</GameNotice><Text selectable style={kit.body}>{email}</Text></>}
   </View>;
 }
