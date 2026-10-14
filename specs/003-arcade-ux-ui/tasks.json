@@ -21,7 +21,7 @@
     {
       "id": "T01",
       "title": "Prepare and obtain approval for reviewable visual designs",
-      "status": "in_progress",
+      "status": "done",
       "requirements": [
         "R02",
         "R03",
@@ -36,13 +36,14 @@
       ],
       "acceptance": "Owner approves exact visual revision covering List, Map, Bottom Sheet, Detail, My Courts, principal Play flows, Profile/shared states, tokens, original placeholders and motion. Design only.",
       "evidence": [
+        "specs/003-arcade-ux-ui/t01-closure.md",
         "specs/003-arcade-ux-ui/verification.md"
       ]
     },
     {
       "id": "T02",
       "title": "Implement approved presentation foundations after both gates",
-      "status": "todo",
+      "status": "done",
       "requirements": [
         "R01",
         "R02",
@@ -53,7 +54,11 @@
         "T01"
       ],
       "acceptance": "Start only after complete SPEC-002 acceptance, exact T01 approval and implementation authorization are recorded. Approved primitives preserve contracts/states and pass checks.",
-      "evidence": []
+      "evidence": [
+        "specs/003-arcade-ux-ui/t02-verification.md",
+        "specs/003-arcade-ux-ui/verification.md",
+        "docs/decisions/0016-shared-presentation-foundations.md"
+      ]
     },
     {
       "id": "T03",

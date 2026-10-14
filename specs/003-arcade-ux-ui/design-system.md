@@ -1,15 +1,29 @@
-# SPEC-003 - Proposed Design System and interaction catalog
+# SPEC-003 - Approved design baseline and interaction catalog
 
-Exact tokens, durations and compositions are T01 proposals. Confirmed direction:
-BBallUY Arcade / Street Basketball with orange, night blue, original illustration,
+R02 + R02.1 design/sequence approval and T01 closure are recorded in t01-closure.md.
+This is the authoritative design contract; native implementation acceptance is pending.
+R02.1 annotations override conflicting historical raster details. Confirmed direction:
+Temporary `bballuy` branding with an arcade / street-basketball visual style,
+orange, night blue, original illustration,
 sports-game/comic expression and microinteractions. No functional gamification.
+
+## Temporary brand and logo
+
+Confirmed by the owner on 2026-10-13: `bballuy` is the internal project name,
+used provisionally as the public brand and logo wordmark. Keep this lowercase
+wording in upcoming boards until the owner selects a final name. Arcade describes
+the design style only; do not append Arcade or Street Basketball to the logo.
+Use the approved sports direction with the lowercase wordmark. R01 artwork is historical
+and does not establish an approved commercial name.
 
 ## Visual tokens and components
 
 - brand #FF8A43, pressed #F97316, on-brand #0C1220.
 - background #0C1220, surface #171F30, raised #243047.
 - contrasting surface #FFF7ED with text #0C1220.
-- text #F8FAFC, secondary #B8C3D6, border #53647E.
+- text #F8FAFC, secondary #B8C3D6, decorative separator #53647E.
+- meaningful control boundary/focus on dark surface: #B8C3D6; #53647E alone fails 3:1
+  on #171F30. Orange labels use navy, never white. See R01 contrast.json.
 - dark-surface success #73DEAA, warning #FFD166, error #FFADB5; text/icon required.
 - spacing 4/8/12/16/24/32/48; control/card/sheet radius 12/20/28.
 - licensed sports display headings 28-36, sections 20-24; Lexend body 16, secondary
@@ -27,8 +41,8 @@ refresh with cached content, empty, no filter matches, read failure and uncertai
 
 ## Common motion/accessibility/performance policy
 
-Press 80-120 ms, selection 120-180, view switch 160-220, sheet 220-280, feedback
-160-220. Ease-out, restrained spring; actions start immediately, never wait for effects.
+Approved defaults: press 100 ms/release 80 ms, selection 140 ms, view switch 160 ms,
+sheet 240 ms, confirmed inline feedback 180 ms. Ease-out, restrained spring; actions start immediately, never wait for effects.
 Prefer opacity/transform. Reduced motion removes scale/bounce/slide/shimmer/camera
 tweens; use immediate updates or brief opacity up to 100 ms. Respect preference
 changes during use. Stop loops on blur/background/unmount. No animation-driven
@@ -38,7 +52,7 @@ requests, delayed confirmations, sound requirement or automatic haptic behavior.
 
 ### M01 - Marker selection
 
-Unselected -> selected basketball marker; 120-180 ms subtle scale 1 -> 1.08 -> 1,
+Unselected -> selected basketball marker; 140 ms subtle scale 1 -> 1.06 -> 1,
 persistent selected outline. One ID; another selection replaces it. No activity pulse.
 Accessible court name/selected state where supported and equivalent list action.
 Reduced motion: static outline. Performance: small static artwork/selected overlay,
@@ -94,8 +108,8 @@ requests; no win/points animation, silent score rebasing or ranking implication.
 ### M07 - Loading and refresh
 
 Labelled progress/static skeleton for initial load; refresh retains labelled cached
-data. Optional visible skeleton opacity pulse 800-1200 ms, never markers; no artificial
-minimum wait. Failure offers retry. Busy label, decorative skeleton hidden from reader.
+data. Static skeleton; optional one-time 120 ms opacity appearance, no shimmer/pulse loop
+or artificial minimum wait. Failure offers retry. Busy label, decorative skeleton hidden from reader.
 Reduced motion: static skeleton/label. Performance: bounded visible placeholders,
 stop loops when hidden/background; reserve image dimensions to prevent layout jumps.
 

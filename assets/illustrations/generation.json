@@ -1,0 +1,15 @@
+{
+  "mode": "built-in image_gen",
+  "reference": "specs/003-arcade-ux-ui/design-r02/courts.png",
+  "prompts": [
+    {
+      "key": "court-placeholder",
+      "prompt": "Use case illustration-story. Original standalone UI asset, extract the ART DIRECTION from reference only (not copy any phone or UI). Generic bold comic sports orange basketball above a hoop and short cream net, navy outlines and restrained halftone, BBallUY approved arcade street basketball style. Fully transparent background, centered single compact object silhouette, generous clear margins, no court, buildings, people, landmarks, scenery, words, logo, letters, watermark or invented attributes. Dominant #FF8A43 orange with #0C1220 navy and #FFF7ED cream. Crisp readable even in 56-pixel thumbnail. Original art suitable for labelled generic court placeholder, not a photo or depiction of any real court. Single clean illustration, no mockup."
+    },
+    {
+      "key": "player",
+      "prompt": "Use case illustration-story. Original compact UI character asset matching only ART STYLE of reference, no phones or UI. One original fictional athletic adult street-basketball player with medium brown skin and short dark hair in a dynamic dribble pose, orange sleeveless sports kit, navy shorts, cream sneakers, expressive comic ink contours and restrained halftone, no recognizable real person or licensed character. Ball physically connected to dribble action; coherent hands/anatomy. Entire character including feet visible with generous margins. Transparent background, no court/scene/backdrop, no text/numbers/logo/watermark. Approved navy #0C1220, orange #FF8A43, cream #FFF7ED. Optimized composition for a small decorative header; not an avatar, real participant, team or attendance claim. One character only, original sports comic illustration."
+    }
+  ],
+  "purpose": "Original generic decorative media; no court photos, profile avatars or real participants"
+}

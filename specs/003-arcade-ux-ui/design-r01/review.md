@@ -3,6 +3,11 @@
 Status: proposed, awaiting owner review. Spanish is the confirmed initial UI language.
 This revision is design-only. No application components or runtime changes.
 
+Naming superseded on 2026-10-13: the owner selected lowercase `bballuy` as the
+temporary brand and logo wordmark, pending a final app name. Arcade / Street
+Basketball is a style description only. Original R01 images and HTML are retained
+for comparison; their brand wording is not a current naming proposal.
+
 ## Reading order
 
 1. `courts.png`: primary List / Map / Preview sheet / Detail composition.

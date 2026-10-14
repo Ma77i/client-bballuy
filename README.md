@@ -2,7 +2,10 @@
 
 Read from your phone: [documentation and project navigation](docs/mobile-guide.md).
 
-Aplicación móvil para encontrar personas con quienes jugar al básquet y organizar equipos. Cliente Expo / React Native y recursos de Supabase. El nombre comercial definitivo está pendiente; algunas pantallas todavía dicen StreetHoops.
+Mobile app for finding people to play basketball with, built with Expo / React Native
+and Supabase. `bballuy` is the internal project name and the temporary public brand
+and logo wordmark until the owner chooses a final app name. Arcade describes the
+visual style, not the app name. Existing StreetHoops references are legacy copy.
 
 **No listo para producción.** Hay funcionalidades parciales, errores conocidos y diferencias entre código y esquemas SQL. Ver [estado actual](docs/status.md).
 

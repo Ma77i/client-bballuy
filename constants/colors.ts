@@ -1,18 +1,12 @@
+import { palette, surfaces } from './design';
+
+// Compatibility keys for existing screens; new primitives use semantic roles.
 export default {
-  background: '#1a1f2e',
-  surface: '#242b3d',
-  surfaceLight: '#2d3548',
-  primary: '#0ea5e9',
-  primaryDark: '#0284c7',
-  secondary: '#f97316',
-  secondaryDark: '#ea580c',
-  text: '#f8fafc',
-  textSecondary: '#94a3b8',
-  textMuted: '#64748b',
-  border: '#334155',
-  success: '#10b981',
-  error: '#ef4444',
-  warning: '#f59e0b',
-  white: '#ffffff',
-  black: '#000000',
+  background: palette.navy, surface: palette.surface, surfaceLight: palette.raised,
+  primary: palette.legacyPrimary, primaryDark: palette.legacyPrimaryPressed,
+  brand: palette.orange, onBrand: palette.navy,
+  secondary: palette.orange, secondaryDark: palette.orangePressed,
+  text: surfaces.dark.text, textSecondary: surfaces.dark.muted, textMuted: surfaces.dark.muted,
+  border: surfaces.dark.boundary, success: palette.success, error: palette.error,
+  warning: palette.warning, white: palette.white, black: palette.black,
 };

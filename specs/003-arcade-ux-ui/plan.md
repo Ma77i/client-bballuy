@@ -2,9 +2,10 @@
 
 ## Authorization and strategy
 
-Documentation/registry only in this step. T01 is next proposed design-only work;
-no actual designs/assets are created now. Reuse Expo routes, contracts and components.
-General direction approval does not approve exact visuals or application code.
+T01 design approved; owner explicitly authorized only T02 on 2026-10-13.
+T02 foundations are locally verified; SPEC-003 in_progress, T03-T06 todo.
+See t02-verification.md and ADR 0016. Stop before T03 pending owner review.
+Earlier dated entries describe their original approval boundaries.
 
 ## Execution sequence
 
@@ -52,7 +53,7 @@ examples must be clearly illustrative, never evidence of real activity.
 
 ## Risks and dependencies
 
-SPEC-002 T06 remains pending. Existing uncommitted work requires before/after scope
+SPEC-002 is verified locally, T00-T06 done; its historical device evidence is retained. Existing uncommitted work requires before/after scope
 review. Palette changes can reduce contrast (especially white-on-orange). Native
 markers/sheet gestures and modal focus need early testing after gates. Art/font size
 can delay startup; optimize and keep fallback. Web must not import the native map.
@@ -62,17 +63,35 @@ Design approval does not constitute functional/device acceptance.
 
 ## Decisions and input for T01
 
-Required: instruction to begin T01 and UI language (English as existing, or Spanish).
-Review preference: annotated static boards recommended; clickable design prototype
-optional. Brand/logo assets, sports/comic references or preferred font are optional;
-without them propose original direction and licensed font options for review.
-No real photos required. Owner reviews exact T01 revision before implementation;
-complete SPEC-002 acceptance is independently mandatory.
+Resolved: Spanish initial UI and R02 + R02.1 visual/motion approval. T01 closure
+and exact T02 foundation scope are documented. Exact font files/provenance and
+optimized artwork remain T02 technical validation; native modal focus belongs T03.
+No new product decision, hosted operation or implementation permission inferred.
 
 ## T01 start - 2026-10-13
+
+Brand clarification from the owner: upcoming revisions use `bballuy` as the
+temporary brand/logo wordmark; the final app name is undecided. Arcade remains
+an art-direction descriptor. Preserve original R01 boards for comparison and
+apply the corrected naming to subsequent boards. This clarification does not
+approve a complete visual revision or start application implementation.
 
 Owner authorized design-only T01 and Spanish initial UI. SPEC-002 now reports
 verified with all tasks done. R01 visual approval and implementation authorization
 remain absent. Static compositions and annotations live in design-r01/. Earlier
 pending-language/SPEC-002 statements describe the T00 baseline, not current gates.
 
+
+## T01 R02 refinement - 2026-10-13
+
+Owner requested a separate R02 with Courts/Play/Organize boards and seven annotated
+motion groups. Preserve R01, retain functional flow/navigation and remain design-only.
+T01 remains in_progress; no T02 authorization or final design approval.
+
+
+## T01 R02.1 targeted design patch - 2026-10-13
+
+R02 artistic direction approved generally, not final T01 acceptance. Prepare only
+the requested compact-sheet, eligibility, scheduling/participant patches and three
+four-frame sequences in design-r02-1/. Preserve R02 originals and all other direction.
+T01 remains in_progress; no implementation authorization, commits or push.

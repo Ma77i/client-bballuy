@@ -1,13 +1,15 @@
 # SPEC-003 - BBallUY Arcade UX/UI Redesign
 
 Execution state: [registry](../registry.json). Owner-approved planning scope dated
-2026-10-13. This remains draft; current authorization includes T01 design and visual presentation only. No application implementation, commits or push.
+2026-10-13. T01 design is approved; T02 foundations are implemented and locally verified.
+SPEC-003 is in_progress; T03-T06 remain todo. Owner authorization covered T02 only.
+No T03 continuation, backend/RLS changes, commits or push.
 
 ## Problem and goal
 
 Court and pickup screens use different palettes/components. Court discovery combines
 map and list and opens details directly from standard markers. Redesign the existing
-MVP as BBallUY Arcade / Street Basketball: orange-led, night blue, original sports
+MVP with an arcade / street-basketball visual style: orange-led, night blue, original sports
 illustrations, sports-game/comic-inspired composition and purposeful microinteractions.
 See [audit](audit.md), [Design System](design-system.md) and [plan](plan.md).
 
@@ -36,8 +38,8 @@ requires BOTH complete SPEC-002 acceptance and owner approval of the exact T01 d
 revision, plus authorization to implement. Complete SPEC-002 means verified registry,
 all tasks done and reproducible local/browser/iPhone evidence, not just bundles/static
 checks. Record dates, revision and approval scope in verification.md. The 2026-10-13
-general direction approval is not T01 visual approval. Keep this draft until dependent
-decisions and approvals are resolved. The harness cannot encode cross-specification
+general direction approval is not T01 visual approval. Design approval and SPEC-002 acceptance are now recorded in t01-closure.md.
+Ready status does not authorize implementation. The harness cannot encode cross-specification
 dependencies; an available-task label does not waive these gates.
 
 ## Requirements
@@ -54,6 +56,13 @@ Permanent orange identity, night blue, white/contrasting surfaces, original spor
 art and expressive controls. Licensed sports display font for headings; Lexend for
 content. Define semantic tokens, component variants/states and motion catalog.
 Exact values and compositions are proposals requiring T01 review.
+
+Owner clarification (2026-10-13): `bballuy` is the internal project name and the
+temporary public brand and logo wordmark until the owner chooses a final app name.
+Use lowercase `bballuy` in new design revisions. Arcade and street basketball
+describe the visual style, not a product name or a logo suffix. Do not introduce
+StreetHoops or another replacement name. Preserve R01 originals as historical
+proposals; their naming is superseded by this clarification.
 
 ### R03 - List-first discovery and court preview
 
@@ -109,6 +118,8 @@ newly observed browser/iPhone results.
   both gates and implementation authorization evidenced before T02.
 - A02/R02: approved arcade designs, consistent token/component states, measured
   contrast and licensed font/original illustration assets.
+  New revisions use `bballuy` for the temporary brand/logo, without Arcade or
+  Street Basketball as part of the name; the final commercial name remains open.
 - A03/R03: list-first entry, equal filtered data, marker-sheet-detail, close/back,
   selection replacement/removal, context return, location denial and web fallback work.
 - A04/R04: community join/leave/retry/restart and A -> B -> A preserve state;
@@ -122,14 +133,14 @@ newly observed browser/iPhone results.
 - A08/R08: owner approval identifies exact T01 revision; eventual closure includes
   reproducible browser/iPhone evidence, not only static success.
 
-## Pending decisions
+## Current design baseline and remaining technical validation
 
-Spanish is the confirmed initial UI language. Annotated static R01 compositions are
-the authorized T01 review format; no implementation is authorized. Pending:
-display font selection/bundled license provenance, illustration approval, exact
-tokens and compositions. Optional owner brand assets; no photos required.
-Bottom-sheet technical choice follows approved designs; prefer existing primitives
-before considering another SDK-compatible dependency. Scope/direction already approved.
+Spanish initial UI; R02 direction plus R02.1 patches/sequences approved and T01 done.
+See [closure](t01-closure.md) for exact scope and five consistency checks.
+Routine T02 work validates display-font files/license provenance, optimized original
+assets and shared primitive compatibility; full native focus/text/motion tests remain
+T03/T06. No new product decision or implementation permission is inferred.
+See [T02 scope](t02-scope.md), awaiting explicit authorization.
 
 ## References
 
@@ -145,3 +156,32 @@ Reviewable compositions prioritize List, Map, Preview sheet and Detail and cover
 the existing SPEC-002 Play journey. No application components, functional code,
 commits or push. R01 approval and separate implementation authorization remain
 mandatory before T02. This supersedes the historical documentation-only boundary.
+
+## T01 R02 visual refinement - 2026-10-13
+
+Owner authorized three separate R02 visual boards: Courts, Play and Organize,
+plus an annotated motion storyboard. Preserve R01 originals for comparison.
+Courts requires a smaller hero and denser truthful list; Play emphasizes existing
+1v1/2v2/5v5 formats; Organize uses visual court/format/timing controls without
+changing the existing Now/Plan branches or validation. Navy predominates, cream
+information panels and orange actions. Design-only; T01 stays in_progress until
+explicit final revision approval. No code/backend/RLS/commit/push authorization.
+
+
+## T01 R02.1 targeted review authorization - 2026-10-13
+
+Owner approved the general R02 artistic direction, not final T01 acceptance.
+R02.1 is design-only and separate: compact/accessible preview sheet; accurate
+full/started/cancelled registration eligibility; future illustrative scheduling and
+existing participant rules; three 3-4-frame visual sequences (marker/sheet, format,
+pending/server-confirmed registration). Preserve all other R02 direction and files.
+No implementation, commits/push or T01 closure authorized. Final approval pending.
+
+## T02 foundation authorization - 2026-10-13
+
+Owner explicitly authorized t02-scope.md: tokens, fonts/license validation, original
+optimized local assets/fallback, reusable accessible primitives and decorative
+motion/reduced-motion utilities. Preserve architecture/APIs and all SPEC-001/002
+contracts. No screen/navigation/map/sheet integration, backend/RLS/new features,
+commits/push or T03 continuation. Add meaningful primitive/recovery-regression checks
+and reproducible foundation preview evidence; native acceptance remains separate.

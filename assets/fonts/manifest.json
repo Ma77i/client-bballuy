@@ -1,0 +1,99 @@
+{
+  "verifiedOn": "2026-10-13",
+  "fonts": [
+    {
+      "family": "Lexend-Regular",
+      "path": "assets/fonts/Lexend-Regular.ttf",
+      "bytes": 78356,
+      "sha256": "5f9ed62e28658e53a02cc8751566821e8515af753f18b02014669ed0341c9f5b",
+      "weight": 400,
+      "variable": false,
+      "names": {
+        "0": "Copyright 2019 The Lexend Project Authors (https://github.com/googlefonts/lexend)",
+        "1": "Lexend",
+        "2": "Regular",
+        "5": "Version 1.007",
+        "13": "This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: https://scripts.sil.org/OFL",
+        "14": "https://scripts.sil.org/OFL"
+      },
+      "missingSpanishGlyphs": [],
+      "license": "assets/fonts/licenses/Lexend-OFL.txt",
+      "source": "Existing project binary, retained; original download source not recorded"
+    },
+    {
+      "family": "Lexend-Medium",
+      "path": "assets/fonts/Lexend-Medium.ttf",
+      "bytes": 78692,
+      "sha256": "18086a9d53eb5e5f8afea3454d79e3b4df811c9f72500b872b8859e12f7ff374",
+      "weight": 500,
+      "variable": false,
+      "names": {
+        "0": "Copyright 2019 The Lexend Project Authors (https://github.com/googlefonts/lexend)",
+        "1": "Lexend Medium",
+        "2": "Regular",
+        "5": "Version 1.007",
+        "13": "This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: https://scripts.sil.org/OFL",
+        "14": "https://scripts.sil.org/OFL"
+      },
+      "missingSpanishGlyphs": [],
+      "license": "assets/fonts/licenses/Lexend-OFL.txt",
+      "source": "Existing project binary, retained; original download source not recorded"
+    },
+    {
+      "family": "Lexend-SemiBold",
+      "path": "assets/fonts/Lexend-SemiBold.ttf",
+      "bytes": 78740,
+      "sha256": "6bf2212e71f48f136f59ad9583a68c0d323cd89801f35d5193927996c452ba8d",
+      "weight": 600,
+      "variable": false,
+      "names": {
+        "0": "Copyright 2019 The Lexend Project Authors (https://github.com/googlefonts/lexend)",
+        "1": "Lexend SemiBold",
+        "2": "Regular",
+        "5": "Version 1.007",
+        "13": "This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: https://scripts.sil.org/OFL",
+        "14": "https://scripts.sil.org/OFL"
+      },
+      "missingSpanishGlyphs": [],
+      "license": "assets/fonts/licenses/Lexend-OFL.txt",
+      "source": "Existing project binary, retained; original download source not recorded"
+    },
+    {
+      "family": "Lexend-Bold",
+      "path": "assets/fonts/Lexend-Bold.ttf",
+      "bytes": 78628,
+      "sha256": "db820d3ccf6b1175e9c96d03e4f093835cb7525e1ae3289702362e43f82b24b3",
+      "weight": 700,
+      "variable": false,
+      "names": {
+        "0": "Copyright 2019 The Lexend Project Authors (https://github.com/googlefonts/lexend)",
+        "1": "Lexend",
+        "2": "Bold",
+        "5": "Version 1.007",
+        "13": "This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: https://scripts.sil.org/OFL",
+        "14": "https://scripts.sil.org/OFL"
+      },
+      "missingSpanishGlyphs": [],
+      "license": "assets/fonts/licenses/Lexend-OFL.txt",
+      "source": "Existing project binary, retained; original download source not recorded"
+    },
+    {
+      "family": "Teko-SemiBold",
+      "path": "assets/fonts/Teko-SemiBold.ttf",
+      "bytes": 18180,
+      "sha256": "266eaa0a5d6ee4180bb59b36cd89fb41d4926960b0f84f20a6ced306fe4b511e",
+      "weight": 600,
+      "variable": false,
+      "names": {
+        "0": "Copyright 2023 The Teko Project Authors (https://www.github.com/googlefonts/teko)",
+        "1": "Teko Light SemiBold",
+        "2": "Regular",
+        "5": "Version 2.000;gftools[0.9.28.dev9+g7d2139d.d20230707]",
+        "14": "http://scripts.sil.org/OFL"
+      },
+      "missingSpanishGlyphs": [],
+      "license": "assets/fonts/licenses/Teko-OFL.txt",
+      "source": "https://fonts.gstatic.com/s/teko/v23/LYjYdG7kmE0gV69VVPPdFl06VN_JHIS11zY.ttf"
+    }
+  ]
+}

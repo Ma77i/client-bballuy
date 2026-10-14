@@ -1,5 +1,76 @@
 # SPEC-003 - Verification
 
+## T02 current completion ledger - 2026-10-13
+
+Owner explicitly authorized t02-scope.md only. T02 is done for local foundation
+implementation and acceptance, evidence in [t02-verification](t02-verification.md)
+and [ADR 0016](../../docs/decisions/0016-shared-presentation-foundations.md).
+SPEC-003 is in_progress, not verified; T03-T06 stay todo and T03 is unauthorized.
+Earlier ledgers remain historical and are superseded by this dated entry.
+
+Implemented tokens/compatibility adapters, canonical primitives, font map and
+loaded-font fallback, static Teko 600 + OFL/Spanish validation, original optimized
+local media/fallback and pooled reduced-motion/decorative animation utilities.
+No dependency/lockfile, application route, screen layout, hook/lib business contract,
+backend/RLS/Edge/harness changes. Root only font/provider initialization.
+
+Reproduction: npm run verify; npm run test:client; node scripts/verify-presentation-assets.mjs;
+standalone Metro gallery commands and browser cases in t02-verification.md.
+Observed: 101 tests pass (94 baseline + 7 new), token contrast on dark/cream,
+font/glyph/hash audits, actual web font/art loading and invalid-source fallback,
+busy/disabled callback blocking, radio checked state, help linkage, keyboard focus,
+375/812 viewport and doubled browser text stress, live reduced-motion emulation.
+Final iOS transform HTTP 200 (6,200,466 bytes) is compilation, not physical acceptance.
+Final verify and whitespace/status results are appended below after these updates.
+
+Remaining: physical device font/rendering, VoiceOver/TalkBack, true native text
+scaling and release frame timing; full map/sheet/screen adoption in later tasks.
+Generic typecheck still includes legacy Deno and fails with 27 preexisting errors;
+client-specific typecheck/verify pass. No server check inferred or required Edge edit.
+No commits/push; preserve prior owner documentation edits. Local gallery available
+for review at localhost only; no backend/auth/data operation executed by the fixture.
+
+## Current approval and gate ledger - 2026-10-13
+
+T01 is done. Owner approved R02.1 direction and all three sequences and expressly
+authorized documentary closure after five consistency checks; all pass as documented
+in [t01-closure](t01-closure.md). Approved baseline: R02 plus R02.1 corrections and
+authoritative contract annotations. Older pending ledgers below are historical.
+
+- SPEC-002 local acceptance: SATISFIED, verified registry and all tasks done, supported
+  by existing local/browser/owner-reported iPhone closure evidence, not rerun here.
+- Exact T01 visual revision: SATISFIED for design-only R02 + R02.1 closure.
+- Implementation authorization: NOT PROVIDED. No T02 execution or automatic continuation.
+- SPEC-003 state: ready for the planned sequence, not implementation-verified.
+- Redesign runtime/native focus/VoiceOver/text scaling/motion/performance: NOT VERIFIED.
+
+Windows/PowerShell, existing dirty working tree. Inspected README/status/workflow,
+SPEC-002 R02/R04/R08, participationState/manager, ParticipationControls,
+validateSessionDraft/capacities and SPEC-003 R02.1 artifacts/annotations. Checks cover
+full/open vs started/cancelled actions, 2/4/10 totals and guests, saved-request replay
+and current-account readback, state-independent motion, compact/expanded accessible
+sheet requirements. Exact sources/steps/outcomes are in t01-closure.md. No new runtime
+or backend evidence inferred from static checks. No app/backend/RLS/harness/Edge
+Function changes, installations, commits or push. T02 scope is in t02-scope.md.
+
+## T01 / R02 temporary branding clarification - 2026-10-13
+
+Owner instruction: `bballuy` is the internal name and temporary public brand/logo
+wordmark until a final app name is chosen. Arcade / street basketball describes
+the visual direction only. Requirements and A02 now distinguish those concepts;
+product documentation, design guidance and the plan use the same decision.
+R01 review notes flag its old naming as superseded while preserving its original
+images/HTML. The pre-existing R02 visual-refinement section in spec.md is preserved.
+
+Environment: Windows/PowerShell, Node 24.16.0, npm 11.13.0. Ran
+`npm.cmd run harness:status`: SPEC-003 draft, T01 in_progress, T00 done.
+Ran `npm.cmd run verify`: PASS, documentation (50 Markdown files / three specs),
+client TypeScript and lint, exit 0. No harness or Edge Function changed.
+Scope review: documentation only; no runtime copy, logo binaries, generated boards,
+backend, dependencies, commits or push changed. No new device/visual acceptance
+is claimed. T01 remains in_progress; next apply this naming to the requested R02
+boards and obtain approval of the exact visual revision before implementation.
+
 ## T00 documentation baseline - 2026-10-13
 
 Windows/PowerShell; existing working tree. Owner approved general planning direction
@@ -90,4 +161,111 @@ Presentation preview limitation: Playwright could not open the static HTML becau
 its managed browser profile was already in use. Existing browser was preserved;
 HTML rendering is not claimed as browser-verified. Raster boards were visually
 inspected in the tool output. open_in_codex queued the review file for the panel.
+
+
+## T01 R02 design-only refinement - 2026-10-13
+
+Windows/PowerShell, existing dirty working tree preserved. Owner explicitly requested
+R02 separate from R01: Courts, Play, Organize and annotated motion. Read README,
+status/workflow, SPEC-003 and R01 constraints; harness reports T01 in_progress,
+T02 todo and SPEC-002 verified. No final visual approval provided.
+
+Review design-r02/review.html with sibling boards and storyboard.svg; compare R01
+using embedded original image links. review.md records changes/limits, motion.md
+records durations/behavior/interruption/reduced-motion for seven interaction groups
+and organizer court selection. prompts.json records built-in generation provenance.
+Session examples are synthetic. Court names/attributes derive from the local catalog,
+not hosted parity. Raster typography approximates the proposed fonts.
+
+Observed visual review: Courts shows the compact header, three distinct cards,
+schematic map with exclusive selected ring, location control and smaller preview art.
+Play generation initially drifted on 1v1 capacity and navigation; targeted correction
+was requested to preserve 2/4/10 totals and the four existing tabs. Board findings
+and any remaining raster deviations are documented in review.md before delivery.
+
+Validation: npm run verify PASS (docs, TypeScript, lint) during preparation; final
+check runs after artifacts/evidence are complete. No Edge Function or harness edits,
+so verify:edge/test:harness are not required. No functional/runtime/backend/iPhone,
+VoiceOver, motion or performance acceptance rerun. Static storyboard is not evidence
+of implemented motion. No application code, RLS/backend, dependencies, commits or
+push changed. R01 preserved. T01 stays in_progress awaiting final owner review.
+
+
+Final R02 visual review: Organize corrected past date to Choose date/Choose time
+placeholders, navy selected labels/checks and same-form Plan heading. All three
+boards visually inspected in image output. Original art has symbolic format icons;
+exact capacities remain in text. Chrome isolated file tabs rendered storyboard.svg
+and loaded review.html; a full storyboard screenshot was inspected without clipped
+rows. PNG export through the browser connector was unavailable due to its path
+policy; SVG remains the standalone visual artifact, with inline screenshot reviewed.
+This is artifact rendering evidence only, not client or animation acceptance.
+
+
+Review HTML image check: all six image references loaded (three R02 boards, two
+R01 references and storyboard); page width 1234 within 1249 viewport. Final
+npm run verify PASS (53 Markdown files, docs/TypeScript/lint); docs/status.md
+diff whitespace check PASS. Design artifact loading does not certify app behavior.
+
+
+## T01 R02.1 targeted design review - 2026-10-13
+
+Owner explicitly approved only the general R02 artistic direction (identity, navy,
+orange, cream, original illustrations and sports-game component styling). Final
+T01 revision approval is NOT provided. T01 stays in_progress; T02 unauthorized.
+Owner requested four targeted corrections and three 3-4-frame visual sequences.
+
+Windows/PowerShell; README/status/workflow, R02 documents and actual client organizer/
+participation contracts inspected. Existing naming/documentation edits and R02
+artifacts preserved. New folder design-r02-1/ contains only patches, not full redesign.
+Review review.html, review.md, sheet.png, eligibility.svg, participants-dates.svg
+and sequence-marker/format/registration.svg. Each sequence has four UI-state frames
+plus duration, interruption and reduced-motion notes. Built-in image_gen edits only
+the preview presentation; SVG UI diagrams are static design artifacts, no app code.
+
+Rule findings: open/full differs from started/cancelled; already-registered players
+may leave an open full session with confirmation. Only fresh consistent open reads
+with available places can allow new join. Uncertainty blocks opposite action.
+Now counts guests/playing organizer once; Plan occupies only the playing organizer
+and adds no present-count field. Current defaults preserved. Planned sample is
+20/10/2026 18:00 Uruguay (future relative to this review); started example has no
+fabricated past schedule. All activity/participant values explicitly illustrative.
+
+Preparation npm run verify PASS (docs, TypeScript, lint); final checks recorded after
+artifacts. Isolated Chrome rendered marker sequence, visually inspected screenshot;
+participant SVG DOM has no text outside its 1600x930 viewBox. No functional/native,
+VoiceOver, actual 200% text scaling, animation, performance or backend acceptance.
+No code/backend/RLS/harness/Edge Function edits; no commits or push. R02 remains
+unchanged; scope records and design artifacts only. No tasks marked done.
+
+
+Final R02.1 checks: npm run verify PASS (54 Markdown files; docs/TypeScript/lint).
+docs/status.md diff whitespace check PASS. Review HTML reload loads all six artifacts
+including corrected sheet; width 1234 fits 1249 viewport. Marker, format and
+registration sequences were visually inspected as rendered four-frame SVGs.
+Sheet raster was visually inspected; compact vs enlarged/reflowed proposal preserves
+Close/View court and labelled generic media. Browser evidence applies to artifacts
+only; no app/native accessibility or animation acceptance. Final approval pending.
+
+Final T01 closure validation - 2026-10-13: npm run verify PASS (56 Markdown files,
+docs/TypeScript/lint); git diff --check PASS; harness:status reports SPEC-003 ready,
+T01 done and T02-T06 todo. approved-design.json records relative artifact paths and
+SHA-256 for the exact approved R02/R02.1 package and authoritative annotations.
+No application file was edited in this closure. Existing README/product/R01 naming
+changes predated this turn and were preserved. No Edge/harness edits: verify:edge and
+test:harness not required. Native/device/permission suites not rerun for doc closure.
+
+Final T02 result - 2026-10-13: npm run verify PASS (58 Markdown files, client
+TypeScript/lint); npm run test:client PASS 101/101 (94 baseline + 7 foundation tests);
+node scripts/verify-presentation-assets.mjs PASS; git diff --check PASS. Client
+checks passed after the final missing-media guard. Final native fixture transform
+HTTP 200 (6,201,772 bytes). Gallery decoded all four instances: default, invalid URI
+recovery, empty URI fallback and decorative character. Idle/busy height stayed 50px;
+labelled radio groups expose checked state. Screenshot/DOM observations are local
+browser evidence, not native accessibility or release performance acceptance.
+
+T02 done; T03-T06 todo. Only final localhost gallery 8196 and Metro 8093 retained
+for owner review; three stale preview helpers stopped. No dependency/lockfile,
+backend/RLS/hooks/lib contracts, real entities, commits or push changed. Existing
+owner changes preserved. No automatic T03 execution. No Edge/harness edits, so
+verify:edge/test:harness not required for this foundation-only change.
 

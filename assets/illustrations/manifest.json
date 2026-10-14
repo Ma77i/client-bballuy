@@ -1,0 +1,27 @@
+{
+  "createdOn": "2026-10-13",
+  "generator": "Built-in image_gen; owner-approved R02 style reference",
+  "generic": true,
+  "photographs": false,
+  "optimization": "Pillow 12.3.0, RGBA, LANCZOS contain resize, WebP quality 85 method 6, alpha preserved",
+  "images": [
+    {
+      "key": "court-placeholder",
+      "path": "assets/illustrations/court-placeholder.webp",
+      "source": "exec-3eb09fe6-571b-41db-8756-e516263c4034.png",
+      "bytes": 21898,
+      "width": 256,
+      "height": 250,
+      "sha256": "9bc65656049ad945d95f8848fc317182b392785b8d098f7954eea2d9c9042ddf"
+    },
+    {
+      "key": "player",
+      "path": "assets/illustrations/player.webp",
+      "source": "exec-4a230709-fb0f-401f-8f5c-1b4fe0f014fb.png",
+      "bytes": 18440,
+      "width": 256,
+      "height": 234,
+      "sha256": "94b69a0a08c1ec75949edb07dda49294bf960c73a7b5f49fb5e37d3d7f9168f2"
+    }
+  ]
+}

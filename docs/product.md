@@ -16,7 +16,11 @@ discovery is next. See
 remains the accepted local scope. iOS beta is future work without a registered
 specification; define it later against the completed product.
 
-BBallUY helps people discover basketball courts and become part of their communities. The commercial name remains undecided; some existing screens still use StreetHoops.
+The app helps people discover basketball courts and become part of their communities.
+The owner clarified on 2026-10-13 that `bballuy` is the internal project name and
+will also serve as the temporary public brand and logo wordmark until a final
+name is chosen. Arcade / street basketball describes the visual direction, not
+the product name. Existing StreetHoops copy is legacy and is not the chosen brand.
 
 ## Current MVP direction
 

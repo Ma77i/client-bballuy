@@ -1,0 +1,58 @@
+{
+  "spec": "SPEC-003",
+  "task": "T01",
+  "revision": "R02 baseline + R02.1 patches/annotations",
+  "approvedOn": "2026-10-13",
+  "approval": "Owner approved visual direction and three sequences; authorized documentary closure after five consistent checks",
+  "scope": "Design only; no implementation authorization",
+  "files": [
+    {
+      "path": "design-r02/courts.png",
+      "sha256": "bf3c914bebf698c9781c9d2e6e87df6936628b41a1b5c75a2f073fd21ea7aa04"
+    },
+    {
+      "path": "design-r02/play.png",
+      "sha256": "7a1dbe2cf227d726269acdeb782816f6df4884bce19e077d5300008fa48b2fca"
+    },
+    {
+      "path": "design-r02/organize.png",
+      "sha256": "f5b9ad4e8043dd394c7014d6a0df79e8dc71f37d02555f7cadbaf2c25ddb6219"
+    },
+    {
+      "path": "design-r02/storyboard.svg",
+      "sha256": "a5a869cb41d280926ef111fabfc008af2cc7bf5d8a2128b6ad6ee7f69ddda9dc"
+    },
+    {
+      "path": "design-r02-1/sheet.png",
+      "sha256": "e2f82d6ee65cbaa9e9b19d265e0bd974f26c094f6bb6a386f44127aca55bbc1d"
+    },
+    {
+      "path": "design-r02-1/eligibility.svg",
+      "sha256": "4e76e977d637f2327059de38fd1373db5c2703091a4a7b64276d9f117f3dd821"
+    },
+    {
+      "path": "design-r02-1/participants-dates.svg",
+      "sha256": "a0c5c22a8a322ef6a0bb852c733a86963dd7839a37a2a167e759e98df3b9adf0"
+    },
+    {
+      "path": "design-r02-1/sequence-marker.svg",
+      "sha256": "1f44a81e81945ade7aa141871c085ffc11e3d5f199816a4a6f159ebc7d3897a0"
+    },
+    {
+      "path": "design-r02-1/sequence-format.svg",
+      "sha256": "e92df1a50412248c7d024d7a03f81ebf63e6136072e3a72b745d8e6da0db639d"
+    },
+    {
+      "path": "design-r02-1/sequence-registration.svg",
+      "sha256": "ff3bd2cb73369a64e2f4ccbdd0cafa2b8ae4ad691557aed67fc5ecab2601ceec"
+    },
+    {
+      "path": "design-r02-1/review.md",
+      "sha256": "85854477bf34848673a7cef38de227982e7b5d39321475d7edf0261c69273a7e"
+    },
+    {
+      "path": "design-system.md",
+      "sha256": "9094f40a20b3e3658eea8ce4d331adb3f253792fde4815253d4cb00a64af0bfb"
+    }
+  ]
+}

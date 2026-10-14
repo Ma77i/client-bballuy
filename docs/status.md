@@ -1,5 +1,40 @@
 # Estado del proyecto
 
+## SPEC-003 T02 foundations locally verified - 2026-10-13
+
+Owner authorized T02 only. Shared tokens/adapters, accessible primitives, pooled
+reduced-motion utilities, verified static Teko/OFL/Spanish glyphs and original
+optimized local media/fallback are implemented. No new dependency, route/screen,
+backend/RLS/business contract, commit or push. See
+[foundation evidence](../specs/003-arcade-ux-ui/t02-verification.md) and
+[ADR 0016](decisions/0016-shared-presentation-foundations.md).
+T02 done for local scope; SPEC-003 in_progress, not verified; T03-T06 todo.
+Verify and 101 client tests pass. Web gallery/native transform do not certify
+physical font rendering, VoiceOver, Dynamic Type, gestures or release performance.
+Legacy primary aliases and full screen/copy adoption remain later presentation work.
+Stop before T03 until owner reviews T02 and explicitly authorizes continuation.
+
+## SPEC-003 T01 approved; T02 awaits authorization - 2026-10-13
+
+T01 is done for design-only acceptance of R02 art plus R02.1 visual patches and
+three sequences. The five owner-requested contract/design consistency checks pass;
+see [closure](../specs/003-arcade-ux-ui/t01-closure.md). SPEC-003 is ready, not verified.
+T02-T06 remain todo. [Exact T02 scope](../specs/003-arcade-ux-ui/t02-scope.md) is reusable
+presentation foundations only, awaiting explicit implementation authorization.
+SPEC-002 local acceptance remains verified; native redesign accessibility/focus/text
+scaling/motion/performance remain unverified. This step changes documentation only;
+no application/backend/RLS, dependency, commit or push action. Earlier dated entries
+retain their original baseline and pending-approval statements as history.
+
+## Temporary branding clarified - 2026-10-13
+
+The owner confirmed `bballuy` as the internal project name and temporary public
+brand/logo wordmark until a final name is selected. Arcade / street basketball
+describes the visual style only. SPEC-003 R02 and upcoming T01 revisions use this
+wording; original R01 boards remain historical. This is a naming clarification,
+not full design approval. Application copy/assets have not been changed here.
+See [SPEC-003 evidence](../specs/003-arcade-ux-ui/verification.md).
+
 ## SPEC-002 local acceptance verified - 2026-10-13
 
 T00-T06 are done for the local specification. Owner-reported iPhone checks cover
@@ -593,3 +628,20 @@ Play/supporting states, alternatives, tokens and motion. See
 T01 remains in_progress awaiting exact owner approval. SPEC-003 remains draft;
 T02 is not authorized. Verify passes; no runtime/device accessibility/performance
 acceptance, functional code, backend, deployment, commits or push in this step.
+
+## SPEC-003 T01 R02 visual refinement - 2026-10-13
+
+Owner requested three separate Courts/Play/Organize visual boards and an annotated
+motion storyboard, preserving R01 and existing behavior. See
+[the R02 review](../specs/003-arcade-ux-ui/design-r02/review.md).
+Design-only; T01 remains in_progress, SPEC-003 draft and T02 unauthorized.
+No application/backend/RLS changes, commits or push. Static check and visual
+review evidence/limitations are recorded in SPEC-003 verification.
+
+## SPEC-003 T01 R02.1 targeted visual review - 2026-10-13
+
+Owner approved R02 general artistic direction, not final T01 acceptance. R02.1
+contains compact/expanded court preview, eligibility/schedule/participant patches
+and three four-frame sequences. See
+[the R02.1 review](../specs/003-arcade-ux-ui/design-r02-1/review.md).
+R02 preserved. T01 remains in_progress; no implementation, commits or push.

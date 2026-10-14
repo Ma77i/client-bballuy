@@ -1,0 +1,5 @@
+Copyright 2019 The Lexend Project Authors (https://github.com/googlefonts/lexend)
+Existing project binaries report Version 1.007 and SIL Open Font License 1.1.
+Preserve the copyright/license embedded in each original font; those binaries
+were not replaced or claimed to be byte-identical to current Google Fonts.
+See Lexend-OFL.txt for the license text and its upstream copyright notice.
