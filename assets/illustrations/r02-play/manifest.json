@@ -1,0 +1,69 @@
+{
+  "source": "specs/003-arcade-ux-ui/play-r02-recovery-evidence/owner-reference.png",
+  "sourceSize": [
+    1536,
+    1024
+  ],
+  "sourceSha256": "c823e59d844009bb2a931cfb6085a19b05904752759932940208b05e23ff962a",
+  "authorization": "Owner explicitly authorized extraction from attached approved R02, 2026-10-15.",
+  "processing": "Text-free rectangular crops, no upscaling, no generation, WebP quality90 method6.",
+  "limitation": "Flattened 1536x1024 board; no high-resolution independent source layers.",
+  "images": [
+    {
+      "key": "header",
+      "path": "assets/illustrations/r02-play/header.webp",
+      "crop": [
+        308,
+        155,
+        533,
+        267
+      ],
+      "width": 225,
+      "height": 112,
+      "bytes": 11694,
+      "sha256": "c8eaf473841c1821d98c97e3ac09eb3f0b0bdff0b5fae04a93d9f7a957dc5f1d"
+    },
+    {
+      "key": "duel",
+      "path": "assets/illustrations/r02-play/duel.webp",
+      "crop": [
+        595,
+        211,
+        767,
+        302
+      ],
+      "width": 172,
+      "height": 91,
+      "bytes": 7146,
+      "sha256": "b0371590af23151968ca559c6a1105f66fc6ad92188abe08da06a30dcf8e70c8"
+    },
+    {
+      "key": "hoop",
+      "path": "assets/illustrations/r02-play/hoop.webp",
+      "crop": [
+        775,
+        211,
+        939,
+        302
+      ],
+      "width": 164,
+      "height": 91,
+      "bytes": 8218,
+      "sha256": "aeadb12b9f6ac2a01bc86e68d0179c207eb9344e6a701dfba1e996944baa561d"
+    },
+    {
+      "key": "ball",
+      "path": "assets/illustrations/r02-play/ball.webp",
+      "crop": [
+        333,
+        158,
+        443,
+        266
+      ],
+      "width": 110,
+      "height": 108,
+      "bytes": 5956,
+      "sha256": "20367c24950d39318b7aee7b3326a81c30e3bac4802edec2a916fd2c4ec1187b"
+    }
+  ]
+}

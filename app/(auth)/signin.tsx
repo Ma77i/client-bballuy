@@ -53,8 +53,7 @@ export default function SignInScreen() {
   return <EntryFrame title="VOLVÉ A LA CANCHA" description="Iniciá sesión para seguir jugando.">
     {formError && <Notice>{errorText(formError)}</Notice>}
     <Field label="Correo electrónico" placeholder="tu@correo.com" value={email} onChangeText={setEmail} keyboardType="email-address" autoCapitalize="none" autoCorrect={false} autoComplete="email" />
-    <Field label="Contraseña" placeholder="Ingresá tu contraseña" value={password} onChangeText={setPassword} secureTextEntry={!showPassword} autoCapitalize="none" autoComplete="current-password" />
-    <Button secondary label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'} onPress={() => setShowPassword(!showPassword)} />
+    <Field label="Contraseña" placeholder="Ingresá tu contraseña" value={password} onChangeText={setPassword} secureTextEntry={!showPassword} passwordVisibility={{ visible: showPassword, onToggle: () => setShowPassword(value => !value) }} autoCapitalize="none" autoComplete="current-password" />
     <Button label="Iniciar sesión" busy={isLoading} onPress={() => void handleSignIn()} />
     <Button secondary label="Crear una cuenta" onPress={() => router.push('/(auth)/age-gate')} />
   </EntryFrame>;

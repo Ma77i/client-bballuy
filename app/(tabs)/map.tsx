@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { AccessibilityInfo } from 'react-native';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { useIsFocused } from 'expo-router/react-navigation';
 import * as Location from 'expo-location';
@@ -20,13 +21,20 @@ export default function MapScreen() {
   const [location, setLocation] = useState<Coordinate | null>(null);
   const [locating, setLocating] = useState(false);
   const [locationMessage, setLocationMessage] = useState<string | null>(null);
+  useEffect(() => {
+    if (!locationMessage) return;
+    AccessibilityInfo.announceForAccessibility(locationMessage);
+    const timeout = setTimeout(() => setLocationMessage(null), 5000);
+    return () => clearTimeout(timeout);
+  }, [locationMessage]);
   async function findLocation() {
     if (locating) return;
     setLocating(true);
+    setLocationMessage(null);
     const result = await locateUser(Location.requestForegroundPermissionsAsync,
       () => Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Balanced }));
     setLocation(result.point);
-    setLocationMessage(result.message ? 'No pudimos obtener tu ubicación. Podés seguir explorando todas las canchas.' : null);
+    setLocationMessage(result.message ? 'Ubicación no disponible. Podés seguir explorando.' : null);
     setLocating(false);
   }
   return <>

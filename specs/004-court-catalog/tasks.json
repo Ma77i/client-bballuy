@@ -1,0 +1,34 @@
+{
+  "specId": "SPEC-004",
+  "tasks": [
+    {
+      "id": "T00",
+      "title": "Import and verify four owner-supplied local courts",
+      "status": "done",
+      "requirements": [
+        "R01",
+        "R02"
+      ],
+      "dependsOn": [],
+      "acceptance": "Four exact new rows, preserved original data, repeat-safe import, public reads and local checks pass.",
+      "evidence": [
+        "specs/004-court-catalog/verification.md"
+      ]
+    },
+    {
+      "id": "T01",
+      "title": "Remove the owner-selected Parque Rodo Court locally",
+      "status": "done",
+      "requirements": [
+        "R03"
+      ],
+      "dependsOn": [
+        "T00"
+      ],
+      "acceptance": "Only the selected court and its membership are removed; six remaining courts and account data are preserved; public catalog and checks pass.",
+      "evidence": [
+        "specs/004-court-catalog/verification.md"
+      ]
+    }
+  ]
+}

@@ -36,7 +36,7 @@ BEGIN
   END;
   DELETE FROM public.court_memberships WHERE user_id=fixture_user AND court_id=fixture_court;
   INSERT INTO public.court_memberships (user_id, court_id) VALUES (fixture_user, fixture_court);
-  INSERT INTO public.court_memberships (user_id, court_id) VALUES (fixture_user, '61b2c883-d029-4725-9142-bc1af122b84f');
+  INSERT INTO public.court_memberships (user_id, court_id) VALUES (fixture_user, '9a63055d-e78b-460c-aab7-30cbb1d867d9');
   DELETE FROM public.court_memberships WHERE user_id=fixture_user AND court_id=fixture_court;
   IF (SELECT count(*) FROM public.court_memberships WHERE user_id=fixture_user) <> 1 THEN
     RAISE EXCEPTION 'Leaving one court affected another membership';

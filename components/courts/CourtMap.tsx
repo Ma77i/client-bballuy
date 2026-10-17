@@ -49,7 +49,7 @@ function CourtMarker({ court, selected, onSelect, focused, onHost }: {
     <BasketballMarker selected={selected} focused={focused} name={court.name} onSelect={() => onSelect(court.id)} onHost={onHost} />
   </Marker>;
 }
-export default function CourtMap({ courts, location, onSelect, selectedId, camera, onCamera, onDismiss, focused = true, focusRef, focusRegion, onFocusRegionApplied }: CourtMapProps) {
+export default function CourtMap({ courts, location, onSelect, selectedId, camera, onCamera, onDismiss, focused = true, interactionEnabled = true, focusRef, focusRegion, onFocusRegionApplied }: CourtMapProps) {
   const map = useRef<MapView>(null);
   const ready = useRef(false);
   const markerHosts = useRef(new Map<string, View>());
@@ -74,14 +74,14 @@ export default function CourtMap({ courts, location, onSelect, selectedId, camer
   }, [location, reduced]);
   return <View style={{ flex: 1, minHeight: 280 }} accessibilityElementsHidden={Boolean(selectedId)}
     importantForAccessibility={selectedId ? 'no-hide-descendants' : 'auto'}>
-    <MapView ref={map} style={{ flex: 1 }} initialRegion={camera ?? (location ? { ...location, latitudeDelta: .015, longitudeDelta: .015 } : catalogRegion(courts))}
+    <MapView scrollEnabled={interactionEnabled} zoomEnabled={interactionEnabled} rotateEnabled={interactionEnabled} pitchEnabled={interactionEnabled} ref={map} style={{ flex: 1 }} initialRegion={camera ?? (location ? { ...location, latitudeDelta: .015, longitudeDelta: .015 } : catalogRegion(courts))}
       onMapReady={() => {
         ready.current = true;
         if (focusRegion) { map.current?.animateToRegion(focusRegion, reduced ? 0 : motion.switch); onFocusRegionApplied?.(); }
         else if (!camera && location) map.current?.animateToRegion({ ...location, latitudeDelta: .015, longitudeDelta: .015 }, 0);
       }}
       accessibilityLabel="Mapa de canchas" onRegionChangeComplete={onCamera} onPress={event => {
-        if (event.nativeEvent.action !== 'marker-press') onDismiss();
+        if (interactionEnabled && event.nativeEvent.action !== 'marker-press') onDismiss();
       }}>
       {courts.map(court => <CourtMarker key={court.id} court={court} selected={court.id === selectedId} onSelect={onSelect} focused={focused}
         onHost={host => { if (host) markerHosts.current.set(court.id, host); else markerHosts.current.delete(court.id); }} />)}

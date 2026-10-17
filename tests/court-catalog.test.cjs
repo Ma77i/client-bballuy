@@ -32,3 +32,11 @@ test('catalog errors propagate for retry instead of appearing as an empty catalo
  const query={select(){return this},order(){return Promise.resolve({data:null,error:new Error('fixture')});}};
  await assert.rejects(loadCatalog({from:()=>query}),/fixture/);
 });
+
+test('overview leaves broad margins without changing the real catalog',()=>{
+ const points=[{latitude:-34.9135,longitude:-56.1792},{latitude:-34.91,longitude:-56.17}];
+ const before=JSON.stringify(points),r=catalogRegion(points);
+ assert.ok(r.latitudeDelta>=0.04);assert.ok(r.longitudeDelta>=0.04);
+ assert.equal(JSON.stringify(points),before);
+ for(const p of points){assert.ok(Math.abs(p.latitude-r.latitude)<r.latitudeDelta/2);assert.ok(Math.abs(p.longitude-r.longitude)<r.longitudeDelta/2);}
+});

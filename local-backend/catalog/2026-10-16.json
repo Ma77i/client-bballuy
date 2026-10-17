@@ -1,0 +1,42 @@
+[
+  {
+    "id": "13829193-bd91-4a7b-ab4a-c960fbbbd390",
+    "name": "La sereg",
+    "latitude": -34.896771,
+    "longitude": -56.1714,
+    "half_court": false,
+    "surface": "concreto",
+    "lighting": null,
+    "notes": null
+  },
+  {
+    "id": "5c8cf078-9371-4164-8bac-e830f29de0a8",
+    "name": "barrio sur",
+    "latitude": -34.9140763,
+    "longitude": -56.1829666,
+    "half_court": true,
+    "surface": "concreto",
+    "lighting": null,
+    "notes": null
+  },
+  {
+    "id": "466a68f4-abbd-4df3-ad0a-c043a9a80d98",
+    "name": "cementerio sur",
+    "latitude": -34.9133863,
+    "longitude": -56.1881912,
+    "half_court": false,
+    "surface": "concreto",
+    "lighting": null,
+    "notes": null
+  },
+  {
+    "id": "7ccdea8a-7a07-4a00-b2b8-9b358abab0e3",
+    "name": "Plaza Argentina",
+    "latitude": -34.911714,
+    "longitude": -56.19905,
+    "half_court": false,
+    "surface": "concreto",
+    "lighting": null,
+    "notes": null
+  }
+]

@@ -10,6 +10,7 @@ export type DiscoveryAction =
   | { type: 'focus-applied' }
   | { type: 'close' }
   | { type: 'expand' }
+  | { type: 'set-expanded'; expanded: boolean }
   | { type: 'reconcile'; ids: string[] };
 export function discoveryReducer(state: DiscoveryState, action: DiscoveryAction): DiscoveryState {
   switch (action.type) {
@@ -21,11 +22,12 @@ export function discoveryReducer(state: DiscoveryState, action: DiscoveryAction)
     case 'focus-applied': return { ...state, focusRegion: null };
     case 'close': return { ...state, selectedId: null, expanded: false };
     case 'expand': return state.selectedId ? { ...state, expanded: !state.expanded } : state;
+    case 'set-expanded': return state.selectedId ? { ...state, expanded: action.expanded } : state;
     case 'reconcile': return state.selectedId && !action.ids.includes(state.selectedId)
       ? { ...state, selectedId: null, expanded: false } : state;
   }
 }
-export function sheetGesture(dy: number, dx: number): 'close' | 'expand' | null {
+export function sheetGesture(dy: number, dx: number): 'compact' | 'expand' | null {
   if (Math.abs(dx) > Math.abs(dy)) return null;
-  return dy > 70 ? 'close' : dy < -40 ? 'expand' : null;
+  return dy > 40 ? 'compact' : dy < -40 ? 'expand' : null;
 }

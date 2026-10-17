@@ -24,6 +24,7 @@ export default function SignUpScreen() {
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const submitting = useRef(false);
@@ -79,14 +80,13 @@ export default function SignUpScreen() {
   if (confirmationPending) return <EntryFrame title="REVISÁ TU CORREO" description="Abrí el enlace de confirmación y después iniciá sesión. No necesitás registrarte otra vez.">
     <Button label="Ir a iniciar sesión" onPress={() => router.replace('/(auth)/signin')} />
   </EntryFrame>;
-  return <EntryFrame title="CREÁ TU CUENTA" description="Encontrá canchas y convocatorias para jugar.">
+  return <EntryFrame title="CREÁ TU CUENTA" description="Encontrá canchas y partidos para jugar.">
     {formError && <Notice>{errorText(formError)}</Notice>}
     <Field label="Nombre visible" placeholder="Tu nombre" value={displayName} onChangeText={setDisplayName} autoCapitalize="words" />
     <Field label="Correo electrónico" placeholder="tu@correo.com" value={email} onChangeText={setEmail} keyboardType="email-address" autoCapitalize="none" autoCorrect={false} autoComplete="email" />
-    <Field label="Contraseña" placeholder="Creá tu contraseña" value={password} onChangeText={setPassword} secureTextEntry={!showPassword} autoCapitalize="none" autoComplete="new-password" />
-    <Button secondary label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'} onPress={() => setShowPassword(!showPassword)} />
+    <Field label="Contraseña" placeholder="Creá tu contraseña" value={password} onChangeText={setPassword} secureTextEntry={!showPassword} passwordVisibility={{ visible: showPassword, onToggle: () => setShowPassword(value => !value) }} autoCapitalize="none" autoComplete="new-password" />
     {password.length > 0 && <Text variant="caption" tone="dark">Seguridad: {{weak:'Baja',fair:'Media',good:'Buena',strong:'Alta'}[passwordStrength.label]}</Text>}
-    <Field label="Confirmar contraseña" placeholder="Repetí tu contraseña" value={confirmPassword} onChangeText={setConfirmPassword} secureTextEntry={!showPassword} autoCapitalize="none" />
+    <Field label="Confirmar contraseña" placeholder="Repetí tu contraseña" value={confirmPassword} onChangeText={setConfirmPassword} secureTextEntry={!showConfirmPassword} passwordVisibility={{ visible: showConfirmPassword, onToggle: () => setShowConfirmPassword(value => !value), label: 'confirmación de contraseña' }} autoCapitalize="none" />
     <Button label="Crear cuenta" busy={isLoading} onPress={() => void handleSignUp()} />
     <Button secondary label="Ya tengo cuenta: iniciar sesión" onPress={() => router.push('/(auth)/signin')} />
   </EntryFrame>;

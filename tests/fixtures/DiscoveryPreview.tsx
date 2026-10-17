@@ -1,4 +1,5 @@
 import { registerRootComponent } from 'expo';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useState } from 'react';
 import { useFonts } from 'expo-font';
 import { View, useWindowDimensions } from 'react-native';
@@ -44,7 +45,7 @@ function Preview() {
       <Text tone="dark">ID: {detail}</Text>
       <Button label="Volver a canchas" onPress={() => setDetail(null)} />
     </View>}
-    {sheet && <CourtPreview court={courts[1]} expanded={expanded} onExpand={() => setExpanded(v => !v)}
+    {sheet && <CourtPreview court={courts[1]} expanded={expanded} onExpandedChange={setExpanded} onDragChange={() => undefined}
       onClose={() => setSheet(false)} onOpen={() => { setSheet(false); setDetail(courts[1].id); }}
       focused={false} bottomInset={0} availableHeight={height} />}
   </View>;
@@ -52,7 +53,7 @@ function Preview() {
 function Root() {
   const [loaded, error] = useFonts(fontAssets);
   if (!loaded && !error) return null;
-  return <PresentationProvider><Preview /></PresentationProvider>;
+  return <GestureHandlerRootView style={{ flex: 1 }}><PresentationProvider><Preview /></PresentationProvider></GestureHandlerRootView>;
 }
 registerRootComponent(Root);
 

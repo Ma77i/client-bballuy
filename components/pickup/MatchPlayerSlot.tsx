@@ -14,8 +14,8 @@ export default function MatchPlayerSlot({ player, index, disabled, error, change
   const label = `Lado ${player.side} · participante ${index + 1}`;
   return <View style={{ gap: 12 }}>
     <Text style={kit.fieldLabel}>{label}</Text>
-    <View style={kit.row}><GameChoice label="Invitado" selected={player.kind === 'guest'} disabled={disabled} onPress={() => change({ ...player, kind: 'guest', userId: '', label: '' })} />
-      <GameChoice label="Cuenta" selected={player.kind === 'account'} disabled={disabled} onPress={() => change({ ...player, kind: 'account', userId: '', label: '' })} /></View>
+    <View style={kit.row}><GameChoice compact label="Invitado" selected={player.kind === 'guest'} disabled={disabled} onPress={() => change({ ...player, kind: 'guest', userId: '', label: '' })} />
+      <GameChoice compact label="Cuenta" selected={player.kind === 'account'} disabled={disabled} onPress={() => change({ ...player, kind: 'account', userId: '', label: '' })} /></View>
     {player.kind === 'guest' ? <GameField label={`${label} · nombre del invitado`} value={player.label} maxLength={40} editable={!disabled} error={error}
       onChangeText={value => change({ ...player, label: value })} /> : <>
       {Boolean(player.userId) && <Text style={kit.badge}>Seleccionado: {player.label || 'Participante guardado'}</Text>}

@@ -2,6 +2,8 @@
 export const palette = {
   navy: '#0C1220', surface: '#171F30', raised: '#243047', cream: '#FFF7ED',
   orange: '#FF8A43', orangePressed: '#F97316', text: '#F8FAFC', muted: '#B8C3D6',
+  orangeInk: '#A63B00',
+  orangeAction: '#BA4300',
   separator: '#53647E', success: '#73DEAA', warning: '#FFD166', error: '#FFADB5',
   dangerSurface: '#3E2530', lightError: '#8C1831', lightSuccess: '#175F3E',
   lightWarning: '#704B00', white: '#FFFFFF', black: '#000000',

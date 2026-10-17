@@ -1,5 +1,111 @@
 # Estado del proyecto
 
+## Final physical block authorized — 2026-10-16
+
+Owner authorizes N12–N16 guided acceptance and N17 matrix preparation only.
+[Sessions and matrix](../specs/003-arcade-ux-ui/t06-native-block-03/README.md) are prepared with new
+physical cases NOT RUN and N17 pending review. N06–N11 owner physical PASS; N02
+gesture-only PASS. N01 camera/N03/N04 retests and N05 missing result remain open.
+No functional/dependency/backend changes, closure, commits, push or deployment.
+T06 in_progress; SPEC-003 open.
+
+
+## N06–N11 physical acceptance reported — 2026-10-16
+
+Owner explicitly reports N06,N07,N08,N09,N10,N11 PASS on iPhone/Expo Go.
+[Case evidence and limits](../specs/003-arcade-ux-ui/t06-native-block-02/README.md) distinguish direct
+owner physical acceptance from simulations. No new screenshots, conditional-subcase
+observations or loaded bundle hash supplied; none fabricated. N01 camera, N03/N04
+physical retests and N05 status remain unchanged; N02 gesture correction PASS.
+T06 in_progress; SPEC-003 open. N12–N17 await authorization. Documentation only;
+no functional/dependency/backend changes, commit, push or deployment.
+
+
+## Owner-selected court removed locally — 2026-10-16
+
+Parque Rodó Court was removed by exact ID with its one community membership.
+No game/session/team history referenced it; user accounts remain. The distinct
+Parque Rodo court remains unchanged. Current local catalog has six courts and
+passes exact database/public API preservation checks. Seed/generator exclude the
+retired ID. See [SPEC-004 evidence](../specs/004-court-catalog/verification.md).
+No hosted change or new device acceptance is claimed.
+
+## Four owner-supplied courts added locally — 2026-10-16
+
+SPEC-004 adds La sereg, barrio sur (half court), cementerio sur and Plaza Argentina
+to the unlinked local catalog. All four have owner-reported concrete surfaces;
+lighting/notes remain unknown. Seven total rows; the three originals retain every
+field. Incremental migration and repeat checks, public API reads, 111 permission
+assertions, 119 client tests and verify pass. See
+[catalog evidence](../specs/004-court-catalog/verification.md).
+No hosted import or new iPhone acceptance is claimed. Refresh/reopen Courts in
+the local preview to inspect the additions; SPEC-003 T06 remains separate.
+
+## Owner gesture acceptance and next-block preparation — 2026-10-16
+
+N02 expansion/contraction gesture correction is physical PASS by direct owner
+report on iPhone/Expo Go. No further gesture changes requested or made. This does
+not pass all N02 subchecks. N01 core list/search/mode flow approved; camera retest
+pending. N03/N04 observed defects remain pending physical correction retest; N05
+has no result supplied. Automated checks do not supersede those statuses.
+[Next block N06–N11](../specs/003-arcade-ux-ui/t06-native-block-02/README.md) prepared; all cases NOT RUN.
+T06 in_progress and SPEC open. No new code/dependency/backend changes or commit/push.
+Latest owner-confirmed status supersedes earlier N02 FAIL statements only for the
+expansion/contraction defect; historical observations remain preserved.
+
+
+## T06 first-block defect corrections — 2026-10-16
+
+Owner reports N02 physical FAIL and authorizes targeted N01 camera, N03 location
+feedback and N04 pending presentation corrections. [Implementation/retest report](../specs/003-arcade-ux-ui/t06-block01-corrections.md)
+records scope and evidence. No post-fix physical acceptance: N02 remains FAIL,
+other observed adjustments await retest, N05 NOT RUN. T06 in_progress, SPEC open;
+no N06–N11 execution, dependency/backend changes, commits or push.
+
+
+## T06 block 01 authorized — 2026-10-16
+
+T00–T05 done; T06 in_progress for guided N01–N05 only. [Physical block record](../specs/003-arcade-ux-ui/t06-native-block-01/README.md)
+tracks environment and separate NOT RUN case records; no new physical pass is
+claimed. Owner confirmation and the next block approval are required. SPEC open;
+no functional/backend/dependency changes, resets, commits, push or deployment.
+This status supersedes earlier T06 todo/planning-only statements below.
+
+
+## Current owner decision — 2026-10-16
+
+Owner formally approved the four secondary game screens and closed T05 for
+implementation and visual acceptance. T00–T05 are done; T06 remains todo,
+planning only, awaiting authorization. SPEC-003 remains open. This latest status
+supersedes older pending-review/dependency-authorization statements below.
+See [T05 closure](../specs/003-arcade-ux-ui/t05-closure.md), [exact security patch](../specs/003-arcade-ux-ui/security-patch-verification.md)
+and [proposed physical T06 checklist](../specs/003-arcade-ux-ui/t06-plan.md). Native validations remain
+pending; no physical tests, commits, push or SPEC closure are claimed.
+
+
+## Current T05 scoped follow-up — 2026-10-16
+
+[Contrast and secondary-game corrections](../specs/003-arcade-ux-ui/t05-final-corrections.md)
+implemented for owner review: court CTA navy/orange AA, Mis partidos sports cards,
+recorded-match/history/result reuse and Spanish copy.117 client tests and isolated
+browser regressions pass; see latest evidence/native limits. [Security investigation](../specs/003-arcade-ux-ui/security-update-proposal.md)
+proposes only shell-quote1.11.0 transitive update; dependencies have not changed and
+all49 findings remain unremediated. T05 in_progress, T06 todo, SPEC open; no commits/push.
+
+
+## Current SPEC-003 pre-closure decision — 2026-10-16
+
+Profile and Map implementation are formally visually approved; no further visual
+revision requested. iPhone large text, VoiceOver, safe areas and long emails remain
+pending. No profile editing/avatar/expanded account data implemented.
+[Current comprehensive audit](../specs/003-arcade-ux-ui/pre-closure-audit.md): T00–T04 done,
+T05 in_progress, T06 todo, SPEC open. Local client116/116 and assets pass; fresh npm
+audit confirms49 affected packages including1 critical (shell-quote1.10.0), not fixed.
+Court-detail white-on-bright-orange contrast and secondary-flow copy/fidelity remain
+acceptance issues. Historical approval/test statements below keep their original scope;
+latest named-screen approvals supersede pending visual statements only.
+No application/backend/contract/dependency changes, commits/push or closure.
+
 ## T04 owner closure; T05 implemented for review — 2026-10-14
 
 Owner explicitly closed T04, with existing evidence and native limits retained in
@@ -745,3 +851,150 @@ before insertion/renumbering. Once approved, frozen R03 boards/specifications be
 the visual baseline; until then R02/R02.1 remain historical approved references.
 Actual iPhone comparison, text settings, safe insets and native acceptance remain
 pending. No backend/RLS, contracts, app source, commits or push in this review.
+
+## R02/R02.1 fidelity correction authorized — 2026-10-14
+
+Owner rejected R03 as a design baseline and authorized implementation correction
+of Canchas only, with approval before proceeding screen by screen. R02/R02.1 and
+subsequent agreed functionality are authoritative. See [scope and evidence](../specs/003-arcade-ux-ui/courts-fidelity-correction.md).
+No new boards, backend changes, commits, push or SPEC closure.
+
+## Targeted Courts/auth refinement — 2026-10-15
+
+Outlined cream/orange court CTA, grouped real information, integrated password eyes
+and recognizable existing provisional-consent checkboxes implemented. See
+[scope and executed checks](../specs/003-arcade-ux-ui/courts-auth-refinement.md).
+Verify and109 client tests pass; browser checks observed, iPhone focus/VoiceOver/
+large-text checks pending. Existing local changes preserved; no map/backend/
+contract changes, new designs, next-screen work, SPEC closure, commits or push.
+
+## Detail fidelity correction — 2026-10-15
+
+Implemented the owner-authorized Detalle correction only: illustrated SOBRE LA
+CANCHA main card, connected organize/save actions, separate reported activity.
+[Evidence and native-review limits](../specs/003-arcade-ux-ui/detail-fidelity-correction.md).
+Verify and109 client tests pass;10 isolated browser transport-simulation checks
+passed. Physical iPhone/account-server review remains pending. Earlier local changes
+preserved; no map/backend/contract changes, new designs, next screen, closure or push.
+
+Owner corrected the Detalle visual target with an uploaded image on2026-10-15.
+Cream page, navy facts, wide provisional art and grouped save/organizer actions
+now replace the earlier composition. Latest evidence is in the linked detail
+correction record. Native owner review remains pending; no next-screen work.
+
+Detail typography refinement: one centered header with icon-only back, sentence-case
+aligned headings, taller rows, no visible image disclaimer. Owner universal rule
+uses white labels on accessible orange action fills and icon-only shared back
+controls. Verify/client checks pass; updated browser simulation11 checks pass.
+Native owner review remains pending. See the detail fidelity evidence above.
+
+Owner provisionally approved the detail cream background and requested compact
+header/activity plus primary Armar partido in exact #FF8A43 and secondary save/remove.
+Implemented only detail presentation; verify/client109 and11 isolated browser checks
+pass. Latest screenshot/evidence in detail-fidelity-correction.md. White text on
+requested bright orange has2.21:1 contrast, recorded as unresolved accessibility
+debt. Native owner review pending; stop before Mis canchas, no commit/push/closure.
+
+## My Courts fidelity correction — 2026-10-15
+
+Owner approved Detalle; it was preserved unchanged. Implemented only Mis canchas:
+approved shared horizontal card,48 pt header refresh,220 pt original-art empty
+state; existing data/read/retry/navigation retained. [Evidence and native limits](../specs/003-arcade-ux-ui/my-courts-fidelity-correction.md).
+Verify/client109 and8 isolated browser checks pass. Actual iPhone/VoiceOver/large
+text review pending. Stop before Jugar; no commit/push/backend change or closure.
+
+## My Courts final approval and Play fidelity review — 2026-10-15
+
+My Courts final owner-requested subtitle/CTA verified; refresh 48 x 48, screen now
+approved/frozen. See [approval record](../specs/003-arcade-ux-ui/my-courts-fidelity-correction.md).
+Jugar now uses R02 horizontal illustrated cards, compact selectors and fixed action
+dock with existing routes. Verify PASS, client109/109 PASS,6 grouped isolated actual
+web-app checks PASS; simulated transport is not remote or native acceptance.
+See [implementation, comparison, captures and iPhone gate](../specs/003-arcade-ux-ui/play-fidelity-correction.md).
+Physical iPhone review pending; T05 remains in_progress, T06 not started, SPEC open.
+Earlier statements that Jugar was not started are historical. No commit/push.
+
+## Play R02 fidelity recovery after rejection — 2026-10-15
+
+Owner rejected the previous Play visuals. With explicit authorization, actual clean
+art crops from the attached R02 now drive the illustrated JUGAR header and compact
+sports tickets, with overlaid formats, semantic state tags, icon-led real metadata
+and exact #FF8A43/navy CTA. Existing routes/filters/dock/domain rules preserved.
+Verify PASS, client111/111 PASS and6 isolated browser groups PASS. See
+[current element comparison, provenance, captures and limits](../specs/003-arcade-ux-ui/play-fidelity-correction.md#recovered-r02-composition-and-verification).
+Art crop resolution/framing and font differences remain explicit; actual iPhone
+acceptance not claimed. My Courts/Detalle unchanged. T05 in_progress, T06 todo,
+SPEC open, no next screen, commits or push. Earlier visual completion is superseded.
+
+## Jugar approved; Armar partido fidelity review — 2026-10-15
+
+Owner explicitly approved Jugar visually; header integration, availability wording
+and full-game behavior remain minor follow-ups, not resolved claims. Only existing
+Armar partido creation/quick/planned presentation was corrected next. Compact real
+court selector, illustrated checked format tiles, timing/participation choices and
+exact orange/navy CTA preserve existing contracts/defaults/validation/UUID replay.
+Verify PASS, client111/111 PASS, five isolated actual-browser groups PASS including
+both simulated confirmed creations and uncertain readback. No real backend writes.
+See [comparison, files, captures and native limits](../specs/003-arcade-ux-ui/organize-fidelity-correction.md).
+Jugar and other approved screens unchanged. Physical iPhone review pending; T05
+in_progress, T06 not started, SPEC open; no commits/push or automatic next screen.
+
+## Organizer approved composition; native scheduling usability — 2026-10-15
+
+Owner approved Armar partido composition and requested targeted usability changes.
+Native date/time adapters, Spanish readable date/device zone, future-selection guards,
+compact format summary, shorter help and keyboard/safe-inset policy implemented only
+in creation. One justified SDK-compatible picker dependency; no domain/backend change.
+Verify PASS, client116/116 PASS; isolated browser regression PASS including both
+simulated creations/replay and resized-viewport CTA. iOS Hermes export PASS; final
+Android export status and actual native limits in [current evidence](../specs/003-arcade-ux-ui/organize-usability.md).
+[Future invitations](future-player-invitations.md) documented, not implemented.
+Project npm audit reports49 alerts including1 critical; picker inherits Expo's alert,
+no broad fix/downgrade applied. No clean security/native-release acceptance claimed.
+Physical iPhone/Android review pending; T05 in_progress, T06 todo, SPEC open; no
+commits/push or other-screen work. Earlier manual scheduling adaptation is superseded.
+
+## Organizer formally approved; game detail/management review only — 2026-10-15
+
+Owner formally approves Armar partido design/usability in Jugar ahora and Planificar.
+Keep pending physical iPhone pickers/keyboard/safe areas/enlarged text,49 security
+alerts with critical priority, and future functional invitation SPEC (documented only).
+Review of public game detail/organizer management compared source and actual isolated
+browser presentation to R02/R02.1. R02 has public detail but no standalone management
+board. Six read-only browser groups passed with0 attempted writes; native/remote
+acceptance not claimed. See [differences and proposed scope](../specs/003-arcade-ux-ui/game-detail-management-review.md).
+Application code unchanged; implementation requires owner approval of the proposal.
+T05 remains in_progress, T06 todo, SPEC open. No commits/push or automatic next screen.
+
+
+Management/detail visual refinement implemented; native visual approval remains pending for both screens. See [SPEC-003 refinement evidence](../specs/003-arcade-ux-ui/game-detail-management-review.md). T05 remains in progress; no SPEC closure.
+
+
+## Game detail and management visually approved — 2026-10-16
+
+Owner approved both current screens; this supersedes earlier pending visual approval.
+No redesign or application change. Thirteen isolated browser state/recovery groups
+and 116/116 client tests passed; local verify passed. Native functional/accessibility
+and live server permission checks were not rerun. Three nonblocking polish items
+(cancel distinction, 24-hour display evaluation, confirmed-registration indicator)
+remain recorded in [acceptance and limits](../specs/003-arcade-ux-ui/game-state-acceptance.md).
+SPEC-003 stays open, T05 in_progress, T06 todo; no commits/push or next-screen work.
+
+
+## Profile fidelity implementation awaiting visual review — 2026-10-16
+
+Owner approved the Profile proposal. Implemented only the Profile composition, reusing
+existing art, auth data, support/logout and shared primitives without new dependencies
+or queries. Client116/116 and six isolated browser groups passed; verify passed.
+See [evidence and native limits](../specs/003-arcade-ux-ui/profile-fidelity-review.md). Physical iPhone visual,
+large-text, VoiceOver and safe-area validation remain pending. SPEC open; no commits/push.
+
+
+## Map footer and compact preview refinement — 2026-10-16
+
+Removed the native map metadata overlay while preserving list data and conditional
+error/empty feedback. Compacted the existing preview; native map/selection/permissions
+and routes unchanged. Client116/116, five shared-web groups and iOS Hermes export pass.
+See [evidence and physical iPhone checklist](../specs/003-arcade-ux-ui/map-preview-refinement.md). Native full-map
+and selected-map captures, gestures and safe-area geometry remain pending. SPEC open;
+no commits/push and no automatic next task.

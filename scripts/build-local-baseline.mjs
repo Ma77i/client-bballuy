@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const snapshot = JSON.parse(readFileSync(path.join(root, 'supabase/snapshots/2026-09-19-dependencies.json'), 'utf8'));
 const out = path.join(root, 'local-backend/supabase');
+const retired = JSON.parse(readFileSync(path.join(root, 'local-backend/catalog/retired.json'), 'utf8'));
 const quote = value => `"${value.replaceAll('"', '""')}"`;
 const literal = value => value === null ? 'NULL' : `'${String(value).replaceAll("'", "''")}'`;
 const role = value => value.toLowerCase() === 'public' ? 'PUBLIC' : quote(value);
@@ -66,8 +67,8 @@ writeFileSync(path.join(out, 'migrations/20260919000100_inspected_baseline.sql')
 
 const seed = [
   '-- Local-only catalog from the owner-provided export. Preserve IDs and raw values.',
-  '-- Do not merge the two Parque Rodo records or invent user/team fixtures here.',
-  ...snapshot.court_catalog.map(court => {
+  '-- Exclude owner-retired IDs listed in local-backend/catalog/retired.json.',
+  ...snapshot.court_catalog.filter(court => !retired.some(row => row.id === court.id)).map(court => {
     if (!/^[0-9a-f]+$/i.test(court.coords_geography_text)) throw new Error('Unexpected geography encoding.');
     return `INSERT INTO public.courts (id, name, coords, half_court, lighting, surface, notes, created_at) VALUES (${literal(court.id)}, ${literal(court.name)}, ${literal(court.coords_geography_text)}::public.geography, ${court.half_court}, ${literal(court.lighting)}, ${literal(court.surface)}, ${literal(court.notes)}, ${literal(court.created_at)}) ON CONFLICT (id) DO NOTHING;`;
   }),

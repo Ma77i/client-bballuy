@@ -22,3 +22,10 @@ test('Spanish error copy retains uncertain replay, changed-state and bounded-cou
   assert.equal(errorText('Choose 1–10 players, including you if playing.'), 'Elegí entre 1 y 10 participantes, incluyéndote si jugás.');
   assert.equal(errorText('No pudimos cargar las canchas.'), 'No pudimos cargar las canchas.');
 });
+
+
+test('secondary game copy translates conflicts and owner/source recovery without changing guidance', () => {
+  assert.equal(errorText('The result or invitation changed. Refresh and review before saving again.'), 'El resultado o el partido cambiaron. Actualizá y revisá antes de guardar otra vez.');
+  assert.equal(errorText('This game is unavailable or belongs to another organizer.'), 'El partido no está disponible o pertenece a otra persona.');
+  assert.equal(errorText('Load a started or closed invitation you organize.'), 'Consultá un partido iniciado o finalizado que organices.');
+});

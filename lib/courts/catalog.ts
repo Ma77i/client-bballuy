@@ -29,7 +29,7 @@ export function catalogRegion(points: Coordinate[]) {
   const south = Math.min(...latitudes), north = Math.max(...latitudes);
   const west = Math.min(...longitudes), east = Math.max(...longitudes);
   return { latitude: (south + north) / 2, longitude: (west + east) / 2,
-    latitudeDelta: Math.max(0.008, (north - south) * 1.4), longitudeDelta: Math.max(0.008, (east - west) * 1.4) };
+    latitudeDelta: Math.max(0.04, (north - south) * 1.9), longitudeDelta: Math.max(0.04, (east - west) * 1.9) };
 }
 export async function loadCatalog(client: SupabaseClient<Database>, signal?: AbortSignal) {
   let query = client.from('court_catalog').select('id,name,latitude,longitude,half_court,lighting,surface,notes,created_at').order('name');

@@ -47,8 +47,24 @@ test('selection, close and expansion have no animation completion dependency', (
   assert.equal(reduce(initial, { type: 'expand' }).expanded, false);
 });
 test('handle drag is optional, vertical and threshold bounded', () => {
-  assert.equal(sheetGesture(71, 2), 'close');
+  assert.equal(sheetGesture(71, 2), 'compact');
   assert.equal(sheetGesture(-41, 2), 'expand');
   assert.equal(sheetGesture(8, 1), null);
   assert.equal(sheetGesture(90, 120), null);
+});
+
+
+test('directional sheet commands are idempotent and never dismiss the selected court', () => {
+  const selected = reduce(reduce(initial, { type: 'mode', mode: 'map' }), { type: 'select', id: 'a' });
+  let state = selected;
+  for (const dy of [-80, -80, 90, 90]) {
+    const action = sheetGesture(dy, 0);
+    state = reduce(state, { type: 'set-expanded', expanded: action === 'expand' });
+    assert.equal(state.selectedId, 'a');
+    assert.equal(state.expanded, dy < 0);
+  }
+  assert.equal(reduce(initial, { type: 'set-expanded', expanded: true }).expanded, false);
+  for (const [dy, dx] of [[40, 0], [-40, 0], [0, 90], [90, 120], [-90, 120]]) {
+    assert.equal(sheetGesture(dy, dx), null);
+  }
 });

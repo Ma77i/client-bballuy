@@ -91,6 +91,25 @@ absence of the migration history table in the export does not authorize a reset.
 
 ## What the checks establish
 
+Later on 2026-10-16 the owner requested removal of Parque Rodó Court (ID
+61b2c883-d029-4725-9142-bc1af122b84f). Incremental migration
+`20261016000200_remove_selected_court.sql` removes only that court and its community
+membership; it refuses removal if history references exist. The separate Parque
+Rodo record remains. Current expected catalog: two original courts plus four
+additions. `catalog/retired.json`, the seed and its generator prevent reintroducing
+the removed ID after migration/seed replay. The historical snapshot is unchanged.
+Verify compares the exact six-row catalog and replays both migrations safely.
+The original three-row and later seven-row descriptions below are historical.
+
+As of 2026-10-16, migration `20261016000100_owner_courts.sql` adds four owner-supplied
+courts to local development. The original snapshot/seed remains unchanged.
+[The batch manifest](catalog/2026-10-16.json) records stable IDs and expected
+coordinates/attributes. `db:local:verify` now requires the three originals plus
+these four additions, compares all original fields, checks new attributes and
+public projections, and replays the import twice without changing any row.
+Permission checks compare complete catalog ID sets instead of a fixed count.
+See [SPEC-004](../specs/004-court-catalog/spec.md). No hosted import is implied.
+
 db:local:verify compares every court field (including timestamp microseconds and
 geography bytes) with the export, checks all 21 original core column types and
 nullability, verifies signup-trigger output, and exercises membership uniqueness,

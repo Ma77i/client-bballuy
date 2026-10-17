@@ -14,7 +14,7 @@ SplashScreen.preventAutoHideAsync();
 
 function RootLayoutNav() {
   return (
-    <Stack initialRouteName="splash" screenOptions={{ headerBackTitle: "Back" }}>
+    <Stack initialRouteName="splash" screenOptions={{ headerBackButtonDisplayMode: 'minimal' }}>
       <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen name="splash" options={{ headerShown: false }} />
       <Stack.Screen name="(auth)" options={{ headerShown: false }} />

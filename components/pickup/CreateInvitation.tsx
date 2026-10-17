@@ -1,11 +1,15 @@
 import { useState } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
+import { Keyboard, KeyboardAvoidingView, Platform, ScrollView, View, useWindowDimensions } from 'react-native';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
-import { ArrowRight, MapPin } from 'lucide-react-native';
+import { ArrowRight, CalendarDays, Zap, UserRound, Users, Check } from 'lucide-react-native';
 import Text from '@/components/pickup/GameText';
 import Colors from '@/constants/colors';
+import { useHeaderHeight } from 'expo-router/react-navigation';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import PlannedSchedule from './PlannedSchedule';
 import FormatChoices from './FormatChoices';
-import { GenericMedia } from '@/components/foundation/GenericMedia';
+import { PlayArt } from './PlayArt';
+import Dropdown from '@/components/ui/dropdown';
 import { palette } from '@/constants/design';
 import { errorText } from './error-copy';
 import { GameLoading as ActivityIndicator, GameButton, GameChoice, ArcadeField as GameField, ArcadeNotice as GameNotice, GamePanel, gameColors, kit } from '@/components/pickup/Kit';
@@ -16,6 +20,10 @@ import { capacities, defaultSessionDraft, pickupFormats, restoredSessionDraft, v
 export function CreateInvitationScreen({ quick = false }: { quick?: boolean }) {
   const { courtId, format } = useLocalSearchParams<{ courtId?: string; format?: string }>();
   const router = useRouter();
+  const headerHeight = useHeaderHeight();
+  const insets = useSafeAreaInsets();
+  const { width, fontScale } = useWindowDimensions();
+  const expanded = width < 350 || fontScale >= 1.4;
   const courts = useCourtCatalog();
   const action = useOrganizerAction('create');
   const [formDraft, setDraft] = useState(() => {
@@ -59,57 +67,75 @@ export function CreateInvitationScreen({ quick = false }: { quick?: boolean }) {
       if (result) router.replace({ pathname: '/organize/[id]', params: { id: result.id, created: '1' } });
     }
   }
-  return <KeyboardAvoidingView style={kit.page} behavior={Platform.OS === 'ios' ? 'padding' : undefined} keyboardVerticalOffset={96}>
-    <Stack.Screen options={{ headerBackTitle: 'Volver', title: quick ? 'Jugar ahora' : 'Organizar convocatoria', headerStyle: { backgroundColor: gameColors.ink }, headerTintColor: Colors.text }} />
-    <ScrollView contentContainerStyle={kit.content} keyboardShouldPersistTaps="handled">
-      <View style={{ gap: 8 }}><Text style={kit.kicker}>ARMÁ TU PRÓXIMO PARTIDO</Text><Text style={kit.title}>{quick ? 'TU PARTIDO. AHORA.' : <>ELEGÍ LA CANCHA.{ '\n' }ARMÁ LA CONVOCATORIA.</>}</Text>
-        <Text style={kit.body}>Elegí dónde y cómo jugar. No necesitás un equipo ni agregar la cancha.</Text></View>
-      <GenericMedia compact asset="player" size={36} />
-      {!action.ready && <ActivityIndicator accessibilityLabel="Consultando solicitud guardada" color={gameColors.orange} />}
-      {action.pending && <GameNotice>Hay una solicitud guardada sin confirmar. Comprobala antes de crear otra convocatoria.</GameNotice>}
-      {!quick && <GamePanel tone="light">
-        <View style={kit.row}><MapPin size={20} color={gameColors.orange} /><Text style={kit.section}>Elegí la cancha</Text></View>
-        {courts.isPending ? <ActivityIndicator color={gameColors.orange} /> : courts.isError ? <>
-          <GameNotice>No pudimos cargar las canchas.</GameNotice><GameButton secondary label="Reintentar canchas" onPress={() => void courts.refetch()} />
-        </> : courts.data?.map(court => <GameChoice key={court.id} label={court.name} selected={draft.courtId === court.id}
-          style={{ flexBasis: 'auto', minHeight: 64, borderColor: draft.courtId === court.id ? palette.orange : palette.separator }}
-          disabled={disabled} onPress={() => change('courtId', court.id)} />)}
-        {errors.courtId && <Text accessibilityRole="alert" style={kit.error}>{errorText(errors.courtId)}</Text>}
-      </GamePanel>}
-      {!quick && <GamePanel tone="light"><Text style={kit.section}>Elegí el formato</Text>
-        <FormatChoices value={draft.format} disabled={disabled} onChange={format => change('format', format)} />
-      </GamePanel>}
-      {quick && (courts.isError ? <GamePanel tone="light"><GameNotice>No pudimos cargar las canchas.</GameNotice><GameButton secondary label="Reintentar canchas" onPress={() => void courts.refetch()} /></GamePanel> : <GamePanel tone="light"><Text style={kit.section}>{courts.data?.find(court => court.id === draft.courtId)?.name ?? 'Cancha seleccionada'} · {draft.format}</Text><Text style={kit.body}>Una convocatoria para ahora. Iniciá el juego cuando estén listos.</Text>{errors.courtId && <GameNotice>{errorText(errors.courtId)}</GameNotice>}</GamePanel>)}
-      {!quick && <GamePanel tone="light"><Text style={kit.section}>¿Cuándo jugamos?</Text>
-        <View style={kit.row}><GameChoice label="Ahora" detail="Encontrá con quién jugar hoy" selected={false} disabled={disabled} onPress={openQuickSetup} />
-          <GameChoice label="Planificar" detail="Elegí fecha y hora" selected={showConfiguration} disabled={disabled} onPress={() => { change('timing', 'future'); setPlanned(true); }} /></View>
-        {showConfiguration && draft.timing === 'future' && <>
-          <GameField label="Fecha" help="YYYY-MM-DD" value={draft.date} editable={!disabled} autoCapitalize="none" maxLength={10} error={errorText(errors.date)} onChangeText={value => change('date', value)} />
-          <GameField label="Hora" help="HH:MM · hora local" value={draft.time} editable={!disabled} maxLength={5} error={errorText(errors.time)} onChangeText={value => change('time', value)} />
-        </>}
-        {showConfiguration && <Text style={kit.help}>Quien organiza inicia el juego. La hora planificada no cierra las inscripciones automáticamente.</Text>}
-      </GamePanel>}
-      {!quick && action.pending && draft.timing === 'now' && <GameButton label="Retomar convocatoria para ahora" onPress={openQuickSetup} />}
-      {showConfiguration && <>
-      <GamePanel tone="light"><Text style={kit.section}>¿Vas a jugar?</Text>
-        <View style={kit.row}><GameChoice label="Voy a jugar" selected={draft.organizerPlays} disabled={disabled} onPress={() => participation(true)} />
-          <GameChoice label="Solo organizo" selected={!draft.organizerPlays} disabled={disabled} onPress={() => participation(false)} /></View>
-        {draft.timing === 'now' && <GameField label="Personas que ya están" help="Incluite si jugás y contá a las personas invitadas sin cuenta."
-          value={draft.presentCount} editable={!disabled} keyboardType="number-pad" maxLength={2} error={errors.presentCount} onChangeText={value => change('presentCount', value)} />}
-        <View style={{ padding: 16, borderRadius: 14, backgroundColor: palette.cream, gap: 6 }}>
-          <Text variant="display" style={{ color: palette.navy }}>{available !== null && available >= 0 ? available : '—'} lugares disponibles</Text>
-          <Text style={kit.help}>{capacity} en total · {draft.timing === 'future' ? 'Tu lugar cuenta solo si vas a jugar.' : 'Las personas presentes cuentan para el límite.'}</Text>
+  return <KeyboardAvoidingView style={kit.page} behavior={Platform.OS === 'ios' ? 'padding' : undefined} keyboardVerticalOffset={headerHeight}>
+    <Stack.Screen options={{ headerBackTitle: 'Volver', title: quick ? 'Jugar ahora' : 'Armar partido', headerStyle: { backgroundColor: gameColors.ink }, headerTintColor: Colors.text }} />
+    <ScrollView contentContainerStyle={{ padding: 12, paddingBottom: Math.max(insets.bottom, 12) + 24, gap: 16, maxWidth: 680, width: '100%', alignSelf: 'center' }} keyboardShouldPersistTaps="handled" keyboardDismissMode={Platform.OS === 'ios' ? 'interactive' : 'on-drag'} automaticallyAdjustKeyboardInsets={false}>
+      <View style={{ flexDirection: expanded ? 'column' : 'row', gap: 8, alignItems: 'center' }}>
+        <View style={{ flex: 1, gap: 4 }}>
+          <Text style={[kit.kicker, { letterSpacing: 0 }]}>BBallUY ARCADE</Text>
+          <Text variant="display" style={{ fontSize: 34, lineHeight: 38 }}>ARMAR PARTIDO</Text>
+          <Text style={[kit.body, { fontSize: 14, lineHeight: 20 }]}>{quick ? 'Completá los detalles.' : 'Elegí dónde y cuándo jugar.'}</Text>
         </View>
-      </GamePanel>
-      <GamePanel tone="light"><GameField label="Nota para quienes juegan (opcional)" help={`${draft.description.length}/500 caracteres`} value={draft.description} editable={!disabled}
-        multiline maxLength={500} error={errorText(errors.description)} onChangeText={value => change('description', value)} /></GamePanel>
-      {action.error && <GameNotice>{action.error}</GameNotice>}
-      <GameButton label={action.pending ? 'Reintentar comprobación' : 'Crear convocatoria'} busy={action.busy}
-        disabled={!action.ready || (!action.pending && (courts.isPending || courts.isError))} icon={<ArrowRight size={20} color={gameColors.ink} />} onPress={() => void submit()} />
-      <Text style={kit.help}>Tu nombre y participantes son visibles para quienes tienen sesión iniciada. La convocatoria no reserva la cancha.</Text>
+        <PlayArt kind="header" style={{ width: expanded ? '100%' : '35%', height: expanded ? 88 : 96 }} />
+      </View>
+      {!action.ready && <ActivityIndicator accessibilityLabel="Consultando solicitud guardada" color={gameColors.orange} />}
+      {action.pending && <GameNotice>Partido sin confirmar. Reintentá la comprobación antes de armar otro.</GameNotice>}
+      <View style={{ gap: 8 }}>
+        {courts.isPending ? <ActivityIndicator accessibilityLabel="Cargando canchas" color={gameColors.orange} /> : courts.isError ? <GamePanel tone="light">
+          <GameNotice>No pudimos cargar las canchas.</GameNotice><GameButton secondary label="Reintentar canchas" onPress={() => void courts.refetch()} />
+        </GamePanel> : <Dropdown arcade label="Cancha" placeholder="Elegí una cancha" disabled={disabled}
+          selectedValue={draft.courtId} onValueChange={value => change('courtId', value)}
+          options={(courts.data ?? []).map(court => ({ label: court.name, value: court.id }))} />}
+        {errors.courtId && <Text accessibilityRole="alert" style={kit.error}>{errorText(errors.courtId)}</Text>}
+      </View>
+      {!quick && <View style={{ gap: 8 }}><Text style={kit.section}>Formato</Text>
+        <FormatChoices illustrated value={draft.format} disabled={disabled} onChange={format => change('format', format)} />
+      </View>}
+      {quick && <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+        <Check size={18} color={palette.orange} aria-hidden /><Text style={kit.help}>Jugar ahora · {draft.format} · {capacity} lugares en total</Text>
+      </View>}
+      {!quick && <View style={{ gap: 8 }}><Text style={kit.section}>¿Cuándo?</Text>
+        <View style={[kit.row, { alignItems: 'stretch' }]}>
+          <GameChoice tone="light" label="Jugar ahora" detail="Ir a configuración rápida" icon={<Zap size={24} />} selected={false} disabled={disabled}
+            style={{ minWidth: expanded ? '100%' : 144, borderColor: palette.cream }} onPress={openQuickSetup} />
+          <GameChoice tone="light" label="Planificar" detail="Elegí fecha y hora" icon={<CalendarDays size={24} />} selected={showConfiguration} disabled={disabled}
+            style={{ minWidth: expanded ? '100%' : 144, borderColor: showConfiguration ? palette.orange : palette.cream }} onPress={() => { change('timing', 'future'); setPlanned(true); }} />
+        </View>
+        {showConfiguration && draft.timing === 'future' && <GamePanel tone="light" style={{ padding: 12, gap: 8, borderColor: palette.cream }}>
+          <PlannedSchedule value={{ date: draft.date, time: draft.time }} disabled={disabled} expanded={expanded} errors={{ date: errors.date, time: errors.time }}
+            onChange={selection => { setDraft(old => ({ ...old, ...selection })); setErrors(old => ({ ...old, date: undefined, time: undefined })); }} />
+          <Text style={kit.help}>Quien organiza inicia el partido.</Text>
+        </GamePanel>}
+      </View>}
+      {!quick && action.pending && draft.timing === 'now' && <GameButton label="Retomar partido para ahora" onPress={openQuickSetup} />}
+      {showConfiguration && <>
+        <View style={{ gap: 8 }}><Text style={kit.section}>¿Cómo vas a participar?</Text>
+          <View style={[kit.row, { alignItems: 'stretch' }]}>
+            <GameChoice tone="light" label="Juego" detail="Mi lugar cuenta" icon={<UserRound size={24} />} selected={draft.organizerPlays} disabled={disabled}
+              style={{ minWidth: expanded ? '100%' : 144, borderColor: draft.organizerPlays ? palette.orange : palette.cream }} onPress={() => participation(true)} />
+            <GameChoice tone="light" label="Solo organizo" detail="Armo el partido sin jugar" icon={<Users size={24} />} selected={!draft.organizerPlays} disabled={disabled}
+              style={{ minWidth: expanded ? '100%' : 144, borderColor: !draft.organizerPlays ? palette.orange : palette.cream }} onPress={() => participation(false)} />
+          </View>
+        </View>
+        <GamePanel tone="light" style={{ padding: 12, gap: 8, borderColor: palette.cream }}>
+          {draft.timing === 'now' && <GameField compact label="Personas ya presentes" help="Incluite si jugás; contá a quienes ya están sin cuenta."
+            value={draft.presentCount} editable={!disabled} keyboardType="number-pad" maxLength={2} error={errors.presentCount} onChangeText={value => change('presentCount', value)} />}
+          <Text variant="label">{available !== null && available >= 0 ? available : '—'} lugares disponibles · {capacity} en total</Text>
+          {draft.timing === 'future' && <Text style={kit.help}>Tu lugar cuenta solo si jugás.</Text>}
+        </GamePanel>
+        <GamePanel tone="light" style={{ padding: 12, borderColor: palette.cream }}><GameField compact label="Descripción (opcional)" help={`${draft.description.length}/500 caracteres`} value={draft.description} editable={!disabled}
+          multiline style={{ minHeight: 72 }} maxLength={500} error={errors.description} onChangeText={value => change('description', value)} /></GamePanel>
+        <Text style={[kit.help, { fontSize: 12, lineHeight: 18 }]}>Tu nombre y participantes son visibles para otras cuentas.</Text>
+        {action.error && <GameNotice>{errorText(action.error)?.replace(/La convocatoria/g, 'El partido').replace(/la convocatoria/g, 'el partido')}</GameNotice>}
+        <Text variant="label" accessibilityLabel={`Formato confirmado: ${draft.format}, ${capacity} lugares en total`} style={{ color: palette.orange }}>{draft.format} · {capacity} lugares en total</Text>
+        <GameButton label={action.pending ? 'Reintentar comprobación' : 'Armar partido'} busy={action.busy}
+          foregroundColor={palette.navy} style={{ backgroundColor: palette.orange, borderColor: palette.orange }}
+          disabled={!action.ready || (!action.pending && (courts.isPending || courts.isError))} icon={<ArrowRight size={20} color={gameColors.ink} />} onPress={() => { Keyboard.dismiss(); void submit(); }} />
+        <Text style={kit.help}>Armar un partido no reserva la cancha.</Text>
       </>}
     </ScrollView>
   </KeyboardAvoidingView>;
 }
 
 export default function OrganizeGameScreen() { return <CreateInvitationScreen />; }
+

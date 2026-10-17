@@ -1,5 +1,4 @@
 -- Local-only catalog from the owner-provided export. Preserve IDs and raw values.
--- Do not merge the two Parque Rodo records or invent user/team fixtures here.
+-- Exclude owner-retired IDs listed in local-backend/catalog/retired.json.
 INSERT INTO public.courts (id, name, coords, half_court, lighting, surface, notes, created_at) VALUES ('43fd5901-f3f6-4e5e-9ae6-d32c2dcc4764', 'Parque Rodo', '0101000020E610000011FE45D098154CC064E60297C77441C0'::public.geography, true, 'si', 'concreto', '', '2025-12-02T20:22:44.763299-03:00') ON CONFLICT (id) DO NOTHING;
-INSERT INTO public.courts (id, name, coords, half_court, lighting, surface, notes, created_at) VALUES ('61b2c883-d029-4725-9142-bc1af122b84f', 'Parque Rodó Court', '0101000020E6100000F3E49A0299154CC09FB0C403CA7441C0'::public.geography, false, 'outdoor', 'concreto', '1 aro solo - Dr. Luis Piera', '2025-10-11T00:31:01.33629-03:00') ON CONFLICT (id) DO NOTHING;
 INSERT INTO public.courts (id, name, coords, half_court, lighting, surface, notes, created_at) VALUES ('9a63055d-e78b-460c-aab7-30cbb1d867d9', 'Palermo', '0101000020E6100000BA9EE8BAF0164CC06E217EB4EE7441C0'::public.geography, false, NULL, 'concreto', '', '2025-12-02T20:22:51.047136-03:00') ON CONFLICT (id) DO NOTHING;

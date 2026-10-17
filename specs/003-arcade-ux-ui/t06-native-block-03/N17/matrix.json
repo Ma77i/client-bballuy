@@ -1,0 +1,198 @@
+{
+  "date": "2026-10-16",
+  "status": "prepared; T06 in_progress, SPEC open",
+  "cases": [
+    {
+      "case": "N01",
+      "physicalStatus": "PARTIAL",
+      "physicalEvidence": "Owner approves list/search/switch; corrected overview zoom awaits physical retest.",
+      "physicalRecord": "../../t06-native-block-01/N01/record.md",
+      "automation": "Separate historical evidence only; does not supply physical PASS.",
+      "closureAction": "Owner retest/clarification required."
+    },
+    {
+      "case": "N02",
+      "physicalStatus": "PARTIAL",
+      "physicalEvidence": "Expansion/contraction gesture PASS by owner; other focus/large-text/reduced-motion subchecks not individually confirmed.",
+      "physicalRecord": "../../t06-native-block-01/N02/record.md",
+      "automation": "Separate historical evidence only; does not supply physical PASS.",
+      "closureAction": "Owner retest/clarification required."
+    },
+    {
+      "case": "N03",
+      "physicalStatus": "RETEST PENDING",
+      "physicalEvidence": "Observed persistent location notice; on-demand/brief-feedback correction implemented; no physical retest supplied.",
+      "physicalRecord": "../../t06-native-block-01/N03/record.md",
+      "automation": "Separate historical evidence only; does not supply physical PASS.",
+      "closureAction": "Owner retest/clarification required."
+    },
+    {
+      "case": "N04",
+      "physicalStatus": "RETEST PENDING",
+      "physicalEvidence": "Observed intrusive pending block; spinner/announcement correction implemented; no physical retest supplied.",
+      "physicalRecord": "../../t06-native-block-01/N04/record.md",
+      "automation": "Separate historical evidence only; does not supply physical PASS.",
+      "closureAction": "Owner retest/clarification required."
+    },
+    {
+      "case": "N05",
+      "physicalStatus": "NOT RUN",
+      "physicalEvidence": "No new owner result for logout and A/B isolation in T06.",
+      "physicalRecord": "../../t06-native-block-01/N05/record.md",
+      "automation": "Separate historical evidence only; does not supply physical PASS.",
+      "closureAction": "Owner retest/clarification required."
+    },
+    {
+      "case": "N06",
+      "physicalStatus": "PASS",
+      "physicalEvidence": "Explicit owner case-level physical PASS; no per-conditional-subcase evidence supplied.",
+      "physicalRecord": "../../t06-native-block-02/N06/record.md",
+      "automation": "Separate historical evidence only; does not supply physical PASS.",
+      "closureAction": "Retain conditional-subcase evidence limits."
+    },
+    {
+      "case": "N07",
+      "physicalStatus": "PASS",
+      "physicalEvidence": "Explicit owner case-level physical PASS; no per-conditional-subcase evidence supplied.",
+      "physicalRecord": "../../t06-native-block-02/N07/record.md",
+      "automation": "Separate historical evidence only; does not supply physical PASS.",
+      "closureAction": "Retain conditional-subcase evidence limits."
+    },
+    {
+      "case": "N08",
+      "physicalStatus": "PASS",
+      "physicalEvidence": "Explicit owner case-level physical PASS; no per-conditional-subcase evidence supplied.",
+      "physicalRecord": "../../t06-native-block-02/N08/record.md",
+      "automation": "Separate historical evidence only; does not supply physical PASS.",
+      "closureAction": "Retain conditional-subcase evidence limits."
+    },
+    {
+      "case": "N09",
+      "physicalStatus": "PASS",
+      "physicalEvidence": "Explicit owner case-level physical PASS; no per-conditional-subcase evidence supplied.",
+      "physicalRecord": "../../t06-native-block-02/N09/record.md",
+      "automation": "Separate historical evidence only; does not supply physical PASS.",
+      "closureAction": "Retain conditional-subcase evidence limits."
+    },
+    {
+      "case": "N10",
+      "physicalStatus": "PASS",
+      "physicalEvidence": "Explicit owner case-level physical PASS; no per-conditional-subcase evidence supplied.",
+      "physicalRecord": "../../t06-native-block-02/N10/record.md",
+      "automation": "Separate historical evidence only; does not supply physical PASS.",
+      "closureAction": "Retain conditional-subcase evidence limits."
+    },
+    {
+      "case": "N11",
+      "physicalStatus": "PASS",
+      "physicalEvidence": "Explicit owner case-level physical PASS; no per-conditional-subcase evidence supplied.",
+      "physicalRecord": "../../t06-native-block-02/N11/record.md",
+      "automation": "Separate historical evidence only; does not supply physical PASS.",
+      "closureAction": "Retain conditional-subcase evidence limits."
+    },
+    {
+      "case": "N12",
+      "physicalStatus": "NOT RUN",
+      "physicalEvidence": "Guided physical session prepared; awaits owner confirmation.",
+      "physicalRecord": "../../t06-native-block-03/N12/record.md",
+      "automation": "Separate historical evidence only; does not supply physical PASS.",
+      "closureAction": "Execute guided session and record owner result."
+    },
+    {
+      "case": "N13",
+      "physicalStatus": "NOT RUN",
+      "physicalEvidence": "Guided physical session prepared; awaits owner confirmation.",
+      "physicalRecord": "../../t06-native-block-03/N13/record.md",
+      "automation": "Separate historical evidence only; does not supply physical PASS.",
+      "closureAction": "Execute guided session and record owner result."
+    },
+    {
+      "case": "N14",
+      "physicalStatus": "NOT RUN",
+      "physicalEvidence": "Guided physical session prepared; awaits owner confirmation.",
+      "physicalRecord": "../../t06-native-block-03/N14/record.md",
+      "automation": "Separate historical evidence only; does not supply physical PASS.",
+      "closureAction": "Execute guided session and record owner result."
+    },
+    {
+      "case": "N15",
+      "physicalStatus": "NOT RUN",
+      "physicalEvidence": "Guided physical session prepared; awaits owner confirmation.",
+      "physicalRecord": "../../t06-native-block-03/N15/record.md",
+      "automation": "Separate historical evidence only; does not supply physical PASS.",
+      "closureAction": "Execute guided session and record owner result."
+    },
+    {
+      "case": "N16",
+      "physicalStatus": "NOT RUN",
+      "physicalEvidence": "Guided physical session prepared; awaits owner confirmation.",
+      "physicalRecord": "../../t06-native-block-03/N16/record.md",
+      "automation": "Separate historical evidence only; does not supply physical PASS.",
+      "closureAction": "Execute guided session and record owner result."
+    }
+  ],
+  "automatedEvidence": [
+    {
+      "check": "Client suite after N01\u2013N04 corrections",
+      "result": "PASS119/119",
+      "source": "../../t06-block01-corrections.md",
+      "limit": "Unit/policy checks; not native gestures or remote deployment."
+    },
+    {
+      "check": "Detail browser regression",
+      "result": "PASS11 grouped checks, synthetic intercepted transport",
+      "source": "../../t06-block01-corrections.md",
+      "limit": "Zero real writes; does not verify physical VoiceOver or live concurrency."
+    },
+    {
+      "check": "iOS production JS/assets export",
+      "result": "PASS3656modules/35assets after corrections",
+      "source": "../../t06-block01-corrections.md",
+      "limit": "Not signed build/installation/device or release performance."
+    },
+    {
+      "check": "Security audit snapshot after exact patch",
+      "result": "48 affected packages:0critical/32high/15moderate/1low",
+      "source": "../../security-patch-verification.md",
+      "limit": "2026-10-16 recorded snapshot, not a new audit in this preparation."
+    }
+  ],
+  "acceptedAdaptations": [
+    "Cream court-detail background and grouped actions; saved-court terminology.",
+    "Generic-art captions removed as explicitly approved; art remains decorative, not real photos/avatars.",
+    "Compact preview and native date/time controls, device-local timezone.",
+    "Provisional existing/cropped R02 art and its resolution limitations; no new assets required for this block."
+  ],
+  "minorNonblockingFollowups": [
+    "History empty-score marker, state wording consistency, enlarged-text adaptation pending observed validation.",
+    "Play header integration/availability clarity; closed/full rules retained and reviewed separately.",
+    "Cancel/edit differentiation with confirmation, es-UY24h evaluation, confirmed-registration indicator."
+  ],
+  "unresolvedDecisions": [
+    "Temporary lowercase bballuy naming contract vs owner-approved BBallUY ARCADE header: owner reconciliation required, no silent rename.",
+    "Any accessibility overflow becomes an observed defect, not automatically accepted as minor."
+  ],
+  "security": {
+    "fixed": "Transitive shell-quote1.10.0 to1.11.0 only; critical audit finding removed.",
+    "residual": "48 package findings remain, inherited findings are not48 independent exploits.",
+    "development": "Config/lint/glob/watchers/websocket and separately vendored desktop DevTools code remain under risk review.",
+    "build": "Metro/CSS/source maps/XML/signing inputs; no build/CI blanket clearance.",
+    "runtime": "Navigation/URI parsers remain reachability candidates; iOS map inclusion/absence is not general exploitability proof.",
+    "disposition": "Explicit owner risk acceptance or separately authorized targeted remediation before closure decision; no automatic security-clean claim."
+  },
+  "platformLimits": [
+    "Expo Go host settings/overlays and development performance are not a standalone release build.",
+    "No signed iOS binary/release performance or quantitative32ms frame evidence.",
+    "Android physical map gestures/back/permissions/date-time/font scaling/TalkBack/keyboard/safe areas not verified; no Android release export claimed.",
+    "Hosted schema/production migration/deployment remain outside this UX acceptance.",
+    "SPEC-004 local catalog modifications are separate evidence, not automatic repeat acceptance of SPEC-003 map geometry."
+  ],
+  "closureCriteria": [
+    "Resolve N01 camera and N03/N04 physical retests; obtain N05 logout/A-B-A result or explicit owner-approved scope disposition.",
+    "Obtain owner N12\u2013N16 results and document each blocked/failing subcase; no blanket automated substitution.",
+    "Consolidate A01\u2013A08 traceability, exact tested revision/settings and remaining conditional evidence gaps.",
+    "Reconcile brand ambiguity and accepted visual differences; no unauthorized redesign.",
+    "Disposition residual security and Android/Expo Go/performance limits explicitly; no false production readiness.",
+    "Only after evidence review and explicit owner authorization may T06 and then SPEC-003 be closed; do not close now."
+  ]
+}

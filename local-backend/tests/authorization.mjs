@@ -81,12 +81,15 @@ export async function verifyAuthorization({ publicKey, database }) {
     check(JSON.stringify(await profile(b)) === JSON.stringify(beforeB), 'other profile preserved');
 
     const courts = await api('courts?select=id&order=id');
-    check(courts.status === 200 && courts.data.length === 3, 'public court catalog remains readable');
+    const preservedIds = JSON.parse(preservedCourts).map(row => row.id).sort();
+    check(courts.status === 200 && JSON.stringify(courts.data.map(row => row.id).sort()) === JSON.stringify(preservedIds),
+      'public court catalog exposes every preserved court exactly once');
     const [first, second, third] = courts.data.map(row => row.id);
     for (const token of [undefined, a.token, b.token]) {
       for (const relation of ['courts', 'court_catalog']) {
         const read = await api(`${relation}?select=id`, { token });
-        check(read.status === 200 && read.data.length === 3, `${relation} readable`);
+        check(read.status === 200 && JSON.stringify(read.data.map(row => row.id).sort()) === JSON.stringify(preservedIds),
+          `${relation} readable with all catalog IDs`);
         denied(await api(`${relation}?id=eq.${first}`, mutation(token, 'PATCH', { name: 'Unauthorized' })),
           `${relation} update denied`);
         denied(await api(`${relation}?id=eq.${first}`, mutation(token, 'DELETE')), `${relation} delete denied`);

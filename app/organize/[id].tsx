@@ -1,8 +1,9 @@
-import { errorText } from '@/components/pickup/error-copy';
+import { detailErrorText as errorText } from '@/components/pickup/detail-copy';
 import { useState } from 'react';
-import { KeyboardAvoidingView, Platform, RefreshControl, ScrollView, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, RefreshControl, ScrollView } from 'react-native';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
-import { CalendarDays, MapPin, Users } from 'lucide-react-native';
+import GameSummary from '@/components/pickup/GameSummary';
+import { palette } from '@/constants/design';
 import Text from '@/components/pickup/GameText';
 import Colors from '@/constants/colors';
 import { GameLoading as ActivityIndicator, GameButton, GameChoice, ArcadeField as GameField, ArcadeNotice as GameNotice, GamePanel, gameColors, kit } from '@/components/pickup/Kit';
@@ -10,14 +11,13 @@ import { useCourtCatalog } from '@/hooks/catalog';
 import { useOrganizedSession, useOrganizerAction } from '@/hooks/organizer';
 import { defaultSessionDraft, managementActions, validateSessionDraft,
   type DraftErrors, type OrganizerInput, type SessionDraft } from '@/lib/pickup/organizer';
-import { sessionStatus } from '@/components/pickup/presentation';
 import FormatChoices from '@/components/pickup/FormatChoices';
 
 type Lifecycle = 'start' | 'cancel' | 'complete_session';
 const confirmations: Record<Lifecycle, { title: string; body: string; label: string }> = {
   start: { title: '¿Listos para jugar?', body: 'Iniciar cierra las inscripciones y salidas. Iniciá cuando estén listos para jugar.', label: 'Iniciar juego' },
-  cancel: { title: '¿Cancelar la convocatoria?', body: 'Los participantes verán la cancelación. Para cambiar cancha, hora o formato después de una inscripción, creá otra convocatoria.', label: 'Cancelar convocatoria' },
-  complete_session: { title: '¿Finalizar la convocatoria?', body: 'Finaliza la convocatoria. No registra un resultado ni confirma asistencia.', label: 'Finalizar convocatoria' },
+  cancel: { title: '¿Cancelar el partido?', body: 'Los participantes verán la cancelación. Para cambiar cancha, hora o formato después de una inscripción, creá otro partido.', label: 'Cancelar partido' },
+  complete_session: { title: '¿Finalizar el partido?', body: 'Finaliza el partido. No registra un resultado ni confirma asistencia.', label: 'Finalizar partido' },
 };
 
 function OrganizerDetail({ id, created }: { id: string; created: boolean }) {
@@ -29,13 +29,13 @@ function OrganizerDetail({ id, created }: { id: string; created: boolean }) {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState<SessionDraft>(() => defaultSessionDraft());
   const [errors, setErrors] = useState<DraftErrors>({});
-  const [notice, setNotice] = useState(created ? 'Tu convocatoria está creada.' : '');
+  const [notice, setNotice] = useState(created ? 'Tu partido está creado.' : '');
   const session = game.data;
   const disabled = action.busy || !action.ready || Boolean(action.pending);
   const controls = session ? managementActions(session) : null;
   async function run(input?: OrganizerInput) {
     const result = await action.run(input);
-    if (result) { setConfirm(null); setEditing(false); setNotice('Cambio confirmado. Tu convocatoria está actualizada.'); }
+    if (result) { setConfirm(null); setEditing(false); setNotice('Cambio confirmado. Tu partido está actualizado.'); }
   }
   function beginEdit() {
     if (!session) return;
@@ -68,34 +68,27 @@ function OrganizerDetail({ id, created }: { id: string; created: boolean }) {
     if (!Object.keys(newErrors).length) await run(input);
   }
   return <KeyboardAvoidingView style={kit.page} behavior={Platform.OS === 'ios' ? 'padding' : undefined} keyboardVerticalOffset={96}>
-    <Stack.Screen options={{ headerBackTitle: 'Volver', title: 'Gestionar convocatoria', headerStyle: { backgroundColor: gameColors.ink }, headerTintColor: Colors.text }} />
-    <ScrollView contentContainerStyle={kit.content} keyboardShouldPersistTaps="handled"
+    <Stack.Screen options={{ headerBackTitle: 'Volver', title: 'Gestionar partido', headerStyle: { backgroundColor: gameColors.ink }, headerTintColor: Colors.text }} />
+    <ScrollView contentContainerStyle={[kit.content, { padding: 12, gap: 12 }]} keyboardShouldPersistTaps="handled"
       refreshControl={<RefreshControl refreshing={game.isFetching && !game.isPending} onRefresh={() => void game.refetch()} tintColor={gameColors.orange} />}>
-      <Text style={kit.kicker}>TU PARTIDO · TU CONVOCATORIA</Text>
-      {action.error && <GameNotice>{action.error}</GameNotice>}
+      <Text style={kit.kicker}>GESTIONÁ TU PARTIDO</Text>
+      {action.error && <GameNotice>{errorText(action.error)}</GameNotice>}
       {action.pending && <GamePanel tone="light">
         <Text style={kit.section}>COMPROBÁ TU ÚLTIMA SOLICITUD</Text><Text style={kit.body}>Comprobá la acción guardada antes de hacer otro cambio.</Text>
         <GameButton label="Reintentar comprobación" busy={action.busy} disabled={!action.ready} onPress={() => void run()} />
       </GamePanel>}
-      {game.isPending ? <ActivityIndicator accessibilityLabel="Cargando convocatoria" color={gameColors.orange} /> : game.isError || !session ? <GamePanel tone="light">
-        <GameNotice>{errorText(game.error?.message) ?? 'Esta convocatoria no está disponible.'}</GameNotice>
-        <GameButton secondary label="Reintentar convocatoria" onPress={() => void game.refetch()} />
+      {game.isPending ? <ActivityIndicator accessibilityLabel="Cargando partido" color={gameColors.orange} /> : game.isError || !session ? <GamePanel tone="light">
+        <GameNotice>{errorText(game.error?.message) ?? 'Este partido no está disponible.'}</GameNotice>
+        <GameButton secondary label="Reintentar partido" onPress={() => void game.refetch()} />
         <GameButton secondary label="Volver a Jugar" onPress={() => router.replace('/(tabs)/play')} />
       </GamePanel> : <>
-        <View style={{ gap: 10 }}><Text style={kit.badge}>{sessionStatus(session)}</Text>
-          <Text style={kit.title}>{session.format} en{ '\n' }{courts.data?.find(c => c.id === session.court_id)?.name ?? 'tu cancha'}</Text>
-          {Boolean(notice) && <Text accessibilityRole="alert" style={{ color: Colors.success, lineHeight: 22 }}>{notice}</Text>}
-        </View>
-        <GamePanel tone="light">
-          <View style={kit.row}><MapPin size={20} color={gameColors.orange} /><Text style={[kit.body, { flex: 1 }]}>{courts.data?.find(c => c.id === session.court_id)?.name ?? 'Información de cancha no disponible'}</Text></View>
-          <View style={kit.row}><CalendarDays size={20} color={gameColors.orange} /><Text style={[kit.body, { flex: 1 }]}>{session.timing === 'now' ? 'Para jugar ahora' : new Date(session.scheduled_at).toLocaleString('es-UY', { dateStyle: 'medium', timeStyle: 'short' })}</Text></View>
-          <View style={kit.row}><Users size={20} color={gameColors.orange} /><Text style={kit.body}>{session.occupied_places}/{session.capacity} lugares ocupados</Text></View>
-          {session.state === 'open' && <Text style={{ color: gameColors.orange, fontSize: 28, fontFamily: 'Lexend-Bold' }}>{session.available_places} lugares disponibles</Text>}
-          <Text style={kit.help}>{session.organizer_plays ? 'Tenés un lugar para jugar.' : 'Organizás sin ocupar un lugar para jugar.'}</Text>
-          {session.description ? <Text style={{ color: Colors.text, lineHeight: 23 }}>{session.description}</Text> : null}
-        </GamePanel>
+        <GameSummary game={session} courtName={courts.data?.find(c => c.id === session.court_id)?.name ?? 'Cancha'}
+          schedule={session.timing === 'now' ? 'Para jugar ahora' : new Date(session.scheduled_at).toLocaleString('es-UY', { dateStyle: 'medium', timeStyle: 'short' })} />
+        {Boolean(notice) && <Text accessibilityRole="alert" style={{ color: Colors.success, lineHeight: 22 }}>{notice}</Text>}
+        <Text style={kit.help}>{session.organizer_plays ? 'Tenés un lugar para jugar.' : 'Organizás sin ocupar un lugar.'}</Text>
+        {Boolean(session.description) && <Text style={kit.body}>{session.description}</Text>}
         {editing ? <GamePanel tone="light">
-          <Text style={kit.section}>EDITAR CONVOCATORIA</Text>
+          <Text style={kit.section}>Editar partido</Text>
           {controls?.editCore ? <>
             <Text style={kit.help}>Podés cambiar cancha, formato y hora antes de que alguien ocupe un lugar.</Text>
             {courts.data?.map(court => <GameChoice key={court.id} label={court.name} selected={draft.courtId === court.id} disabled={disabled}
@@ -106,28 +99,27 @@ function OrganizerDetail({ id, created }: { id: string; created: boolean }) {
               <GameField label="Fecha" value={draft.date} editable={!disabled} error={errorText(errors.date)} onChangeText={date => setDraft(old => ({ ...old, date }))} />
               <GameField label="Hora" value={draft.time} editable={!disabled} error={errorText(errors.time)} onChangeText={time => setDraft(old => ({ ...old, time }))} />
             </>}
-          </> : <Text style={kit.body}>Ya hay lugares ocupados. Para cambiar cancha, hora o formato, cancelá y creá otra convocatoria.</Text>}
+          </> : <Text style={kit.body}>Ya hay lugares ocupados. Para cambiar cancha, hora o formato, cancelá y creá otro partido.</Text>}
           <GameField label="Nota para quienes juegan" value={draft.description} editable={!disabled} multiline maxLength={500} error={errorText(errors.description)}
             onChangeText={description => setDraft(old => ({ ...old, description }))} />
           <GameButton label="Guardar cambios" busy={action.busy} disabled={disabled} onPress={() => void saveEdit()} />
-          <GameButton secondary label="Conservar convocatoria" disabled={disabled} onPress={() => setEditing(false)} />
-        </GamePanel> : !confirm && <View style={{ gap: 12 }}>
-          {controls?.start && <GameButton label="Iniciar juego" disabled={disabled} onPress={() => { setConfirm('start'); setNotice(''); }} />}
-          {controls?.complete && <GameButton label="Finalizar convocatoria" disabled={disabled} onPress={() => { setConfirm('complete_session'); setNotice(''); }} />}
-          {controls?.edit && <GameButton secondary label="Editar convocatoria" disabled={disabled} onPress={beginEdit} />}
-          {controls?.cancel && <GameButton danger label="Cancelar convocatoria" disabled={disabled} onPress={() => { setConfirm('cancel'); setNotice(''); }} />}
-        </View>}
+          <GameButton secondary label="Conservar partido" disabled={disabled} onPress={() => setEditing(false)} />
+        </GamePanel> : !confirm && (controls?.start || controls?.complete || controls?.edit || controls?.cancel) && <GamePanel tone="light" style={{ gap: 8 }}>
+          {controls?.start && <GameButton label="Iniciar juego" foregroundColor={palette.navy} style={{ backgroundColor: palette.orange, borderColor: palette.orange }} disabled={disabled} onPress={() => { setConfirm('start'); setNotice(''); }} />}
+          {controls?.complete && <GameButton label="Finalizar partido" foregroundColor={palette.navy} style={{ backgroundColor: palette.orange, borderColor: palette.orange }} disabled={disabled} onPress={() => { setConfirm('complete_session'); setNotice(''); }} />}
+          {controls?.edit && <GameButton quiet label="Editar partido" disabled={disabled} onPress={beginEdit} />}
+          {controls?.cancel && <GameButton quiet label="Cancelar partido" disabled={disabled} onPress={() => { setConfirm('cancel'); setNotice(''); }} />}
+        </GamePanel>}
         {confirm && <GamePanel tone="light" style={{ borderColor: gameColors.orange }}>
           <Text style={kit.section}>{confirmations[confirm].title}</Text><Text style={kit.body}>{confirmations[confirm].body}</Text>
           <GameButton label={confirmations[confirm].label} danger={confirm === 'cancel'} busy={action.busy} disabled={disabled}
             onPress={() => void run({ action: confirm, data: { session_id: id } })} />
-          <GameButton secondary label="Volver" disabled={disabled} onPress={() => setConfirm(null)} />
+          <GameButton secondary label="Conservar estado" disabled={disabled} onPress={() => setConfirm(null)} />
         </GamePanel>}
-        <GameButton secondary label="Organizar otra convocatoria" disabled={disabled} onPress={() => router.push({ pathname: '/organize/create', params: { courtId: session.court_id } })} />
+        <GameButton quiet label="Armar otro partido" disabled={disabled} onPress={() => router.push({ pathname: '/organize/create', params: { courtId: session.court_id } })} />
         {['started','completed'].includes(session.state) && <GameButton secondary label="Registrar este partido" disabled={disabled}
           onPress={() => router.push({ pathname: '/matches/create', params: { courtId: session.court_id, format: session.format, sourceId: session.id } })} />}
-        <GameButton secondary label="Volver a Jugar" disabled={disabled} onPress={() => router.replace('/(tabs)/play')} />
-        <Text style={kit.help}>La convocatoria no reserva la cancha ni confirma asistencia. Solo quien organiza puede gestionarla.</Text>
+        <Text style={kit.help}>El partido no reserva la cancha ni confirma asistencia. Solo quien organiza puede gestionarlo.</Text>
       </>}
     </ScrollView>
   </KeyboardAvoidingView>;

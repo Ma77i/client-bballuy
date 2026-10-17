@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { AccessibilityInfo, Animated, BackHandler, PanResponder, Platform, ScrollView, View, useWindowDimensions } from 'react-native';
+import { AccessibilityInfo, Animated, BackHandler, Platform, ScrollView, View, useWindowDimensions } from 'react-native';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Text from '@/components/AppText';
 import { Button, Panel } from '@/components/foundation/Primitives';
 import { GenericMedia } from '@/components/foundation/GenericMedia';
@@ -10,8 +11,8 @@ import { CourtFacts } from './CourtCard';
 import { sheetGesture } from './discovery-state';
 import { X } from 'lucide-react-native';
 
-export default function CourtPreview({ court, expanded, onExpand, onClose, onOpen, bottomInset, focused, availableHeight }: {
-  court: Court; expanded: boolean; onExpand(): void; onClose(): void; onOpen(): void; bottomInset: number; focused: boolean; availableHeight: number;
+export default function CourtPreview({ court, expanded, onExpandedChange, onDragChange, onClose, onOpen, bottomInset, focused, availableHeight }: {
+  court: Court; expanded: boolean; onExpandedChange(value: boolean): void; onDragChange(value: boolean): void; onClose(): void; onOpen(): void; bottomInset: number; focused: boolean; availableHeight: number;
 }) {
   const { fontScale } = useWindowDimensions();
   const { reduced, active } = usePresentationMotion();
@@ -35,42 +36,52 @@ export default function CourtPreview({ court, expanded, onExpand, onClose, onOpe
     const handler = BackHandler.addEventListener('hardwareBackPress', () => { onClose(); return true; });
     return () => handler.remove();
   }, [focused, onClose]);
-  const pan = useMemo(() => PanResponder.create({
-    onMoveShouldSetPanResponder: (_, gesture) => Math.abs(gesture.dy) > 12 && Math.abs(gesture.dy) > Math.abs(gesture.dx),
-    onPanResponderRelease: (_, gesture) => {
-      const action = sheetGesture(gesture.dy, gesture.dx);
-      if (action === 'close') onClose();
-      if (action === 'expand' && !expanded) onExpand();
-    },
-  }), [expanded, onClose, onExpand]);
+  // Keep the recognizer stable when parent state changes during touch ownership.
+  useEffect(() => () => onDragChange(false), [onDragChange]);
+  const pan = useMemo(() => Gesture.Pan()
+    .runOnJS(true)
+    .activeOffsetY([-12, 12])
+    .failOffsetX([-24, 24])
+    .shouldCancelWhenOutside(false)
+    .onBegin(() => onDragChange(true))
+    .onEnd(event => {
+      const action = sheetGesture(event.translationY, event.translationX);
+      if (action) onExpandedChange(action === 'expand');
+    })
+    .onFinalize(() => onDragChange(false)), [onDragChange, onExpandedChange]);
   const large = fontScale >= 1.5;
   return <Animated.View accessibilityViewIsModal onAccessibilityEscape={onClose}
     style={{ position: 'absolute', bottom: 0, left: 0, right: 0, maxHeight: availableHeight * .9,
       opacity: entrance, transform: [{ translateY: entrance.interpolate({ inputRange: [0, 1], outputRange: [28, 0] }) }] }}>
     <Panel tone="light" style={{ borderTopLeftRadius: radii.sheet, borderTopRightRadius: radii.sheet,
       padding: spacing.sm, paddingBottom: spacing.sm + bottomInset, gap: spacing.xs, flexShrink: 1 }}>
-      <ScrollView style={{ flexGrow: 0, flexShrink: 1, maxHeight: Math.max(48, availableHeight * .9 - 20 - bottomInset) }}
+      <GestureDetector gesture={pan}>
+        <View collapsable={false} testID="court-preview-handle" accessible={false}
+          style={{ minHeight: 44, justifyContent: 'center', touchAction: 'none' }}>
+          <View style={{ height: 4, width: 32, borderRadius: 4, backgroundColor: palette.separator, alignSelf: 'center' }} />
+        </View>
+      </GestureDetector>
+      <ScrollView style={{ flexGrow: 0, flexShrink: 1, maxHeight: Math.max(48, availableHeight * .9 - 64 - bottomInset) }}
         contentContainerStyle={{ gap: spacing.xs }}>
-        <View style={{ flexDirection: 'row', gap: spacing.sm, alignItems: 'flex-start' }}>
-          <View {...pan.panHandlers} style={{ flex: 1, minHeight: 48, gap: spacing.xs }}>
-            <View accessible={false} style={{ height: 4, width: 32, borderRadius: 4, backgroundColor: palette.separator, alignSelf: 'center' }} />
+        <View style={{ flexDirection: 'row', gap: spacing.sm, alignItems: 'center' }}>
+          {!large && <GenericMedia size={56} showCaption={false} imageBackground={palette.navy} />}
+          <View style={{ flex: 1, minWidth: 0, gap: spacing.xs }}>
             <View ref={heading} accessible accessibilityRole="header" accessibilityLabel={court.name}>
               <Text variant="display" tone="light" style={{ fontSize: 26, lineHeight: 30 }}>{court.name}</Text>
             </View>
+            <CourtFacts court={court} />
           </View>
           <Button quiet iconOnly tone="light" label="Cerrar" icon={<X size={24} color={palette.navy} />} onPress={onClose} />
-        </View>
-        <CourtFacts court={court} />
-        <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: spacing.xs, alignItems: 'center', justifyContent: 'space-between' }}>
-          {!large ? <GenericMedia compact size={28} style={{ flexBasis: 200, flexGrow: 1 }} />
-            : <Text variant="caption" tone="light">Ilustración · No es una foto</Text>}
-          {!large && <Button quiet expanded={expanded} tone="light" label={expanded ? 'Ver menos' : 'Ampliar'} onPress={onExpand} />}
         </View>
         {(expanded || large) && <>
           <Text variant="body" tone="light">Iluminación: {court.lighting || 'Sin registrar'}</Text>
           {court.notes && <Text variant="body" tone="light">{court.notes}</Text>}
         </>}
-        <Button tone="light" label="Ver cancha" onPress={onOpen} />
+        <View style={{ flexDirection: large ? 'column' : 'row', gap: spacing.sm, alignItems: 'stretch' }}>
+          <Button tone="light" label="Ver cancha" foregroundColor={palette.navy}
+            style={{ backgroundColor: palette.orange, borderColor: palette.orange, flex: large ? undefined : 1 }} onPress={onOpen} />
+          <Button quiet expanded={expanded} tone="light" label={expanded ? 'Contraer' : 'Ampliar'} onPress={() => onExpandedChange(!expanded)} />
+        </View>
       </ScrollView>
     </Panel>
   </Animated.View>;

@@ -1,5 +1,90 @@
 # SPEC-003 - Verification
 
+## Final physical block authorized — 2026-10-16
+
+Owner authorizes N12–N16 guided acceptance and N17 matrix preparation only.
+[Sessions and matrix](t06-native-block-03/README.md) are prepared with new
+physical cases NOT RUN and N17 pending review. N06–N11 owner physical PASS; N02
+gesture-only PASS. N01 camera/N03/N04 retests and N05 missing result remain open.
+No functional/dependency/backend changes, closure, commits, push or deployment.
+T06 in_progress; SPEC-003 open.
+
+
+## N06–N11 physical acceptance reported — 2026-10-16
+
+Owner explicitly reports N06,N07,N08,N09,N10,N11 PASS on iPhone/Expo Go.
+[Case evidence and limits](t06-native-block-02/README.md) distinguish direct
+owner physical acceptance from simulations. No new screenshots, conditional-subcase
+observations or loaded bundle hash supplied; none fabricated. N01 camera, N03/N04
+physical retests and N05 status remain unchanged; N02 gesture correction PASS.
+T06 in_progress; SPEC-003 open. N12–N17 await authorization. Documentation only;
+no functional/dependency/backend changes, commit, push or deployment.
+
+
+## Owner gesture acceptance and next-block preparation — 2026-10-16
+
+N02 expansion/contraction gesture correction is physical PASS by direct owner
+report on iPhone/Expo Go. No further gesture changes requested or made. This does
+not pass all N02 subchecks. N01 core list/search/mode flow approved; camera retest
+pending. N03/N04 observed defects remain pending physical correction retest; N05
+has no result supplied. Automated checks do not supersede those statuses.
+[Next block N06–N11](t06-native-block-02/README.md) prepared; all cases NOT RUN.
+T06 in_progress and SPEC open. No new code/dependency/backend changes or commit/push.
+Latest owner-confirmed status supersedes earlier N02 FAIL statements only for the
+expansion/contraction defect; historical observations remain preserved.
+
+
+## T06 first-block defect corrections — 2026-10-16
+
+Owner reports N02 physical FAIL and authorizes targeted N01 camera, N03 location
+feedback and N04 pending presentation corrections. [Implementation/retest report](t06-block01-corrections.md)
+records scope and evidence. No post-fix physical acceptance: N02 remains FAIL,
+other observed adjustments await retest, N05 NOT RUN. T06 in_progress, SPEC open;
+no N06–N11 execution, dependency/backend changes, commits or push.
+
+
+## Current authorization — block 01 only, 2026-10-16
+
+Owner approved the plan and authorized N01–N05 only. T06 is in_progress for
+preparation and owner-operated physical testing. [Block record](t06-native-block-01/README.md)
+contains separate case records and the exact local revision snapshot. All physical
+cases remain NOT RUN pending owner results. This supersedes earlier planning-only
+status, not historical test evidence. N06–N17 require further owner authorization;
+no functional changes, dependency updates or automatic SPEC closure permitted.
+
+
+## Current owner decision — 2026-10-16
+
+Owner formally approved the four secondary game screens and closed T05 for
+implementation and visual acceptance. T00–T05 are done; T06 remains todo,
+planning only, awaiting authorization. SPEC-003 remains open. This latest status
+supersedes older pending-review/dependency-authorization statements below.
+See [T05 closure](t05-closure.md), [exact security patch](security-patch-verification.md)
+and [proposed physical T06 checklist](t06-plan.md). Native validations remain
+pending; no physical tests, commits, push or SPEC closure are claimed.
+
+
+
+## Authorized T05 scoped corrections — 2026-10-16
+
+Owner accepted the pre-closure diagnosis and authorized contrast and secondary Play/
+result fidelity corrections plus security analysis only. [Implementation and evidence](t05-final-corrections.md)
+resolve the current contrast composition and secondary Spanish/card adoption, pending
+owner review. [Security proposal](security-update-proposal.md) requires separate approval
+before any dependency update. T05 remains in_progress; T06 todo; SPEC open. No commits/push.
+
+
+## Current pre-closure audit — 2026-10-16
+
+Owner formally approves the implemented Profile and Map visuals, with no more visual
+changes requested now. Keep physical iPhone large text/VoiceOver/safe areas and long
+emails pending; avatar/editing/expanded profile remain future functional scope.
+The [pre-closure audit](pre-closure-audit.md) is the current cross-screen acceptance
+index and supersedes older pending approval statements for those two screens.
+T00–T04 remain done, T05 in_progress, T06 todo, SPEC in_progress. Secondary Play/result
+copy/fidelity, a concrete court-detail contrast failure, native acceptance and critical
+security-risk treatment remain explicit. No code changes or closure in this audit.
+
 ## T04 closure / T05 local implementation — 2026-10-14
 
 Owner explicitly closes T04: [closure](t04-closure.md), retaining unobserved native
@@ -321,3 +406,152 @@ review illustrations; no runtime UI/contract/backend modifications. Native iPhon
 comparison is not executed. T00–T04 history unchanged, T05 in_progress, T06 todo;
 R03 unapproved and no implementation authorization. Local static result is recorded
 in the R03 evidence after checks complete.
+
+## R02/R02.1 Canchas fidelity correction — 2026-10-14
+
+Owner rejected R03 and authorized only Canchas before a per-screen approval gate.
+See [implementation, actual browser captures and evidence](courts-fidelity-correction.md).
+Verify PASS, client tests109/109 PASS; browser search/detail/back, reduced-motion
+mode selection and error/loading/sheet fixture checks passed. iOS transformation
+HTTP200 is not physical execution. Native screenshot, map/gesture/VoiceOver/text
+acceptance remain pending. No next-screen work, task closure, commit or push.
+
+## Targeted Courts/auth refinement — 2026-10-15
+
+Owner authorized outline court CTA/hierarchy and integrated password eyes. Owner
+clarified consent scope: make the two existing provisional acknowledgement
+checkboxes recognizable, retaining existing persistence/validation. See
+[scope, implementation and verification](courts-auth-refinement.md). Verify PASS;
+client tests109/109 PASS; actual browser form/card checks passed. Physical iPhone
+focus/VoiceOver/scaled text remain pending. No map/backend changes, next-screen
+progression, task closure, new mockups, commits or push.
+
+## Detail fidelity implementation — 2026-10-15
+
+Owner authorized only Detalle after Courts/auth work. R02/R02.1 plus subsequent
+approved adaptations remain the reference; no R03/new design. See
+[scope, changed files, captures and verification](detail-fidelity-correction.md).
+Verify PASS; client tests109/109 PASS;10 isolated-browser checks passed with
+explicitly simulated transport and no backend writes. Native owner approval pending.
+No map/backend/contract changes, next-screen work, closure, commits or push.
+
+Owner corrected Detalle reference on2026-10-15 with an uploaded image: cream page,
+wide original-art header, navy attribute rows, grouped orange save/outlined organizer
+actions, separate navy activity. Latest accepted labels/no coordinates/quiet location
+remain. See [current comparison and checks](detail-fidelity-correction.md). Earlier
+composition notes are history; new reference comes from the owner, not R03.
+
+## My Courts fidelity implementation — 2026-10-15
+
+Owner approved Detalle and authorized only Mis canchas. Shared approved illustrated
+card reused, quiet header refresh and existing-art empty state implemented. See
+[scope, files, captures and observed limits](my-courts-fidelity-correction.md).
+Verify PASS; client109/109 PASS;8 isolated browser transport-simulation checks PASS.
+Protected approved detail/shared components/hooks unchanged. Native owner review
+pending; no Jugar work, backend/contract changes, commits/push or SPEC closure.
+
+## My Courts final approval and Play fidelity review — 2026-10-15
+
+My Courts final owner-requested subtitle/CTA verified; refresh 48 x 48, screen now
+approved/frozen. See [approval record](my-courts-fidelity-correction.md).
+Jugar now uses R02 horizontal illustrated cards, compact selectors and fixed action
+dock with existing routes. Verify PASS, client109/109 PASS,6 grouped isolated actual
+web-app checks PASS; simulated transport is not remote or native acceptance.
+See [implementation, comparison, captures and iPhone gate](play-fidelity-correction.md).
+Physical iPhone review pending; T05 remains in_progress, T06 not started, SPEC open.
+Earlier statements that Jugar was not started are historical. No commit/push.
+
+## Play R02 fidelity recovery after rejection — 2026-10-15
+
+Owner rejected the previous Play visuals. With explicit authorization, actual clean
+art crops from the attached R02 now drive the illustrated JUGAR header and compact
+sports tickets, with overlaid formats, semantic state tags, icon-led real metadata
+and exact #FF8A43/navy CTA. Existing routes/filters/dock/domain rules preserved.
+Verify PASS, client111/111 PASS and6 isolated browser groups PASS. See
+[current element comparison, provenance, captures and limits](play-fidelity-correction.md#recovered-r02-composition-and-verification).
+Art crop resolution/framing and font differences remain explicit; actual iPhone
+acceptance not claimed. My Courts/Detalle unchanged. T05 in_progress, T06 todo,
+SPEC open, no next screen, commits or push. Earlier visual completion is superseded.
+
+## Jugar approved; Armar partido fidelity review — 2026-10-15
+
+Owner explicitly approved Jugar visually; header integration, availability wording
+and full-game behavior remain minor follow-ups, not resolved claims. Only existing
+Armar partido creation/quick/planned presentation was corrected next. Compact real
+court selector, illustrated checked format tiles, timing/participation choices and
+exact orange/navy CTA preserve existing contracts/defaults/validation/UUID replay.
+Verify PASS, client111/111 PASS, five isolated actual-browser groups PASS including
+both simulated confirmed creations and uncertain readback. No real backend writes.
+See [comparison, files, captures and native limits](organize-fidelity-correction.md).
+Jugar and other approved screens unchanged. Physical iPhone review pending; T05
+in_progress, T06 not started, SPEC open; no commits/push or automatic next screen.
+
+## Organizer approved composition; native scheduling usability — 2026-10-15
+
+Owner approved Armar partido composition and requested targeted usability changes.
+Native date/time adapters, Spanish readable date/device zone, future-selection guards,
+compact format summary, shorter help and keyboard/safe-inset policy implemented only
+in creation. One justified SDK-compatible picker dependency; no domain/backend change.
+Verify PASS, client116/116 PASS; isolated browser regression PASS including both
+simulated creations/replay and resized-viewport CTA. iOS Hermes export PASS; final
+Android export status and actual native limits in [current evidence](organize-usability.md).
+[Future invitations](../../docs/future-player-invitations.md) documented, not implemented.
+Project npm audit reports49 alerts including1 critical; picker inherits Expo's alert,
+no broad fix/downgrade applied. No clean security/native-release acceptance claimed.
+Physical iPhone/Android review pending; T05 in_progress, T06 todo, SPEC open; no
+commits/push or other-screen work. Earlier manual scheduling adaptation is superseded.
+
+## Organizer formally approved; game detail/management review only — 2026-10-15
+
+Owner formally approves Armar partido design/usability in Jugar ahora and Planificar.
+Keep pending physical iPhone pickers/keyboard/safe areas/enlarged text,49 security
+alerts with critical priority, and future functional invitation SPEC (documented only).
+Review of public game detail/organizer management compared source and actual isolated
+browser presentation to R02/R02.1. R02 has public detail but no standalone management
+board. Six read-only browser groups passed with0 attempted writes; native/remote
+acceptance not claimed. See [differences and proposed scope](game-detail-management-review.md).
+Application code unchanged; implementation requires owner approval of the proposal.
+T05 remains in_progress, T06 todo, SPEC open. No commits/push or automatic next screen.
+
+
+Management/detail visual refinement implemented; native visual approval remains pending for both screens. See [refinement evidence](game-detail-management-review.md). T05 remains in progress; no SPEC closure.
+
+
+## Game detail and management visually approved — 2026-10-16
+
+Owner approved both current screens; this supersedes earlier pending visual approval.
+No redesign or application change. Thirteen isolated browser state/recovery groups
+and 116/116 client tests passed; local verify passed. Native functional/accessibility
+and live server permission checks were not rerun. Three nonblocking polish items
+(cancel distinction, 24-hour display evaluation, confirmed-registration indicator)
+remain recorded in [acceptance and limits](game-state-acceptance.md).
+SPEC-003 stays open, T05 in_progress, T06 todo; no commits/push or next-screen work.
+
+
+## Profile fidelity implementation awaiting visual review — 2026-10-16
+
+Owner approved the Profile proposal. Implemented only the Profile composition, reusing
+existing art, auth data, support/logout and shared primitives without new dependencies
+or queries. Client116/116 and six isolated browser groups passed; verify passed.
+See [evidence and native limits](profile-fidelity-review.md). Physical iPhone visual,
+large-text, VoiceOver and safe-area validation remain pending. SPEC open; no commits/push.
+
+
+## Map footer and compact preview refinement — 2026-10-16
+
+Removed the native map metadata overlay while preserving list data and conditional
+error/empty feedback. Compacted the existing preview; native map/selection/permissions
+and routes unchanged. Client116/116, five shared-web groups and iOS Hermes export pass.
+See [evidence and physical iPhone checklist](map-preview-refinement.md). Native full-map
+and selected-map captures, gestures and safe-area geometry remain pending. SPEC open;
+no commits/push and no automatic next task.
+
+## T06 block 01 preparation verification — 2026-10-16
+
+Windows / Node24.16.0, SPEC-003/design dirty checkout. npm run verify: PASS,
+110 Markdown files, application typecheck and lint. Application/package hashes
+match t06-native-block-01/revision.json after documentation preparation. Only
+specification/status/evidence documentation changed. No functional code, dependency,
+backend or data change. No physical observations, browser simulation or device
+acceptance executed in this block yet. N01–N05 remain NOT RUN awaiting owner
+reports; T06 stays in_progress, SPEC open. No commits/push/deployments.

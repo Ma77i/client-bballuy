@@ -1,5 +1,47 @@
 # SPEC-003 - BBallUY Arcade UX/UI Redesign
 
+## Current authorization — block 01 only, 2026-10-16
+
+Owner approved the plan and authorized N01–N05 only. T06 is in_progress for
+preparation and owner-operated physical testing. [Block record](t06-native-block-01/README.md)
+contains separate case records and the exact local revision snapshot. All physical
+cases remain NOT RUN pending owner results. This supersedes earlier planning-only
+status, not historical test evidence. N06–N17 require further owner authorization;
+no functional changes, dependency updates or automatic SPEC closure permitted.
+
+
+## Current owner decision — 2026-10-16
+
+Owner formally approved the four secondary game screens and closed T05 for
+implementation and visual acceptance. T00–T05 are done; T06 remains todo,
+planning only, awaiting authorization. SPEC-003 remains open. This latest status
+supersedes older pending-review/dependency-authorization statements below.
+See [T05 closure](t05-closure.md), [exact security patch](security-patch-verification.md)
+and [proposed physical T06 checklist](t06-plan.md). Native validations remain
+pending; no physical tests, commits, push or SPEC closure are claimed.
+
+
+
+## Authorized T05 scoped corrections — 2026-10-16
+
+Owner accepted the pre-closure diagnosis and authorized contrast and secondary Play/
+result fidelity corrections plus security analysis only. [Implementation and evidence](t05-final-corrections.md)
+resolve the current contrast composition and secondary Spanish/card adoption, pending
+owner review. [Security proposal](security-update-proposal.md) requires separate approval
+before any dependency update. T05 remains in_progress; T06 todo; SPEC open. No commits/push.
+
+
+## Current pre-closure audit — 2026-10-16
+
+Owner formally approves the implemented Profile and Map visuals, with no more visual
+changes requested now. Keep physical iPhone large text/VoiceOver/safe areas and long
+emails pending; avatar/editing/expanded profile remain future functional scope.
+The [pre-closure audit](pre-closure-audit.md) is the current cross-screen acceptance
+index and supersedes older pending approval statements for those two screens.
+T00–T04 remain done, T05 in_progress, T06 todo, SPEC in_progress. Secondary Play/result
+copy/fidelity, a concrete court-detail contrast failure, native acceptance and critical
+security-risk treatment remain explicit. No code changes or closure in this audit.
+
 Execution state: [registry](../registry.json). Owner-approved planning scope dated
 2026-10-13. T01 design is approved; T02 foundations are implemented and locally verified.
 SPEC-003 is in_progress. Owner closed T03 and T04 and authorized T05 on 2026-10-14;
@@ -200,3 +242,44 @@ before insertion/renumbering. Once approved, frozen R03 boards/specifications be
 the visual baseline; until then R02/R02.1 remain historical approved references.
 Actual iPhone comparison, text settings, safe insets and native acceptance remain
 pending. No backend/RLS, contracts, app source, commits or push in this review.
+
+## Approved return to R02/R02.1 — 2026-10-14
+
+R03 is rejected as a visual baseline; no new design revision is requested. Owner
+authorized corrections one screen at a time, starting with Canchas only. See
+[scope and acceptance](courts-fidelity-correction.md). Stop for native owner review
+before Detalle; preserve all functional behavior and completed task history.
+
+## Targeted Courts/auth refinement — 2026-10-15
+
+Owner authorized outline court CTA/hierarchy and integrated password eyes. Owner
+clarified consent scope: make the two existing provisional acknowledgement
+checkboxes recognizable, retaining existing persistence/validation. See
+[scope, implementation and verification](courts-auth-refinement.md). Verify PASS;
+client tests109/109 PASS; actual browser form/card checks passed. Physical iPhone
+focus/VoiceOver/scaled text remain pending. No map/backend changes, next-screen
+progression, task closure, new mockups, commits or push.
+
+## Detail fidelity implementation — 2026-10-15
+
+Owner authorized only Detalle after Courts/auth work. R02/R02.1 plus subsequent
+approved adaptations remain the reference; no R03/new design. See
+[scope, changed files, captures and verification](detail-fidelity-correction.md).
+Verify PASS; client tests109/109 PASS;10 isolated-browser checks passed with
+explicitly simulated transport and no backend writes. Native owner approval pending.
+No map/backend/contract changes, next-screen work, closure, commits or push.
+
+Owner corrected Detalle reference on2026-10-15 with an uploaded image: cream page,
+wide original-art header, navy attribute rows, grouped orange save/outlined organizer
+actions, separate navy activity. Latest accepted labels/no coordinates/quiet location
+remain. See [current comparison and checks](detail-fidelity-correction.md). Earlier
+composition notes are history; new reference comes from the owner, not R03.
+
+## My Courts fidelity implementation — 2026-10-15
+
+Owner approved Detalle and authorized only Mis canchas. Shared approved illustrated
+card reused, quiet header refresh and existing-art empty state implemented. See
+[scope, files, captures and observed limits](my-courts-fidelity-correction.md).
+Verify PASS; client109/109 PASS;8 isolated browser transport-simulation checks PASS.
+Protected approved detail/shared components/hooks unchanged. Native owner review
+pending; no Jugar work, backend/contract changes, commits/push or SPEC closure.

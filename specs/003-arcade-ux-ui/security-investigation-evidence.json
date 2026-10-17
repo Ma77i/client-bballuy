@@ -1,0 +1,1782 @@
+{
+  "date": "2026-10-16",
+  "scope": "read-only installed source/package metadata and production iOS source map; no dependency modifications",
+  "counts": {
+    "info": 0,
+    "low": 1,
+    "moderate": 15,
+    "high": 32,
+    "critical": 1,
+    "total": 49
+  },
+  "packageAssessments": [
+    {
+      "package": "@babel/core",
+      "severity": "low",
+      "direct": false,
+      "area": "transforms / lint / configuration parsers",
+      "lockedNodes": [
+        {
+          "path": "node_modules/@babel/core",
+          "version": "7.28.4"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        {
+          "source": 1123528,
+          "name": "@babel/core",
+          "dependency": "@babel/core",
+          "title": "@babel/core: Arbitrary File Read via sourceMappingURL Comment",
+          "url": "https://github.com/advisories/GHSA-4x5r-pxfx-6jf8",
+          "severity": "low",
+          "cwe": [
+            "CWE-22",
+            "CWE-200"
+          ],
+          "cvss": {
+            "score": 3.2,
+            "vectorString": "CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:C/C:L/I:N/A:N"
+          },
+          "range": "<=7.29.0"
+        }
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "@expo/cli",
+      "severity": "high",
+      "direct": false,
+      "area": "SDK or inherited package finding",
+      "lockedNodes": [
+        {
+          "path": "node_modules/expo/node_modules/@expo/cli",
+          "version": "57.0.26"
+        }
+      ],
+      "productionIosSourceCount": 1,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        "@expo/code-signing-certificates",
+        "@expo/config",
+        "@expo/config-plugins",
+        "@expo/inline-modules",
+        "@expo/metro",
+        "@expo/metro-config",
+        "@expo/prebuild-config",
+        "node-forge"
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "@expo/code-signing-certificates",
+      "severity": "high",
+      "direct": false,
+      "area": "native configuration / XML / signing tooling",
+      "lockedNodes": [
+        {
+          "path": "node_modules/@expo/code-signing-certificates",
+          "version": "0.0.6"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        "node-forge"
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "@expo/config",
+      "severity": "moderate",
+      "direct": false,
+      "area": "SDK or inherited package finding",
+      "lockedNodes": [
+        {
+          "path": "node_modules/@expo/config",
+          "version": "57.0.9"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        "@expo/config-plugins"
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "@expo/config-plugins",
+      "severity": "moderate",
+      "direct": false,
+      "area": "SDK or inherited package finding",
+      "lockedNodes": [
+        {
+          "path": "node_modules/@expo/config-plugins",
+          "version": "57.0.9"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        "xcode"
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "@expo/inline-modules",
+      "severity": "moderate",
+      "direct": false,
+      "area": "SDK or inherited package finding",
+      "lockedNodes": [
+        {
+          "path": "node_modules/@expo/inline-modules",
+          "version": "0.1.7"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        "@expo/config-plugins"
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "@expo/local-build-cache-provider",
+      "severity": "moderate",
+      "direct": false,
+      "area": "SDK or inherited package finding",
+      "lockedNodes": [
+        {
+          "path": "node_modules/@expo/local-build-cache-provider",
+          "version": "57.0.8"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        "@expo/config"
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "@expo/metro",
+      "severity": "high",
+      "direct": false,
+      "area": "bundler / filesystem / pattern matching",
+      "lockedNodes": [
+        {
+          "path": "node_modules/@expo/metro",
+          "version": "56.0.2"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        "metro",
+        "metro-config",
+        "metro-file-map",
+        "metro-transform-worker"
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "@expo/metro-config",
+      "severity": "high",
+      "direct": false,
+      "area": "bundler / filesystem / pattern matching",
+      "lockedNodes": [
+        {
+          "path": "node_modules/@expo/metro-config",
+          "version": "57.0.12"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        "@expo/config",
+        "@expo/metro"
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "@expo/metro-file-map",
+      "severity": "high",
+      "direct": false,
+      "area": "bundler / filesystem / pattern matching",
+      "lockedNodes": [
+        {
+          "path": "node_modules/@expo/metro-file-map",
+          "version": "57.0.3"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        "micromatch"
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "@expo/prebuild-config",
+      "severity": "moderate",
+      "direct": false,
+      "area": "native configuration / XML / signing tooling",
+      "lockedNodes": [
+        {
+          "path": "node_modules/@expo/prebuild-config",
+          "version": "57.0.16"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        "@expo/config",
+        "@expo/config-plugins"
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "@humanfs/node",
+      "severity": "moderate",
+      "direct": false,
+      "area": "transforms / lint / configuration parsers",
+      "lockedNodes": [
+        {
+          "path": "node_modules/@humanfs/node",
+          "version": "0.16.7"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        {
+          "source": 1158499,
+          "name": "@humanfs/node",
+          "dependency": "@humanfs/node",
+          "title": "humanfs: Recursive copy follows symlinked files and copies data from outside the source tree",
+          "url": "https://github.com/advisories/GHSA-p498-v437-472g",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-22"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": "<0.16.8"
+        }
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "@react-native-community/datetimepicker",
+      "severity": "high",
+      "direct": true,
+      "area": "SDK or inherited package finding",
+      "lockedNodes": [
+        {
+          "path": "node_modules/@react-native-community/datetimepicker",
+          "version": "9.1.0"
+        }
+      ],
+      "productionIosSourceCount": 8,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        "expo"
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "@react-native/community-cli-plugin",
+      "severity": "high",
+      "direct": false,
+      "area": "SDK or inherited package finding",
+      "lockedNodes": [
+        {
+          "path": "node_modules/@react-native/community-cli-plugin",
+          "version": "0.86.3"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        "@react-native/metro-config",
+        "metro",
+        "metro-config"
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "@react-native/metro-config",
+      "severity": "high",
+      "direct": false,
+      "area": "bundler / filesystem / pattern matching",
+      "lockedNodes": [
+        {
+          "path": "node_modules/@react-native/metro-config",
+          "version": "0.86.3"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        "metro-config"
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "@react-native/virtualized-lists",
+      "severity": "high",
+      "direct": false,
+      "area": "SDK or inherited package finding",
+      "lockedNodes": [
+        {
+          "path": "node_modules/react-native/node_modules/@react-native/virtualized-lists",
+          "version": "0.86.3"
+        }
+      ],
+      "productionIosSourceCount": 15,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        "react-native"
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "@react-navigation/core",
+      "severity": "moderate",
+      "direct": false,
+      "area": "navigation / URL parsing",
+      "lockedNodes": [
+        {
+          "path": "node_modules/@react-navigation/core",
+          "version": "7.12.4"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        "query-string"
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "@xmldom/xmldom",
+      "severity": "high",
+      "direct": false,
+      "area": "native configuration / XML / signing tooling",
+      "lockedNodes": [
+        {
+          "path": "node_modules/@xmldom/xmldom",
+          "version": "0.8.11"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        {
+          "source": 1117097,
+          "name": "@xmldom/xmldom",
+          "dependency": "@xmldom/xmldom",
+          "title": "xmldom: XML injection via unsafe CDATA serialization allows attacker-controlled markup insertion",
+          "url": "https://github.com/advisories/GHSA-wh4c-j3r5-mjhp",
+          "severity": "high",
+          "cwe": [
+            "CWE-91"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N"
+          },
+          "range": "<0.8.12"
+        },
+        {
+          "source": 1117894,
+          "name": "@xmldom/xmldom",
+          "dependency": "@xmldom/xmldom",
+          "title": "xmldom: Uncontrolled recursion in XML serialization leads to DoS",
+          "url": "https://github.com/advisories/GHSA-2v35-w6hq-6mfw",
+          "severity": "high",
+          "cwe": [
+            "CWE-674"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": "<0.8.13"
+        },
+        {
+          "source": 1117897,
+          "name": "@xmldom/xmldom",
+          "dependency": "@xmldom/xmldom",
+          "title": "xmldom has XML injection through unvalidated DocumentType serialization",
+          "url": "https://github.com/advisories/GHSA-f6ww-3ggp-fr8h",
+          "severity": "high",
+          "cwe": [
+            "CWE-91"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": "<0.8.13"
+        },
+        {
+          "source": 1117900,
+          "name": "@xmldom/xmldom",
+          "dependency": "@xmldom/xmldom",
+          "title": "xmldom has XML node injection through unvalidated processing instruction serialization",
+          "url": "https://github.com/advisories/GHSA-x6wf-f3px-wcqx",
+          "severity": "high",
+          "cwe": [
+            "CWE-91"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": "<0.8.13"
+        },
+        {
+          "source": 1117903,
+          "name": "@xmldom/xmldom",
+          "dependency": "@xmldom/xmldom",
+          "title": "xmldom has XML node injection through unvalidated comment serialization",
+          "url": "https://github.com/advisories/GHSA-j759-j44w-7fr8",
+          "severity": "high",
+          "cwe": [
+            "CWE-91"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": "<0.8.13"
+        },
+        {
+          "source": 1158518,
+          "name": "@xmldom/xmldom",
+          "dependency": "@xmldom/xmldom",
+          "title": "xmldom: XML fragment injection via invalid EntityReference.nodeName during requireWellFormed serialization",
+          "url": "https://github.com/advisories/GHSA-6gmq-8vp8-gcm6",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-116"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": ">=0.7.0 <=0.8.14"
+        },
+        {
+          "source": 1193689,
+          "name": "@xmldom/xmldom",
+          "dependency": "@xmldom/xmldom",
+          "title": "xmldom: Element name injection via createElement() bypasses requireWellFormed",
+          "url": "https://github.com/advisories/GHSA-w2rr-34g9-rvrj",
+          "severity": "high",
+          "cwe": [
+            "CWE-91"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": ">=0.7.0 <=0.8.13"
+        },
+        {
+          "source": 1193692,
+          "name": "@xmldom/xmldom",
+          "dependency": "@xmldom/xmldom",
+          "title": "xmldom: Attribute name injection via setAttribute() bypasses requireWellFormed",
+          "url": "https://github.com/advisories/GHSA-4w3w-2rp5-g8jm",
+          "severity": "high",
+          "cwe": [
+            "CWE-91"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": ">=0.7.0 <=0.8.13"
+        },
+        {
+          "source": 1193696,
+          "name": "@xmldom/xmldom",
+          "dependency": "@xmldom/xmldom",
+          "title": "xmldom: Processing Instruction Target Injection Bypasses requireWellFormed",
+          "url": "https://github.com/advisories/GHSA-c7q8-3ch8-vqpv",
+          "severity": "high",
+          "cwe": [
+            "CWE-91"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": ">=0.7.0 <=0.8.14"
+        },
+        {
+          "source": 1193700,
+          "name": "@xmldom/xmldom",
+          "dependency": "@xmldom/xmldom",
+          "title": "xmldom: DocType `name` Injection Bypasses requireWellFormed",
+          "url": "https://github.com/advisories/GHSA-27p8-2357-5qqv",
+          "severity": "high",
+          "cwe": [
+            "CWE-91"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": ">=0.7.0 <=0.8.14"
+        },
+        {
+          "source": 1193705,
+          "name": "@xmldom/xmldom",
+          "dependency": "@xmldom/xmldom",
+          "title": "xmldom: Parser silently accepts a not-well-formed end tag whose name is followed by a line break and trailing content",
+          "url": "https://github.com/advisories/GHSA-6h8r-xr42-gp59",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-1286"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": ">=0.7.0 <=0.8.14"
+        },
+        {
+          "source": 1193708,
+          "name": "@xmldom/xmldom",
+          "dependency": "@xmldom/xmldom",
+          "title": "xmldom: Quadratic-time attribute deduplication",
+          "url": "https://github.com/advisories/GHSA-8344-3jmq-59r6",
+          "severity": "high",
+          "cwe": [
+            "CWE-407"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": ">=0.7.0 <=0.8.14"
+        },
+        {
+          "source": 1193709,
+          "name": "@xmldom/xmldom",
+          "dependency": "@xmldom/xmldom",
+          "title": "xmldom: End-tag Whitespace-Trim Regex ReDoS \u2014 quadratic backtracking in the 0.8.x end-tag parser",
+          "url": "https://github.com/advisories/GHSA-x4fp-j954-r2f4",
+          "severity": "high",
+          "cwe": [
+            "CWE-400",
+            "CWE-1333"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": ">=0.7.0 <=0.8.14"
+        },
+        {
+          "source": 1193712,
+          "name": "@xmldom/xmldom",
+          "dependency": "@xmldom/xmldom",
+          "title": "xmldom: Quadratic-memory consumption",
+          "url": "https://github.com/advisories/GHSA-965w-775f-mr7g",
+          "severity": "high",
+          "cwe": [
+            "CWE-770"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": ">=0.7.0 <=0.8.14"
+        },
+        {
+          "source": 1193715,
+          "name": "@xmldom/xmldom",
+          "dependency": "@xmldom/xmldom",
+          "title": "xmldom: Quadratic-time parsing via the malformed-input recovery path \u2014 `parseElementStartPart` re-scan and `normalize()` adjacent-text merge",
+          "url": "https://github.com/advisories/GHSA-93r5-fhx6-vmg9",
+          "severity": "high",
+          "cwe": [
+            "CWE-400",
+            "CWE-407"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": ">=0.7.0 <=0.8.14"
+        }
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "ajv",
+      "severity": "moderate",
+      "direct": false,
+      "area": "transforms / lint / configuration parsers",
+      "lockedNodes": [
+        {
+          "path": "node_modules/ajv",
+          "version": "6.12.6"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        {
+          "source": 1113714,
+          "name": "ajv",
+          "dependency": "ajv",
+          "title": "ajv has ReDoS when using `$data` option",
+          "url": "https://github.com/advisories/GHSA-2g4f-4pwh-qvx6",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-400",
+            "CWE-1333"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": "<6.14.0"
+        }
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "brace-expansion",
+      "severity": "high",
+      "direct": false,
+      "area": "bundler / filesystem / pattern matching",
+      "lockedNodes": [
+        {
+          "path": "node_modules/brace-expansion",
+          "version": "1.1.12"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        {
+          "source": 1115540,
+          "name": "brace-expansion",
+          "dependency": "brace-expansion",
+          "title": "brace-expansion: Zero-step sequence causes process hang and memory exhaustion",
+          "url": "https://github.com/advisories/GHSA-f886-m6hf-6m8v",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-400"
+          ],
+          "cvss": {
+            "score": 6.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H"
+          },
+          "range": "<1.1.13"
+        },
+        {
+          "source": 1123897,
+          "name": "brace-expansion",
+          "dependency": "brace-expansion",
+          "title": "brace-expansion: DoS via exponential-time expansion of consecutive non-expanding {} groups",
+          "url": "https://github.com/advisories/GHSA-3jxr-9vmj-r5cp",
+          "severity": "high",
+          "cwe": [
+            "CWE-400",
+            "CWE-407"
+          ],
+          "cvss": {
+            "score": 5.3,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
+          },
+          "range": "<1.1.16"
+        },
+        {
+          "source": 1130588,
+          "name": "brace-expansion",
+          "dependency": "brace-expansion",
+          "title": "brace-expansion: DoS via unbounded expansion length causing an out-of-memory process crash",
+          "url": "https://github.com/advisories/GHSA-mh99-v99m-4gvg",
+          "severity": "high",
+          "cwe": [
+            "CWE-400",
+            "CWE-770"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": "<1.1.17"
+        },
+        {
+          "source": 1130737,
+          "name": "brace-expansion",
+          "dependency": "brace-expansion",
+          "title": "brace-expansion: DoS via unbounded intermediate arrays, bypassing the CVE-2026-14257 mitigation",
+          "url": "https://github.com/advisories/GHSA-rgw5-rvv9-x895",
+          "severity": "high",
+          "cwe": [
+            "CWE-400",
+            "CWE-770"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": "<1.1.18"
+        },
+        {
+          "source": 1240100,
+          "name": "brace-expansion",
+          "dependency": "brace-expansion",
+          "title": "brace-expansion: Quadratic-time expansion of the `{a},b}` rewrite causes CPU denial of service",
+          "url": "https://github.com/advisories/GHSA-q2hr-2g5m-vwhr",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-400",
+            "CWE-407"
+          ],
+          "cvss": {
+            "score": 5.3,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
+          },
+          "range": "<1.1.21"
+        },
+        {
+          "source": 1240104,
+          "name": "brace-expansion",
+          "dependency": "brace-expansion",
+          "title": "brace-expansion: DoS via uncontrolled recursion on nested brace groups causing stack exhaustion",
+          "url": "https://github.com/advisories/GHSA-qhr7-859c-m2p7",
+          "severity": "high",
+          "cwe": [
+            "CWE-400",
+            "CWE-674"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": "<1.1.20"
+        },
+        {
+          "source": 1240108,
+          "name": "brace-expansion",
+          "dependency": "brace-expansion",
+          "title": "brace-expansion: DoS via uncontrolled recursion in parseCommaParts causing stack exhaustion",
+          "url": "https://github.com/advisories/GHSA-6j4f-fj2g-mc7p",
+          "severity": "high",
+          "cwe": [
+            "CWE-400",
+            "CWE-674"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": "<1.1.19"
+        }
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "braces",
+      "severity": "high",
+      "direct": false,
+      "area": "bundler / filesystem / pattern matching",
+      "lockedNodes": [
+        {
+          "path": "node_modules/braces",
+          "version": "3.0.3"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        {
+          "source": 1240992,
+          "name": "braces",
+          "dependency": "braces",
+          "title": "braces vulnerable to stack-exhaustion denial of service through deeply nested patterns",
+          "url": "https://github.com/advisories/GHSA-vfj7-8cjw-p6xm",
+          "severity": "high",
+          "cwe": [
+            "CWE-674"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": "<=3.0.3"
+        }
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "chokidar",
+      "severity": "high",
+      "direct": false,
+      "area": "bundler / filesystem / pattern matching",
+      "lockedNodes": [
+        {
+          "path": "node_modules/chokidar",
+          "version": "3.6.0"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        "braces"
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "decode-uri-component",
+      "severity": "moderate",
+      "direct": false,
+      "area": "navigation / URL parsing",
+      "lockedNodes": [
+        {
+          "path": "node_modules/decode-uri-component",
+          "version": "0.2.2"
+        }
+      ],
+      "productionIosSourceCount": 1,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        {
+          "source": 1147955,
+          "name": "decode-uri-component",
+          "dependency": "decode-uri-component",
+          "title": "decode-uri-component: Denial of service via exponential decoding of malformed percent-encoded input",
+          "url": "https://github.com/advisories/GHSA-vcc3-ghjq-m6fr",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-400",
+            "CWE-405",
+            "CWE-407",
+            "CWE-1176"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": "<=0.4.2"
+        }
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "expo",
+      "severity": "high",
+      "direct": true,
+      "area": "SDK or inherited package finding",
+      "lockedNodes": [
+        {
+          "path": "node_modules/expo",
+          "version": "57.0.24"
+        }
+      ],
+      "productionIosSourceCount": 72,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        "@expo/cli",
+        "@expo/config",
+        "@expo/config-plugins",
+        "@expo/local-build-cache-provider",
+        "@expo/metro",
+        "@expo/metro-config"
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "expo-router",
+      "severity": "moderate",
+      "direct": true,
+      "area": "navigation / URL parsing",
+      "lockedNodes": [
+        {
+          "path": "node_modules/expo-router",
+          "version": "57.0.22"
+        }
+      ],
+      "productionIosSourceCount": 380,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        "query-string"
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "expo-splash-screen",
+      "severity": "moderate",
+      "direct": true,
+      "area": "SDK or inherited package finding",
+      "lockedNodes": [
+        {
+          "path": "node_modules/expo-splash-screen",
+          "version": "57.0.9"
+        }
+      ],
+      "productionIosSourceCount": 2,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        "@expo/config-plugins"
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "fast-glob",
+      "severity": "high",
+      "direct": false,
+      "area": "bundler / filesystem / pattern matching",
+      "lockedNodes": [
+        {
+          "path": "node_modules/fast-glob",
+          "version": "3.3.3"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        "micromatch"
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "flatted",
+      "severity": "high",
+      "direct": false,
+      "area": "transforms / lint / configuration parsers",
+      "lockedNodes": [
+        {
+          "path": "node_modules/flatted",
+          "version": "3.3.3"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        {
+          "source": 1114526,
+          "name": "flatted",
+          "dependency": "flatted",
+          "title": "flatted vulnerable to unbounded recursion DoS in parse() revive phase",
+          "url": "https://github.com/advisories/GHSA-25h7-pfq9-p65f",
+          "severity": "high",
+          "cwe": [
+            "CWE-674"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": "<3.4.0"
+        },
+        {
+          "source": 1241196,
+          "name": "flatted",
+          "dependency": "flatted",
+          "title": "Prototype Pollution via parse() in NodeJS flatted",
+          "url": "https://github.com/advisories/GHSA-rf6f-7fwh-wjgh",
+          "severity": "high",
+          "cwe": [
+            "CWE-915",
+            "CWE-1321"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": "<=3.4.1"
+        }
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "js-yaml",
+      "severity": "high",
+      "direct": false,
+      "area": "transforms / lint / configuration parsers",
+      "lockedNodes": [
+        {
+          "path": "node_modules/js-yaml",
+          "version": "4.1.0"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        {
+          "source": 1112715,
+          "name": "js-yaml",
+          "dependency": "js-yaml",
+          "title": "js-yaml has prototype pollution in merge (<<)",
+          "url": "https://github.com/advisories/GHSA-mh29-5h37-fv8m",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-1321"
+          ],
+          "cvss": {
+            "score": 5.3,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N"
+          },
+          "range": ">=4.0.0 <4.1.1"
+        },
+        {
+          "source": 1121860,
+          "name": "js-yaml",
+          "dependency": "js-yaml",
+          "title": "JS-YAML: Quadratic-complexity DoS in merge key handling via repeated aliases",
+          "url": "https://github.com/advisories/GHSA-h67p-54hq-rp68",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-407"
+          ],
+          "cvss": {
+            "score": 5.3,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
+          },
+          "range": ">=4.0.0 <=4.1.1"
+        },
+        {
+          "source": 1123911,
+          "name": "js-yaml",
+          "dependency": "js-yaml",
+          "title": "js-yaml: YAML merge-key chains can force quadratic CPU consumption",
+          "url": "https://github.com/advisories/GHSA-52cp-r559-cp3m",
+          "severity": "high",
+          "cwe": [
+            "CWE-400",
+            "CWE-407"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": ">=4.0.0 <4.3.0"
+        },
+        {
+          "source": 1138115,
+          "name": "js-yaml",
+          "dependency": "js-yaml",
+          "title": "JS-YAML: Quadratic CPU consumption in !!omap resolution (3.x and 4.x) \u2014 CVE-2026-59870 fix not backported",
+          "url": "https://github.com/advisories/GHSA-5p4m-2wfm-xmqj",
+          "severity": "high",
+          "cwe": [
+            "CWE-407"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": ">=4.0.0 <4.3.1"
+        },
+        {
+          "source": 1193727,
+          "name": "js-yaml",
+          "dependency": "js-yaml",
+          "title": "js-yaml: maxTotalMergeKeys does not limit CPU use for empty merge sources",
+          "url": "https://github.com/advisories/GHSA-2883-xcg3-v3hh",
+          "severity": "high",
+          "cwe": [
+            "CWE-400",
+            "CWE-407"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": ">=4.0.0 <4.3.2"
+        }
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "metro",
+      "severity": "high",
+      "direct": false,
+      "area": "bundler / filesystem / pattern matching",
+      "lockedNodes": [
+        {
+          "path": "node_modules/@expo/metro/node_modules/metro",
+          "version": "0.84.5"
+        },
+        {
+          "path": "node_modules/metro",
+          "version": "0.84.6"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        "metro-config",
+        "metro-file-map",
+        "metro-transform-worker"
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "metro-config",
+      "severity": "high",
+      "direct": false,
+      "area": "bundler / filesystem / pattern matching",
+      "lockedNodes": [
+        {
+          "path": "node_modules/@expo/metro/node_modules/metro-config",
+          "version": "0.84.5"
+        },
+        {
+          "path": "node_modules/metro-config",
+          "version": "0.84.6"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        "metro"
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "metro-file-map",
+      "severity": "high",
+      "direct": false,
+      "area": "bundler / filesystem / pattern matching",
+      "lockedNodes": [
+        {
+          "path": "node_modules/@expo/metro/node_modules/metro-file-map",
+          "version": "0.84.5"
+        },
+        {
+          "path": "node_modules/metro-file-map",
+          "version": "0.84.6"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        "micromatch"
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "metro-transform-worker",
+      "severity": "high",
+      "direct": false,
+      "area": "bundler / filesystem / pattern matching",
+      "lockedNodes": [
+        {
+          "path": "node_modules/@expo/metro/node_modules/metro-transform-worker",
+          "version": "0.84.5"
+        },
+        {
+          "path": "node_modules/metro-transform-worker",
+          "version": "0.84.6"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        "metro"
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "micromatch",
+      "severity": "high",
+      "direct": false,
+      "area": "bundler / filesystem / pattern matching",
+      "lockedNodes": [
+        {
+          "path": "node_modules/micromatch",
+          "version": "4.0.8"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        "braces"
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "minimatch",
+      "severity": "high",
+      "direct": false,
+      "area": "bundler / filesystem / pattern matching",
+      "lockedNodes": [
+        {
+          "path": "node_modules/minimatch",
+          "version": "3.1.2"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        {
+          "source": 1113459,
+          "name": "minimatch",
+          "dependency": "minimatch",
+          "title": "minimatch has a ReDoS via repeated wildcards with non-matching literal in pattern",
+          "url": "https://github.com/advisories/GHSA-3ppc-4f35-3m26",
+          "severity": "high",
+          "cwe": [
+            "CWE-1333"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": "<3.1.3"
+        },
+        {
+          "source": 1113538,
+          "name": "minimatch",
+          "dependency": "minimatch",
+          "title": "minimatch has ReDoS: matchOne() combinatorial backtracking via multiple non-adjacent GLOBSTAR segments",
+          "url": "https://github.com/advisories/GHSA-7r86-cg39-jmmj",
+          "severity": "high",
+          "cwe": [
+            "CWE-407"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": "<3.1.3"
+        },
+        {
+          "source": 1113546,
+          "name": "minimatch",
+          "dependency": "minimatch",
+          "title": "minimatch ReDoS: nested *() extglobs generate catastrophically backtracking regular expressions",
+          "url": "https://github.com/advisories/GHSA-23c5-xmqv-rm74",
+          "severity": "high",
+          "cwe": [
+            "CWE-1333"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": "<3.1.4"
+        }
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "node-forge",
+      "severity": "high",
+      "direct": false,
+      "area": "native configuration / XML / signing tooling",
+      "lockedNodes": [
+        {
+          "path": "node_modules/node-forge",
+          "version": "1.4.0"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        {
+          "source": 1240912,
+          "name": "node-forge",
+          "dependency": "node-forge",
+          "title": "node-forge RSA PKCS#1 v1.5 signature verification accepts extra nested DigestAlgorithm elements",
+          "url": "https://github.com/advisories/GHSA-86w9-cpqp-85rv",
+          "severity": "high",
+          "cwe": [
+            "CWE-347"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N"
+          },
+          "range": "<=1.4.0"
+        }
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "picomatch",
+      "severity": "high",
+      "direct": false,
+      "area": "bundler / filesystem / pattern matching",
+      "lockedNodes": [
+        {
+          "path": "node_modules/picomatch",
+          "version": "2.3.1"
+        },
+        {
+          "path": "node_modules/tinyglobby/node_modules/picomatch",
+          "version": "4.0.3"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        {
+          "source": 1115549,
+          "name": "picomatch",
+          "dependency": "picomatch",
+          "title": "Picomatch: Method Injection in POSIX Character Classes causes incorrect Glob Matching",
+          "url": "https://github.com/advisories/GHSA-3v7f-55p6-f55p",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-1321"
+          ],
+          "cvss": {
+            "score": 5.3,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N"
+          },
+          "range": "<2.3.2"
+        },
+        {
+          "source": 1115551,
+          "name": "picomatch",
+          "dependency": "picomatch",
+          "title": "Picomatch: Method Injection in POSIX Character Classes causes incorrect Glob Matching",
+          "url": "https://github.com/advisories/GHSA-3v7f-55p6-f55p",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-1321"
+          ],
+          "cvss": {
+            "score": 5.3,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N"
+          },
+          "range": ">=4.0.0 <4.0.4"
+        },
+        {
+          "source": 1115552,
+          "name": "picomatch",
+          "dependency": "picomatch",
+          "title": "Picomatch has a ReDoS vulnerability via extglob quantifiers",
+          "url": "https://github.com/advisories/GHSA-c2c7-rcm5-vvqj",
+          "severity": "high",
+          "cwe": [
+            "CWE-1333"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": "<2.3.2"
+        },
+        {
+          "source": 1115554,
+          "name": "picomatch",
+          "dependency": "picomatch",
+          "title": "Picomatch has a ReDoS vulnerability via extglob quantifiers",
+          "url": "https://github.com/advisories/GHSA-c2c7-rcm5-vvqj",
+          "severity": "high",
+          "cwe": [
+            "CWE-1333"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": ">=4.0.0 <4.0.4"
+        }
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "postcss-selector-parser",
+      "severity": "moderate",
+      "direct": false,
+      "area": "CSS / source-map tooling",
+      "lockedNodes": [
+        {
+          "path": "node_modules/postcss-selector-parser",
+          "version": "6.1.2"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        {
+          "source": 1153170,
+          "name": "postcss-selector-parser",
+          "dependency": "postcss-selector-parser",
+          "title": "postcss-selector-parser allows denial of service through uncontrolled AST recursion",
+          "url": "https://github.com/advisories/GHSA-w9m9-85wc-3x92",
+          "severity": "low",
+          "cwe": [
+            "CWE-404"
+          ],
+          "cvss": {
+            "score": 4.3,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:L"
+          },
+          "range": ">=6.1.0 <6.1.3"
+        },
+        {
+          "source": 1241232,
+          "name": "postcss-selector-parser",
+          "dependency": "postcss-selector-parser",
+          "title": "PostCSS: Quadratic complexity in flat selector parsing allows CPU exhaustion",
+          "url": "https://github.com/advisories/GHSA-rj75-hqrm-r3gf",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-400",
+            "CWE-407"
+          ],
+          "cvss": {
+            "score": 5.9,
+            "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": "<7.1.6"
+        }
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "query-string",
+      "severity": "moderate",
+      "direct": false,
+      "area": "navigation / URL parsing",
+      "lockedNodes": [
+        {
+          "path": "node_modules/query-string",
+          "version": "7.1.3"
+        }
+      ],
+      "productionIosSourceCount": 1,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        "decode-uri-component"
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "react-native",
+      "severity": "high",
+      "direct": true,
+      "area": "SDK or inherited package finding",
+      "lockedNodes": [
+        {
+          "path": "node_modules/react-native",
+          "version": "0.86.3"
+        }
+      ],
+      "productionIosSourceCount": 465,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        "@react-native/community-cli-plugin",
+        "@react-native/virtualized-lists"
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "react-native-maps",
+      "severity": "high",
+      "direct": true,
+      "area": "SDK or inherited package finding",
+      "lockedNodes": [
+        {
+          "path": "node_modules/react-native-maps",
+          "version": "1.27.2"
+        }
+      ],
+      "productionIosSourceCount": 32,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        "react-native"
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "react-native-reanimated",
+      "severity": "high",
+      "direct": true,
+      "area": "SDK or inherited package finding",
+      "lockedNodes": [
+        {
+          "path": "node_modules/react-native-reanimated",
+          "version": "4.5.1"
+        }
+      ],
+      "productionIosSourceCount": 315,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        "react-native",
+        "react-native-worklets"
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "react-native-worklets",
+      "severity": "high",
+      "direct": true,
+      "area": "SDK or inherited package finding",
+      "lockedNodes": [
+        {
+          "path": "node_modules/react-native-worklets",
+          "version": "0.10.1"
+        }
+      ],
+      "productionIosSourceCount": 42,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        "@react-native/metro-config",
+        "react-native"
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "shell-quote",
+      "severity": "critical",
+      "direct": false,
+      "area": "devtools / shell escaping",
+      "lockedNodes": [
+        {
+          "path": "node_modules/shell-quote",
+          "version": "1.10.0"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        {
+          "source": 1241332,
+          "name": "shell-quote",
+          "dependency": "shell-quote",
+          "title": "shell-quote: `quote()` command injection via a line terminator in a token after a `{ comment }` token",
+          "url": "https://github.com/advisories/GHSA-pqg4-j6r4-53mv",
+          "severity": "critical",
+          "cwe": [
+            "CWE-78"
+          ],
+          "cvss": {
+            "score": 8.1,
+            "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H"
+          },
+          "range": ">=1.8.4 <1.11.0"
+        }
+      ],
+      "proposedAction": "separate compatible transitive patch authorization"
+    },
+    {
+      "package": "source-map-js",
+      "severity": "high",
+      "direct": false,
+      "area": "CSS / source-map tooling",
+      "lockedNodes": [
+        {
+          "path": "node_modules/source-map-js",
+          "version": "1.2.1"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        {
+          "source": 1241209,
+          "name": "source-map-js",
+          "dependency": "source-map-js",
+          "title": "source-map-js allows event-loop denial of service through indexed source-map section offsets",
+          "url": "https://github.com/advisories/GHSA-68fv-2mgg-jv7q",
+          "severity": "high",
+          "cwe": [
+            "CWE-1284"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": ">=1.0.0 <1.2.2"
+        }
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "tailwindcss",
+      "severity": "high",
+      "direct": false,
+      "area": "CSS / source-map tooling",
+      "lockedNodes": [
+        {
+          "path": "node_modules/tailwindcss",
+          "version": "3.4.18"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        "chokidar",
+        "fast-glob",
+        "micromatch"
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "uuid",
+      "severity": "moderate",
+      "direct": false,
+      "area": "SDK or inherited package finding",
+      "lockedNodes": [
+        {
+          "path": "node_modules/uuid",
+          "version": "7.0.3"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        {
+          "source": 1119441,
+          "name": "uuid",
+          "dependency": "uuid",
+          "title": "uuid: Missing buffer bounds check in v3/v5/v6 when buf is provided",
+          "url": "https://github.com/advisories/GHSA-w5hq-g745-h8pq",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-787",
+            "CWE-1285"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N"
+          },
+          "range": "<11.1.1"
+        }
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "ws",
+      "severity": "high",
+      "direct": false,
+      "area": "development websocket tooling",
+      "lockedNodes": [
+        {
+          "path": "node_modules/@supabase/realtime-js/node_modules/ws",
+          "version": "8.18.3"
+        },
+        {
+          "path": "node_modules/ws",
+          "version": "7.5.10"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        {
+          "source": 1119108,
+          "name": "ws",
+          "dependency": "ws",
+          "title": "ws: Uninitialized memory disclosure",
+          "url": "https://github.com/advisories/GHSA-58qx-3vcg-4xpx",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-908"
+          ],
+          "cvss": {
+            "score": 4.4,
+            "vectorString": "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:H/I:N/A:N"
+          },
+          "range": ">=8.0.0 <8.20.1"
+        },
+        {
+          "source": 1123259,
+          "name": "ws",
+          "dependency": "ws",
+          "title": "ws: Memory exhaustion DoS from tiny fragments and data chunks",
+          "url": "https://github.com/advisories/GHSA-96hv-2xvq-fx4p",
+          "severity": "high",
+          "cwe": [
+            "CWE-400",
+            "CWE-770",
+            "CWE-1050"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": ">=8.0.0 <8.21.0"
+        },
+        {
+          "source": 1123260,
+          "name": "ws",
+          "dependency": "ws",
+          "title": "ws: Memory exhaustion DoS from tiny fragments and data chunks",
+          "url": "https://github.com/advisories/GHSA-96hv-2xvq-fx4p",
+          "severity": "high",
+          "cwe": [
+            "CWE-400",
+            "CWE-770",
+            "CWE-1050"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": ">=7.0.0 <7.5.11"
+        }
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    },
+    {
+      "package": "xcode",
+      "severity": "moderate",
+      "direct": false,
+      "area": "native configuration / XML / signing tooling",
+      "lockedNodes": [
+        {
+          "path": "node_modules/xcode",
+          "version": "3.0.1"
+        }
+      ],
+      "productionIosSourceCount": 0,
+      "assessment": "source-map presence is not proof of vulnerable function reachability; absence does not cover other build modes/platforms",
+      "via": [
+        "uuid"
+      ],
+      "proposedAction": "trace underlying advisory/parent and consider only compatible targeted fixes; no update authorized"
+    }
+  ],
+  "critical": {
+    "installed": "1.10.0",
+    "parent": "react-devtools-core@6.1.5",
+    "parentRange": "^1.6.1",
+    "root": "react-native@0.86.3",
+    "patchMetadata": {
+      "version": "1.11.0",
+      "engines": {
+        "node": ">= 0.4"
+      },
+      "license": "MIT",
+      "dist.integrity": "sha512-JdxDPD0DBTyu08pq0kPC0xSNet/qsU07qT6IsX1AS8oO2ICNRY4ldNa8OAI6PuwAH8tG3lxEhbqmyp4Dw4036g=="
+    },
+    "nativeSetup": "node_modules/react-native/Libraries/Core/setUpReactDevTools.js imports react-devtools-core inside __DEV__",
+    "backendMapShellQuoteSources": 0,
+    "standaloneMapShellQuoteSources": 1,
+    "standaloneCaller": "embedded src/editor.js imports parse; not quote",
+    "iosProductionSourceEntries": 3640,
+    "iosProductionShellQuoteSources": 0,
+    "iosProductionDevtoolsCoreSources": 0
+  },
+  "filesInspected": {
+    "package-lock.json": "7df70ac54b33229457f3c1bec73c69e87ba75f9e7a4b9c75773a8ebcd58177cf",
+    "node_modules/react-devtools-core/package.json": "ad322347cea0ca8abc82aad23c1b0470af897d2ecdbb7dd66357fc4a89e006f6",
+    "node_modules/react-native/Libraries/Core/setUpReactDevTools.js": "fe78cfdc9ed165f2d3d38f065307a74579890b3c016fa63048c8f79609e42b86",
+    "node_modules/react-devtools-core/dist/backend.js.map": "7f38a1871cd9b98c19d23b009bfe8ea3c33e05ebff2f2e824bcbf9bf589d6030",
+    "node_modules/react-devtools-core/dist/standalone.js.map": "8679428cfa8dcd725fb5a5d837d44a9078c6fe27c01dfddffc9e808f9f405bae"
+  },
+  "iosBundleFile": [
+    "entry-24112a0f35f7962c6fa9bc9cdce6297b.hbc"
+  ]
+}

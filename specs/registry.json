@@ -50,6 +50,17 @@
         "R07",
         "R08"
       ]
+    },
+    {
+      "id": "SPEC-004",
+      "title": "Owner-supplied court catalog expansion",
+      "path": "specs/004-court-catalog",
+      "status": "verified",
+      "requirements": [
+        "R01",
+        "R02",
+        "R03"
+      ]
     }
   ]
 }

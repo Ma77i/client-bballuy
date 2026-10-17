@@ -89,11 +89,29 @@ switch (action) {
       const instant = BigInt(new Date(row.created_at).getTime()) * 1000n + BigInt(fraction.slice(3, 6));
       return { ...row, created_at: instant.toString() };
     });
-    const expected = canonical(snapshot.court_catalog);
+    const additions = JSON.parse(readFileSync(path.join(workspace, 'catalog/2026-10-16.json'), 'utf8'));
+    const retired = JSON.parse(readFileSync(path.join(workspace, 'catalog/retired.json'), 'utf8'));
+    const retainedOriginals = snapshot.court_catalog.filter(court => !retired.some(row => row.id === court.id));
+    const expected = [...canonical(retainedOriginals), ...additions.map(({ latitude, longitude, ...court }) => {
+      const point = Buffer.alloc(25);
+      point.writeUInt8(1, 0); point.writeUInt32LE(0x20000001, 1); point.writeUInt32LE(4326, 5);
+      point.writeDoubleLE(longitude, 9); point.writeDoubleLE(latitude, 17);
+      return { ...court, coords_geography_text: point.toString('hex').toUpperCase() };
+    })].sort((a, b) => a.id.localeCompare(b.id));
     const normalized = canonical(actual);
     if (expected.length !== normalized.length || expected.some((court, i) => Object.keys(court).some(key => court[key] !== normalized[i][key]))) {
       throw new Error('Local court catalog differs from the preserved source.');
     }
+    // Replaying the batch must preserve every row, including generated timestamps.
+    const catalogSnapshot = () => database('SELECT jsonb_agg(to_jsonb(c) ORDER BY id) FROM public.courts c;');
+    const beforeReplay = catalogSnapshot();
+    const importSql = readFileSync(path.join(workspace, 'supabase/migrations/20261016000100_owner_courts.sql'), 'utf8');
+    database(importSql);
+    database(importSql);
+    const removalSql = readFileSync(path.join(workspace, 'supabase/migrations/20261016000200_remove_selected_court.sql'), 'utf8');
+    database(removalSql);
+    database(removalSql);
+    if (catalogSnapshot() !== beforeReplay) throw new Error('Owner court import replay changed the catalog.');
     const originalColumns = snapshot.columns.filter(col => ['courts', 'users_public'].includes(col.relation_name));
     const localColumns = JSON.parse(database("SELECT jsonb_agg(jsonb_build_object('relation_name',c.relname,'column_name',a.attname,'data_type',format_type(a.atttypid,a.atttypmod),'not_null',a.attnotnull)) FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace JOIN pg_attribute a ON a.attrelid=c.oid WHERE n.nspname='public' AND c.relname IN ('courts','users_public') AND a.attnum>0 AND NOT a.attisdropped;"));
     if (localColumns.length !== originalColumns.length || originalColumns.some(col => !localColumns.some(actualCol => ['relation_name', 'column_name', 'data_type', 'not_null'].every(key => actualCol[key] === col[key])))) {
@@ -105,14 +123,14 @@ switch (action) {
     if (!publicKey) throw new Error('Local public API key unavailable.');
     for (const route of [
       'courts?select=id,name&order=id',
-      'court_catalog?select=id,name,latitude,longitude,half_court,lighting&order=id',
+      'court_catalog?select=id,name,latitude,longitude,half_court,lighting,surface,notes&order=id',
     ]) {
       const response = await fetch(`http://127.0.0.1:55431/rest/v1/${route}`, {
         headers: { apikey: publicKey }, redirect: 'error', signal: AbortSignal.timeout(10000),
       });
       if (!response.ok) throw new Error(`Local catalog API returned HTTP ${response.status}.`);
       const rows = await response.json();
-      if (rows.length !== 3 || rows.some((row, i) => row.id !== expected[i].id || row.name !== expected[i].name)) {
+      if (rows.length !== expected.length || rows.some((row, i) => row.id !== expected[i].id || row.name !== expected[i].name)) {
         throw new Error('Local API catalog differs from the preserved source.');
       }
       if (route.startsWith('court_catalog')) {
@@ -120,14 +138,15 @@ switch (action) {
           const point = Buffer.from(expected[i].coords_geography_text, 'hex');
           if (point.length !== 25 || point.readUInt32LE(1) !== 0x20000001 || point.readUInt32LE(5) !== 4326 ||
               row.longitude !== point.readDoubleLE(9) || row.latitude !== point.readDoubleLE(17) ||
-              row.lighting !== expected[i].lighting || row.half_court !== expected[i].half_court) {
+              row.lighting !== expected[i].lighting || row.half_court !== expected[i].half_court ||
+              row.surface !== expected[i].surface || row.notes !== expected[i].notes) {
             throw new Error('Local API coordinate/attribute conversion differs from the source.');
           }
         }
       }
     }
     const versions = database("SELECT jsonb_build_object('postgres',current_setting('server_version'),'postgis',postgis_lib_version());").trim();
-    console.log(`PASS: three original courts, 21 core columns, public catalog API, signup trigger, coordinates and membership invariants. Runtime: ${versions}`);
+    console.log(`PASS: ${retainedOriginals.length} preserved original courts and ${additions.length} owner additions; ${retired.length} explicitly retired court absent, 21 core columns, public catalog API, signup trigger, coordinates and membership invariants. Runtime: ${versions}`);
     break;
   }
   case 'permissions': {

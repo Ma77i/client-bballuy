@@ -1,7 +1,7 @@
-import { createContext, useContext, useId, useState, type ReactNode, type Ref } from 'react';
-import { ActivityIndicator, Animated, Pressable, StyleSheet, TextInput, View,
+import { cloneElement, createContext, isValidElement, useContext, useId, useRef, useState, type ReactNode, type Ref } from 'react';
+import { ActivityIndicator, Animated, Platform, Pressable, StyleSheet, TextInput, View,
   type StyleProp, type TextInputProps, type ViewStyle } from 'react-native';
-import { Check } from 'lucide-react-native';
+import { ArrowLeft, Check, Eye, EyeOff } from 'lucide-react-native';
 import Text from '@/components/AppText';
 import { fonts, palette, spacing, surfaces, type SurfaceTone } from '@/constants/design';
 import { isLoaded } from 'expo-font';
@@ -15,18 +15,23 @@ export function useSurfaceTone() { return useContext(SurfaceContext); }
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 export function Button({ label, onPress, disabled = false, busy = false, secondary = false,
-  danger = false, icon, tone: explicitTone, testID, style, expanded, quiet = false, iconOnly = false }: {
+  danger = false, icon, tone: explicitTone, testID, style, expanded, quiet = false, iconOnly = false, accessibilityHint, foregroundColor }: {
   label: string; onPress(): void; disabled?: boolean; busy?: boolean; secondary?: boolean;
   danger?: boolean; icon?: ReactNode; tone?: SurfaceTone; testID?: string; style?: StyleProp<ViewStyle>; expanded?: boolean;
-  quiet?: boolean; iconOnly?: boolean;
+  quiet?: boolean; iconOnly?: boolean; accessibilityHint?: string; foregroundColor?: string;
 }) {
   const inheritedTone = useSurfaceTone();
   const colors = surfaces[explicitTone ?? inheritedTone];
   const blocked = disabled || busy;
   const motion = usePressMotion(blocked);
   const [focused, setFocused] = useState(false);
-  const foreground = danger ? colors.error : secondary || quiet ? colors.text : palette.navy;
-  return <AnimatedPressable accessibilityRole="button" accessibilityLabel={label}
+  const brightBrand = StyleSheet.flatten(style)?.backgroundColor === palette.orange;
+  const foreground = foregroundColor ?? (danger ? colors.error : secondary || quiet ? colors.text : brightBrand ? palette.navy : palette.white);
+  const contentColor = blocked && !brightBrand ? colors.muted : foreground;
+  const backOnly = /^(Volver(?:\s|$)|Back$)/i.test(label);
+  const renderedIcon = backOnly ? <ArrowLeft size={24} color={foreground} aria-hidden />
+    : isValidElement<{ color?: string }>(icon) ? cloneElement(icon, { color: foreground }) : icon;
+  return <AnimatedPressable accessibilityRole="button" accessibilityLabel={label} accessibilityHint={accessibilityHint}
     accessibilityState={{ disabled: blocked, busy, expanded }} aria-disabled={blocked} aria-busy={busy} aria-expanded={expanded}
     disabled={blocked} testID={testID}
     onPress={() => { if (!blocked) onPress(); }} onPressIn={motion.onPressIn} onPressOut={motion.onPressOut}
@@ -34,34 +39,38 @@ export function Button({ label, onPress, disabled = false, busy = false, seconda
     style={[styles.button, secondary && { backgroundColor: colors.panel, borderWidth: 1, borderColor: colors.boundary },
       danger && { backgroundColor: colors.panel, borderWidth: 1, borderColor: colors.error },
       quiet && { backgroundColor: 'transparent', borderColor: 'transparent', padding: spacing.sm, gap: spacing.xs },
+      backOnly && { alignSelf: 'flex-start', paddingHorizontal: spacing.sm },
       blocked && { backgroundColor: colors.panel, borderWidth: 1, borderColor: colors.boundary },
       motion.pressed && !blocked && { opacity: 0.85 },
       style, focused && { outlineColor: colors.focus, outlineWidth: 3, outlineOffset: 3, outlineStyle: 'solid' }, motion.style]}>
     <View accessible={false} accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
-      {busy ? <ProgressIndicator color={blocked ? colors.muted : foreground} /> : icon}
+      {busy ? <ProgressIndicator color={contentColor} /> : renderedIcon}
     </View>
-    {!iconOnly && <Text variant="label" style={[styles.buttonLabel, { color: blocked ? colors.muted : foreground }]}>{label}</Text>}
+    {!iconOnly && !backOnly && <Text variant="label" style={[styles.buttonLabel, { color: contentColor }]}>{label}</Text>}
   </AnimatedPressable>;
 }
 
-export function Choice({ label, detail, selected, disabled = false, onPress, tone: explicitTone, testID, emphasis = 'label', focusRef, compact = false, style }: {
+export function Choice({ label, detail, selected, disabled = false, onPress, tone: explicitTone, testID, emphasis = 'label', focusRef, compact = false, style, icon }: {
   label: string; detail?: string; selected: boolean; disabled?: boolean; onPress(): void;
   tone?: SurfaceTone; testID?: string; emphasis?: 'label' | 'format'; focusRef?: Ref<View>; compact?: boolean;
-  style?: StyleProp<ViewStyle>;
+  style?: StyleProp<ViewStyle>; icon?: ReactNode;
 }) {
   const inheritedTone = useSurfaceTone();
   const colors = surfaces[explicitTone ?? inheritedTone];
   const [focused, setFocused] = useState(false);
+  const orangeFill = StyleSheet.flatten(style)?.backgroundColor === palette.orange;
+  const choiceText = orangeFill ? palette.white : disabled ? colors.muted : colors.text;
   return <Pressable ref={focusRef} accessibilityRole="radio" accessibilityLabel={label} accessibilityHint={detail}
     accessibilityState={{ checked: selected, disabled }} aria-checked={selected} aria-disabled={disabled}
     disabled={disabled} testID={testID}
     onPress={() => { if (!disabled) onPress(); }} onFocus={() => setFocused(true)} onBlur={() => setFocused(false)}
     style={({ pressed }) => [styles.choice, compact && { minHeight: 48, paddingVertical: spacing.sm }, { backgroundColor: colors.panel, borderColor: selected ? colors.focus : colors.boundary },
-      pressed && !disabled && { opacity: 0.85 }, style, focused && { outlineWidth: 3, outlineOffset: 3, outlineStyle: 'solid', outlineColor: colors.focus }]}>
+      pressed && !disabled && { opacity: 0.85 }, style, orangeFill && { backgroundColor: palette.orangeAction, borderColor: palette.orangeAction }, focused && { outlineWidth: 3, outlineOffset: 3, outlineStyle: 'solid', outlineColor: colors.focus }]}>
     <View style={{ flexDirection: 'row', gap: spacing.sm, alignItems: 'center' }}>
-      <Text variant={emphasis === 'format' ? 'display' : 'label'} style={{ color: disabled ? colors.muted : colors.text, flexShrink: 1 }}>{label}</Text>
+      {icon && <View accessible={false} accessibilityElementsHidden importantForAccessibility="no-hide-descendants">{isValidElement<{ color?: string }>(icon) ? cloneElement(icon, { color: choiceText }) : icon}</View>}
+      <Text variant={emphasis === 'format' ? 'display' : 'label'} style={{ color: choiceText, flexShrink: 1 }}>{label}</Text>
       {selected && <View accessible={false} accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
-        <Check size={20} color={colors.focus} />
+        <Check size={20} color={orangeFill ? palette.white : colors.focus} />
       </View>}
     </View>
     {detail && <Text variant="caption" style={{ color: colors.muted }}>{detail}</Text>}
@@ -76,16 +85,17 @@ export function ChoiceGroup({ label, children, style }: {
   </View>;
 }
 
-export function Field({ label, help, error, tone: explicitTone, style, onFocus, onBlur, compact = false, ...props }:
-  TextInputProps & { label: string; help?: string; error?: string; tone?: SurfaceTone; compact?: boolean }) {
+export function Field({ label, help, error, tone: explicitTone, style, onFocus, onBlur, compact = false, leadingIcon, hideLabel = false, passwordVisibility, ...props }:
+  TextInputProps & { label: string; help?: string; error?: string; tone?: SurfaceTone; compact?: boolean; leadingIcon?: ReactNode; hideLabel?: boolean;
+    passwordVisibility?: { visible: boolean; onToggle(): void; label?: string } }) {
   const inheritedTone = useSurfaceTone();
   const colors = surfaces[explicitTone ?? inheritedTone];
   const [focused, setFocused] = useState(false);
   const labelId = useId();
   const descriptionId = `${labelId}-description`;
-  return <View style={{ gap: compact ? spacing.xs : spacing.sm }}>
-    <Text nativeID={labelId} variant={compact ? 'caption' : 'label'} style={{ color: colors.text }}>{label}</Text>
-    <TextInput {...props} accessibilityLabel={label} accessibilityLabelledBy={labelId} aria-invalid={Boolean(error)}
+  const inputRef = useRef<TextInput>(null);
+  const [actionFocused, setActionFocused] = useState(false);
+  const input = <TextInput {...props} ref={inputRef} accessibilityLabel={label} accessibilityLabelledBy={hideLabel ? undefined : labelId} aria-invalid={Boolean(error)}
       aria-describedby={error || help ? descriptionId : undefined}
       accessibilityHint={error ?? help} accessibilityState={{ disabled: props.editable === false }}
       placeholderTextColor={colors.muted} onFocus={event => { setFocused(true); onFocus?.(event); }}
@@ -93,7 +103,23 @@ export function Field({ label, help, error, tone: explicitTone, style, onFocus, 
       style={[styles.input, { color: colors.text, backgroundColor: colors.background,
         borderColor: error ? colors.error : focused ? colors.focus : colors.boundary },
         compact && { paddingVertical: spacing.sm }, props.multiline && { minHeight: 96, textAlignVertical: 'top' }, style,
-        { fontFamily: presentationFont(StyleSheet.flatten(style)?.fontFamily ?? fonts.body, isLoaded) }]} />
+        Boolean(leadingIcon) && { paddingLeft: 44 },
+        Boolean(passwordVisibility) && { paddingRight: 56 },
+        { fontFamily: presentationFont(StyleSheet.flatten(style)?.fontFamily ?? fonts.body, isLoaded) }]} />;
+  return <View style={{ gap: compact ? spacing.xs : spacing.sm }}>
+    {!hideLabel && <Text nativeID={labelId} variant={compact ? 'caption' : 'label'} style={{ color: colors.text }}>{label}</Text>}
+    {leadingIcon || passwordVisibility ? <View>{input}{leadingIcon && <View pointerEvents="none" accessible={false} accessibilityElementsHidden importantForAccessibility="no-hide-descendants"
+      style={{ position: 'absolute', left: 12, top: 0, bottom: 0, justifyContent: 'center' }}>{leadingIcon}</View>}
+      {passwordVisibility && <Pressable accessibilityRole="button" accessibilityLabel={`${passwordVisibility.visible ? 'Ocultar' : 'Mostrar'} ${passwordVisibility.label ?? label.toLocaleLowerCase('es')}`}
+        accessibilityHint={passwordVisibility.visible ? 'La contraseña está visible.' : 'La contraseña está oculta.'}
+        onPointerDown={event => { if (Platform.OS === 'web') event.preventDefault(); }}
+        onPress={() => { const restore = inputRef.current?.isFocused(); passwordVisibility.onToggle(); if (restore) requestAnimationFrame(() => inputRef.current?.focus()); }}
+        onFocus={() => setActionFocused(true)} onBlur={() => setActionFocused(false)}
+        style={{ position: 'absolute', right: 2, top: 0, bottom: 0, minWidth: 48, minHeight: 48, alignItems: 'center', justifyContent: 'center',
+          borderRadius: 10, ...(actionFocused ? { outlineColor: colors.focus, outlineWidth: 3, outlineStyle: 'solid' as const } : {}) }}>
+        {passwordVisibility.visible ? <EyeOff size={22} color={colors.text} aria-hidden /> : <Eye size={22} color={colors.text} aria-hidden />}
+      </Pressable>}
+    </View> : input}
     {error ? <Text nativeID={descriptionId} variant="caption" accessibilityRole="alert" style={{ color: colors.error }}>{error}</Text>
       : help ? <Text nativeID={descriptionId} variant="caption" style={{ color: colors.muted }}>{help}</Text> : null}
   </View>;
